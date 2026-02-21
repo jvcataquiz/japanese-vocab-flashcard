@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary - JLPT N5</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.18);
+  --text: #e8eaf0;
+  --muted: rgba(232,234,240,0.45);
+  --gold: #f0c060;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;position:relative;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px;z-index:0;pointer-events:none;}
+.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;top:-150px;left:50%;transform:translateX(-50%);z-index:0;pointer-events:none;animation:bgpulse 6s ease-in-out infinite;}
+.bg-glow-2{position:fixed;width:350px;height:350px;border-radius:50%;bottom:-80px;right:-80px;z-index:0;pointer-events:none;animation:bgpulse 8s ease-in-out infinite reverse;}
+@keyframes bgpulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.topbar-brand{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:0.05em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.topbar-tag{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);padding:4px 14px;border-radius:20px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;background:var(--surface);border:1px solid var(--border);padding:5px 14px;border-radius:20px;letter-spacing:0.05em;transition:color 0.2s,border-color 0.2s,background 0.2s;}
+.back-btn:hover{color:var(--text);border-color:var(--border-hover);background:var(--surface-hover);}
+.bottombar{position:fixed;bottom:0;left:0;right:0;z-index:100;text-align:center;padding:12px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);font-size:12px;color:var(--muted);letter-spacing:0.05em;}
+.main{position:relative;z-index:1;width:100%;max-width:860px;padding:100px 28px 72px;display:flex;flex-direction:column;align-items:center;}
+.page-hero{width:100%;text-align:center;margin-bottom:40px;animation:fadeUp 0.7s ease both;}
+.page-char{font-family:'Shippori Mincho',serif;font-size:64px;font-weight:800;line-height:1;margin-bottom:8px;}
+.page-title{font-size:clamp(22px,5vw,32px);font-weight:600;letter-spacing:-0.01em;margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--muted);font-weight:300;}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;margin-top:8px;animation:fadeUp 0.7s ease 0.1s both;}
+.mode-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 24px;text-align:left;cursor:pointer;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s,border-color 0.3s,background 0.3s;display:flex;flex-direction:column;gap:8px;}
+.mode-card:hover{transform:translateY(-5px);border-color:var(--border-hover);background:var(--surface-hover);}
+.mode-icon{font-size:32px;margin-bottom:4px;}
+.mode-label{font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.mode-name{font-size:20px;font-weight:600;}
+.mode-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.5;}
+.section-box{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;animation:fadeUp 0.6s ease both;}
+.section-title{font-size:18px;font-weight:600;margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.part-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:20px;}
+.part-btn{padding:18px 14px;border-radius:14px;cursor:pointer;font-weight:600;font-size:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:transform 0.2s,border-color 0.2s,background 0.2s;line-height:1.5;text-align:center;}
+.part-btn:hover{transform:translateY(-2px);background:var(--surface-hover);}
+.cancel-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 22px;border-radius:10px;font-size:14px;cursor:pointer;transition:color 0.2s,border-color 0.2s;}
+.cancel-btn:hover{color:var(--text);border-color:var(--border-hover);}
+
+/* ── FLASHCARD ── */
+.flashcard-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.flashcard{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:56px 40px 48px;text-align:center;margin-bottom:20px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:border-color 0.3s;}
+.fc-counter{font-size:11px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:28px;}
+.fc-jp{font-family:'Shippori Mincho',serif;font-size:clamp(38px,9vw,62px);font-weight:700;line-height:1.15;color:var(--text);margin-bottom:6px;}
+
+.fc-divider{width:40px;height:1px;background:var(--border);margin:0 auto 20px;transition:width 0.4s ease,background 0.4s ease;}
+.fc-divider.revealed{width:80px;}
+.fc-en{font-size:clamp(22px,5vw,32px);font-weight:600;color:var(--gold);letter-spacing:0.01em;margin-top:4px;min-height:40px;transition:opacity 0.4s ease,transform 0.4s ease;}
+.fc-en.hidden-ans{opacity:0;transform:translateY(8px);pointer-events:none;}
+.fc-romaji{font-size:15px;color:rgba(232,234,240,0.38);letter-spacing:0.12em;margin-bottom:4px;min-height:20px;font-weight:400;font-style:italic;transition:opacity 0.4s ease,transform 0.4s ease;}
+.fc-romaji.hidden-ans{opacity:0;transform:translateY(8px);pointer-events:none;}
+
+/* EXAM */
+.exam-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.exam-progress-bar{width:100%;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:20px;overflow:hidden;}
+.exam-progress-fill{height:100%;border-radius:2px;transition:width 0.4s ease;}
+.exam-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:48px 40px 40px;text-align:center;margin-bottom:20px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.exam-counter{font-size:11px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:24px;}
+.exam-jp{font-family:'Shippori Mincho',serif;font-size:clamp(34px,8vw,54px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+
+.exam-input{width:100%;padding:14px 18px;font-size:16px;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;color:var(--text);margin-bottom:14px;outline:none;transition:border-color 0.2s,background 0.2s;}
+.exam-input:focus{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.08);}
+.exam-input::placeholder{color:var(--muted);}
+
+/* Shared Buttons */
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn{padding:11px 22px;border-radius:10px;font-size:14px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:transform 0.2s,background 0.2s,border-color 0.2s;font-family:'DM Sans',sans-serif;}
+.btn:hover{transform:translateY(-2px);background:var(--surface-hover);border-color:var(--border-hover);}
+.btn-primary{border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);}
+.btn-primary:hover{background:rgba(255,255,255,0.12);}
+
+/* Results */
+.results-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.results-header{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-bottom:16px;}
+.results-score{font-family:'Shippori Mincho',serif;font-size:clamp(48px,10vw,72px);font-weight:800;line-height:1;}
+.results-label{font-size:14px;color:var(--muted);margin-top:8px;}
+.results-list{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;max-height:420px;overflow-y:auto;text-align:left;margin-bottom:16px;}
+.result-item{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;align-items:flex-start;gap:12px;}
+.result-item:last-child{border-bottom:none;}
+.r-icon{flex-shrink:0;font-size:16px;margin-top:2px;}
+.r-jp{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:700;line-height:1.2;margin-bottom:2px;}
+.r-en{font-size:14px;font-weight:500;}
+.r-user{font-size:13px;color:var(--muted);margin-top:2px;}
+.r-correct-en{color:#4ade80;}
+.r-wrong-en{color:#ff6b6b;}
+.r-gold{color:var(--gold);}
+
+.hidden{display:none!important;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:600px){
+  .topbar{padding:12px 16px;}
+  .topbar-tag{display:none;}
+  .main{padding:88px 16px 64px;}
+  .mode-grid{grid-template-columns:1fr;}
+  .flashcard{padding:40px 22px 36px;}
+  .exam-card{padding:36px 22px 30px;}
+  .section-box{padding:22px 16px;}
+  .part-grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));}
+  .btn{padding:10px 16px;font-size:13px;}
+}
+</style>
+
+<style>
+.page-char{color:#4ade80;}
+.mode-card:hover{box-shadow:0 20px 50px rgba(74,222,128,0.12);}
+
+
+.btn-submit{background:rgba(240,192,96,0.12);border-color:rgba(240,192,96,0.35);color:var(--gold);}
+.btn-submit:hover{background:rgba(240,192,96,0.22);border-color:var(--gold);}
+.exam-progress-fill{background:#4ade80;}
+.part-btn:hover{border-color:#4ade8070;box-shadow:0 4px 20px rgba(74,222,128,0.12);}
+.bg-glow{background:radial-gradient(circle,rgba(40,180,100,0.1) 0%,transparent 70%);}
+.bg-glow-2{background:radial-gradient(circle,rgba(240,192,96,0.06) 0%,transparent 70%);}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<header class="topbar">
+  <span class="topbar-brand">✦ Jerick's Learning Hub</span>
+  <div class="topbar-right">
+    <span class="topbar-tag">JLPT N5</span>
+    <a href="index.html" class="back-btn">← Hub</a>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- Page Hero -->
+  <div class="page-hero">
+    <div class="page-char">単</div>
+    <div class="page-title">Vocabulary</div>
+    <div class="page-sub">Build your N5 vocabulary foundation &nbsp;·&nbsp; 805 items &nbsp;·&nbsp; 41 exam parts</div>
+  </div>
+
+  <!-- MAIN MENU -->
+  <div id="mainMenu" class="mode-grid">
+    <div class="mode-card" onclick="startFlashcard()">
+      <div class="mode-icon">🃏</div>
+      <div class="mode-label">Mode 01</div>
+      <div class="mode-name">Flashcard</div>
+      <div class="mode-desc">Browse all items with Prev &amp; Next. Reveal the English answer in gold.</div>
+    </div>
+    <div class="mode-card" onclick="showPartSelection()">
+      <div class="mode-icon">📝</div>
+      <div class="mode-label">Mode 02</div>
+      <div class="mode-name">Exam</div>
+      <div class="mode-desc">Pick a part and answer 20 questions. See results with full details.</div>
+    </div>
+  </div>
+
+  <!-- PART SELECTION -->
+  <div id="partSelection" class="section-box hidden">
+    <div class="section-title">Choose an Exam Part</div>
+    <div class="section-sub">Each part covers 20 Vocabulary items</div>
+    <div class="part-grid" id="partGrid"></div>
+    <button class="cancel-btn" onclick="backToMenu()">← Cancel</button>
+  </div>
+
+  <!-- FLASHCARD -->
+  <div id="flashcardSection" class="flashcard-wrap hidden">
+    <div class="flashcard">
+      <div class="fc-counter" id="fcCounter"></div>
+      <div class="fc-jp" id="fcJp"></div>
+      <div class="fc-divider" id="fcDivider"></div>
+      <div class="fc-romaji hidden-ans" id="fcRomaji"></div>
+      <div class="fc-en hidden-ans" id="fcEn"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn" onclick="prevCard()">← Prev</button>
+      <button class="btn btn-primary" onclick="showAnswer()">Show Answer</button>
+      <button class="btn btn-primary" onclick="nextCard()">Next →</button>
+    </div>
+    <br>
+    <div class="btn-row">
+      <button class="btn" onclick="backToMenu()">← Back to Menu</button>
+    </div>
+  </div>
+
+  <!-- EXAM -->
+  <div id="examSection" class="exam-wrap hidden">
+    <div class="exam-progress-bar"><div class="exam-progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="exam-card">
+      <div class="exam-counter" id="examCounter"></div>
+      <div class="exam-jp" id="examJp"></div>
+      <div id="examEnHint" style="display:none"></div>
+    </div>
+    <input class="exam-input" type="text" id="answerInput" placeholder="Type the English meaning here…" autocomplete="off" />
+    <div class="btn-row">
+      <button class="btn btn-submit" onclick="submitAnswer()">Submit ✓</button>
+      <button class="btn" onclick="backToMenu()">← Quit</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultSection" class="results-wrap hidden">
+    <div class="results-header">
+      <div class="results-score" id="resultsScore"></div>
+      <div class="results-label" id="resultsLabel"></div>
+    </div>
+    <div class="results-list" id="resultsList"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="showPartSelection()">Try Another Part</button>
+      <button class="btn" onclick="backToMenu()">Main Menu</button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="bottombar">© 2026 Jerick's Learning Platform &nbsp;·&nbsp; All rights reserved</footer>
+
+<script>
+const DATA = [{"jp": "わたし", "en": "I", "romaji": "watashi"}, {"jp": "わたしたち", "en": "we", "romaji": "watashitachi"}, {"jp": "あなた", "en": "you", "romaji": "anata"}, {"jp": "ひと", "en": "person", "romaji": "hito"}, {"jp": "〜かた", "en": "〜 way/method", "romaji": "~kata"}, {"jp": "〜にん", "en": "〜 person(s)", "romaji": "~nin"}, {"jp": "みなさん", "en": "everyone", "romaji": "minasan"}, {"jp": "さん", "en": "Mr./Ms./Mrs.", "romaji": "san"}, {"jp": "せんせい", "en": "teacher", "romaji": "sensei"}, {"jp": "きょうし", "en": "educator/teacher", "romaji": "kyoushi"}, {"jp": "がくせい", "en": "student", "romaji": "gakusei"}, {"jp": "かいしゃいん", "en": "company employee", "romaji": "kaishain"}, {"jp": "しゃいん", "en": "employee", "romaji": "shain"}, {"jp": "ぎんこういん", "en": "bank clerk", "romaji": "ginkouin"}, {"jp": "いしゃ", "en": "doctor", "romaji": "isha"}, {"jp": "けんきゅうしゃ", "en": "researcher", "romaji": "kenkyuusha"}, {"jp": "エンジニア", "en": "engineer", "romaji": "enjinia"}, {"jp": "だいがく", "en": "university", "romaji": "daigaku"}, {"jp": "びょういん", "en": "hospital", "romaji": "byouin"}, {"jp": "でんき", "en": "electricity", "romaji": "denki"}, {"jp": "さい", "en": "years old", "romaji": "sai"}, {"jp": "アメリカ", "en": "America", "romaji": "amerika"}, {"jp": "イギリス", "en": "UK", "romaji": "igirisu"}, {"jp": "インド", "en": "India", "romaji": "indo"}, {"jp": "インドネシア", "en": "Indonesia", "romaji": "indoneshia"}, {"jp": "タイ", "en": "Thailand", "romaji": "tai"}, {"jp": "かんこく", "en": "Korea", "romaji": "kankoku"}, {"jp": "ちゅうごく", "en": "China", "romaji": "chuugoku"}, {"jp": "ドイツ", "en": "Germany", "romaji": "doitsu"}, {"jp": "フランス", "en": "France", "romaji": "furansu"}, {"jp": "ブラジル", "en": "Brazil", "romaji": "burajiru"}, {"jp": "にほん", "en": "Japan", "romaji": "nihon"}, {"jp": "ほん", "en": "book", "romaji": "hon"}, {"jp": "じしょ", "en": "dictionary", "romaji": "jisho"}, {"jp": "ざっし", "en": "magazine", "romaji": "zasshi"}, {"jp": "しんぶん", "en": "newspaper", "romaji": "shinbun"}, {"jp": "ノート", "en": "notebook", "romaji": "no-to"}, {"jp": "てちょう", "en": "diary", "romaji": "techou"}, {"jp": "めいし", "en": "business card", "romaji": "meishi"}, {"jp": "カード", "en": "card", "romaji": "ka-do"}, {"jp": "えんぴつ", "en": "pencil", "romaji": "enpitsu"}, {"jp": "ボールペン", "en": "ballpoint pen", "romaji": "bo-rupen"}, {"jp": "シャープペンシル", "en": "mechanical pencil", "romaji": "sha-pupenshiru"}, {"jp": "かぎ", "en": "key", "romaji": "kagi"}, {"jp": "とけい", "en": "watch/clock", "romaji": "tokei"}, {"jp": "かさ", "en": "umbrella", "romaji": "kasa"}, {"jp": "かばん", "en": "bag", "romaji": "kaban"}, {"jp": "テレビ", "en": "TV", "romaji": "terebi"}, {"jp": "ラジオ", "en": "radio", "romaji": "rajio"}, {"jp": "カメラ", "en": "camera", "romaji": "kamera"}, {"jp": "コンピューター", "en": "computer", "romaji": "konpyu-ta-"}, {"jp": "じどうしゃ", "en": "car", "romaji": "jidousha"}, {"jp": "つくえ", "en": "desk", "romaji": "tsukue"}, {"jp": "いす", "en": "chair", "romaji": "isu"}, {"jp": "コーヒー", "en": "coffee", "romaji": "ko-hi-"}, {"jp": "えいご", "en": "English", "romaji": "eigo"}, {"jp": "にほんご", "en": "Japanese", "romaji": "nihongo"}, {"jp": "きょうしつ", "en": "classroom", "romaji": "kyoushitsu"}, {"jp": "しょくどう", "en": "dining hall", "romaji": "shokudou"}, {"jp": "じむしょ", "en": "office", "romaji": "jimusho"}, {"jp": "かいぎしつ", "en": "meeting room", "romaji": "kaigishitsu"}, {"jp": "うけつけ", "en": "reception", "romaji": "uketsuke"}, {"jp": "へや", "en": "room", "romaji": "heya"}, {"jp": "トイレ", "en": "toilet", "romaji": "toire"}, {"jp": "おてあらい", "en": "restroom", "romaji": "otearai"}, {"jp": "かいだん", "en": "stairs", "romaji": "kaidan"}, {"jp": "エレベーター", "en": "elevator", "romaji": "erebe-ta-"}, {"jp": "エスカレーター", "en": "escalator", "romaji": "esukare-ta-"}, {"jp": "くに", "en": "country", "romaji": "kuni"}, {"jp": "かいしゃ", "en": "company", "romaji": "kaisha"}, {"jp": "いえ", "en": "house", "romaji": "ie"}, {"jp": "でんわ", "en": "phone", "romaji": "denwa"}, {"jp": "くつ", "en": "shoes", "romaji": "kutsu"}, {"jp": "ネクタイ", "en": "necktie", "romaji": "nekutai"}, {"jp": "ワイン", "en": "wine", "romaji": "wain"}, {"jp": "たばこ", "en": "cigarette", "romaji": "tabako"}, {"jp": "うりば", "en": "sales floor", "romaji": "uriba"}, {"jp": "ちか", "en": "basement/subway", "romaji": "chika"}, {"jp": "イタリア", "en": "Italy", "romaji": "itaria"}, {"jp": "スイス", "en": "Switzerland", "romaji": "suisu"}, {"jp": "デパート", "en": "department store", "romaji": "depa-to"}, {"jp": "ぎんこう", "en": "bank", "romaji": "ginkou"}, {"jp": "ゆうびんきょく", "en": "post office", "romaji": "yuubinkyoku"}, {"jp": "としょかん", "en": "library", "romaji": "toshokan"}, {"jp": "びじゅつかん", "en": "art museum", "romaji": "bijutsukan"}, {"jp": "いま", "en": "now", "romaji": "ima"}, {"jp": "ごぜん", "en": "AM", "romaji": "gozen"}, {"jp": "ごご", "en": "PM", "romaji": "gogo"}, {"jp": "あさ", "en": "morning", "romaji": "asa"}, {"jp": "ひる", "en": "noon", "romaji": "hiru"}, {"jp": "よる", "en": "night", "romaji": "yoru"}, {"jp": "ばん", "en": "evening", "romaji": "ban"}, {"jp": "おととい", "en": "the day before yesterday", "romaji": "ototoi"}, {"jp": "きのう", "en": "yesterday", "romaji": "kinou"}, {"jp": "きょう", "en": "today", "romaji": "kyou"}, {"jp": "あした", "en": "tomorrow", "romaji": "ashita"}, {"jp": "あさって", "en": "the day after tomorrow", "romaji": "asatte"}, {"jp": "けさ", "en": "this morning", "romaji": "kesa"}, {"jp": "こんばん", "en": "tonight", "romaji": "konban"}, {"jp": "さくばん", "en": "last night", "romaji": "sakuban"}, {"jp": "やすみ", "en": "rest/day off", "romaji": "yasumi"}, {"jp": "ひるやすみ", "en": "lunch break", "romaji": "hiruyasumi"}, {"jp": "まいあさ", "en": "every morning", "romaji": "maiasa"}, {"jp": "まいばん", "en": "every night", "romaji": "maiban"}, {"jp": "まいにち", "en": "every day", "romaji": "mainichi"}, {"jp": "げつようび", "en": "Monday", "romaji": "getsuyoubi"}, {"jp": "かようび", "en": "Tuesday", "romaji": "kayoubi"}, {"jp": "すいようび", "en": "Wednesday", "romaji": "suiyoubi"}, {"jp": "もくようび", "en": "Thursday", "romaji": "mokuyoubi"}, {"jp": "きんようび", "en": "Friday", "romaji": "kinyoubi"}, {"jp": "どようび", "en": "Saturday", "romaji": "doyoubi"}, {"jp": "にちようび", "en": "Sunday", "romaji": "nichiyoubi"}, {"jp": "ばんごう", "en": "number", "romaji": "bangou"}, {"jp": "じてんしゃ", "en": "bicycle", "romaji": "jitensha"}, {"jp": "がっこう", "en": "school", "romaji": "gakkou"}, {"jp": "えき", "en": "station", "romaji": "eki"}, {"jp": "ひこうき", "en": "airplane", "romaji": "hikouki"}, {"jp": "ふね", "en": "ship", "romaji": "fune"}, {"jp": "でんしゃ", "en": "train", "romaji": "densha"}, {"jp": "ちかてつ", "en": "subway", "romaji": "chikatetsu"}, {"jp": "しんかんせん", "en": "shinkansen", "romaji": "shinkansen"}, {"jp": "バス", "en": "bus", "romaji": "basu"}, {"jp": "ともだち", "en": "friend", "romaji": "tomodachi"}, {"jp": "せんしゅう", "en": "last week", "romaji": "senshuu"}, {"jp": "こんしゅう", "en": "this week", "romaji": "konshuu"}, {"jp": "らいしゅう", "en": "next week", "romaji": "raishuu"}, {"jp": "せんげつ", "en": "last month", "romaji": "sengetsu"}, {"jp": "こんげつ", "en": "this month", "romaji": "kongetsu"}, {"jp": "らいげつ", "en": "next month", "romaji": "raigetsu"}, {"jp": "きょねん", "en": "last year", "romaji": "kyonen"}, {"jp": "ことし", "en": "this year", "romaji": "kotoshi"}, {"jp": "らいねん", "en": "next year", "romaji": "rainen"}, {"jp": "たんじょうび", "en": "birthday", "romaji": "tanjoubi"}, {"jp": "ふつうれっしゃ", "en": "local train", "romaji": "futsuuressha"}, {"jp": "きゅうこう", "en": "express train", "romaji": "kyuukou"}, {"jp": "とっきゅう", "en": "limited express", "romaji": "tokkyuu"}, {"jp": "つぎ", "en": "next", "romaji": "tsugi"}, {"jp": "ごはん", "en": "meal/rice", "romaji": "gohan"}, {"jp": "あさごはん", "en": "breakfast", "romaji": "asagohan"}, {"jp": "ひるごはん", "en": "lunch", "romaji": "hirugohan"}, {"jp": "ばんごはん", "en": "dinner", "romaji": "bangohan"}, {"jp": "たまご", "en": "egg", "romaji": "tamago"}, {"jp": "にく", "en": "meat", "romaji": "niku"}, {"jp": "さかな", "en": "fish", "romaji": "sakana"}, {"jp": "やさい", "en": "vegetables", "romaji": "yasai"}, {"jp": "くだもの", "en": "fruit", "romaji": "kudamono"}, {"jp": "みず", "en": "water", "romaji": "mizu"}, {"jp": "おちゃ", "en": "tea", "romaji": "ocha"}, {"jp": "こうちゃ", "en": "black tea", "romaji": "koucha"}, {"jp": "ぎゅうにゅう", "en": "milk", "romaji": "gyuunyuu"}, {"jp": "ジュース", "en": "juice", "romaji": "ju-su"}, {"jp": "ビール", "en": "beer", "romaji": "bi-ru"}, {"jp": "おさけ", "en": "alcohol/sake", "romaji": "osake"}, {"jp": "えいが", "en": "movie", "romaji": "eiga"}, {"jp": "てがみ", "en": "letter", "romaji": "tegami"}, {"jp": "しゃしん", "en": "photo", "romaji": "shashin"}, {"jp": "みせ", "en": "shop/store", "romaji": "mise"}, {"jp": "レストラン", "en": "restaurant", "romaji": "resutoran"}, {"jp": "にわ", "en": "garden", "romaji": "niwa"}, {"jp": "しゅくだい", "en": "homework", "romaji": "shukudai"}, {"jp": "おはなみ", "en": "flower viewing", "romaji": "ohanami"}, {"jp": "けしゴム", "en": "eraser", "romaji": "keshigomu"}, {"jp": "て", "en": "hand", "romaji": "te"}, {"jp": "はし", "en": "chopsticks", "romaji": "hashi"}, {"jp": "スプーン", "en": "spoon", "romaji": "supu-n"}, {"jp": "ナイフ", "en": "knife", "romaji": "naifu"}, {"jp": "フォーク", "en": "fork", "romaji": "fuぉ-ku"}, {"jp": "はさみ", "en": "scissors", "romaji": "hasami"}, {"jp": "かみ", "en": "paper", "romaji": "kami"}, {"jp": "はな", "en": "flower", "romaji": "hana"}, {"jp": "シャツ", "en": "shirt", "romaji": "shatsu"}, {"jp": "プレゼント", "en": "present", "romaji": "purezento"}, {"jp": "にもつ", "en": "luggage/parcel", "romaji": "nimotsu"}, {"jp": "おかね", "en": "money", "romaji": "okane"}, {"jp": "きっぷ", "en": "ticket", "romaji": "kippu"}, {"jp": "クリスマス", "en": "Christmas", "romaji": "kurisumasu"}, {"jp": "ちち", "en": "father", "romaji": "chichi"}, {"jp": "はは", "en": "mother", "romaji": "haha"}, {"jp": "おとうさん", "en": "dad", "romaji": "otousan"}, {"jp": "おかあさん", "en": "mom", "romaji": "okaasan"}, {"jp": "りょこう", "en": "trip", "romaji": "ryokou"}, {"jp": "おみやげ", "en": "souvenir", "romaji": "omiyage"}, {"jp": "くるま", "en": "car", "romaji": "kuruma"}, {"jp": "さくら", "en": "cherry blossom", "romaji": "sakura"}, {"jp": "やま", "en": "mountain", "romaji": "yama"}, {"jp": "まち", "en": "town", "romaji": "machi"}, {"jp": "たべもの", "en": "food", "romaji": "tabemono"}, {"jp": "ところ", "en": "place", "romaji": "tokoro"}, {"jp": "りょう", "en": "dormitory", "romaji": "ryou"}, {"jp": "べんきょう", "en": "study", "romaji": "benkyou"}, {"jp": "せいかつ", "en": "life", "romaji": "seikatsu"}, {"jp": "しごと", "en": "work", "romaji": "shigoto"}, {"jp": "りょうり", "en": "cooking", "romaji": "ryouri"}, {"jp": "のみもの", "en": "drink", "romaji": "nomimono"}, {"jp": "スポーツ", "en": "sports", "romaji": "supo-tsu"}, {"jp": "やきゅう", "en": "baseball", "romaji": "yakyuu"}, {"jp": "おんがく", "en": "music", "romaji": "ongaku"}, {"jp": "うた", "en": "song", "romaji": "uta"}, {"jp": "え", "en": "picture", "romaji": "e"}, {"jp": "じ", "en": "character/writing", "romaji": "ji"}, {"jp": "ひらがな", "en": "hiragana", "romaji": "hiragana"}, {"jp": "かたかな", "en": "katakana", "romaji": "katakana"}, {"jp": "ローマじ", "en": "romaji", "romaji": "ro-maji"}, {"jp": "こまかいおかね", "en": "small change", "romaji": "komakaiokane"}, {"jp": "きって", "en": "stamp", "romaji": "kitte"}, {"jp": "はがき", "en": "postcard", "romaji": "hagaki"}, {"jp": "ふうとう", "en": "envelope", "romaji": "fuutou"}, {"jp": "そくたつ", "en": "express mail", "romaji": "sokutatsu"}, {"jp": "かきとめ", "en": "registered mail", "romaji": "kakitome"}, {"jp": "こうくうびん", "en": "airmail", "romaji": "koukuubin"}, {"jp": "ふなびん", "en": "ship mail", "romaji": "funabin"}, {"jp": "りょうしん", "en": "parents", "romaji": "ryoushin"}, {"jp": "きょうだい", "en": "siblings", "romaji": "kyoudai"}, {"jp": "あに", "en": "older brother", "romaji": "ani"}, {"jp": "おにいさん", "en": "older brother (polite)", "romaji": "oniisan"}, {"jp": "あね", "en": "older sister", "romaji": "ane"}, {"jp": "おねえさん", "en": "older sister (polite)", "romaji": "oneesan"}, {"jp": "おとうと", "en": "younger brother", "romaji": "otouto"}, {"jp": "おとうとさん", "en": "younger brother (polite)", "romaji": "otoutosan"}, {"jp": "いもうと", "en": "younger sister", "romaji": "imouto"}, {"jp": "いもうと", "en": "younger sister", "romaji": "imouto"}, {"jp": "いもうとさん", "en": "younger sister (polite)", "romaji": "imoutosan"}, {"jp": "がいこく", "en": "foreign country", "romaji": "gaikoku"}, {"jp": "しゅうかん", "en": "week(s)", "romaji": "shuukan"}, {"jp": "オーストラリア", "en": "Australia", "romaji": "o-sutoraria"}, {"jp": "きせつ", "en": "season", "romaji": "kisetsu"}, {"jp": "はる", "en": "spring", "romaji": "haru"}, {"jp": "なつ", "en": "summer", "romaji": "natsu"}, {"jp": "あき", "en": "autumn/fall", "romaji": "aki"}, {"jp": "ふゆ", "en": "winter", "romaji": "fuyu"}, {"jp": "てんき", "en": "weather", "romaji": "tenki"}, {"jp": "あめ", "en": "rain", "romaji": "ame"}, {"jp": "ゆき", "en": "snow", "romaji": "yuki"}, {"jp": "くもり", "en": "cloudy", "romaji": "kumori"}, {"jp": "くうこう", "en": "airport", "romaji": "kuukou"}, {"jp": "うみ", "en": "sea/ocean", "romaji": "umi"}, {"jp": "せかい", "en": "world", "romaji": "sekai"}, {"jp": "まつり", "en": "festival", "romaji": "matsuri"}, {"jp": "しけん", "en": "exam", "romaji": "shiken"}, {"jp": "すきやき", "en": "sukiyaki", "romaji": "sukiyaki"}, {"jp": "さしみ", "en": "sashimi", "romaji": "sashimi"}, {"jp": "すし", "en": "sushi", "romaji": "sushi"}, {"jp": "てんぷら", "en": "tempura", "romaji": "tenpura"}, {"jp": "いけばな", "en": "flower arrangement", "romaji": "ikebana"}, {"jp": "もみじ", "en": "autumn leaves", "romaji": "momiji"}, {"jp": "しゅうまつ", "en": "weekend", "romaji": "shuumatsu"}, {"jp": "しやくしょ", "en": "city hall", "romaji": "shiyakusho"}, {"jp": "プール", "en": "pool", "romaji": "pu-ru"}, {"jp": "かわ", "en": "river", "romaji": "kawa"}, {"jp": "けいざい", "en": "economy", "romaji": "keizai"}, {"jp": "びじゅつ", "en": "art", "romaji": "bijutsu"}, {"jp": "つり", "en": "fishing", "romaji": "tsuri"}, {"jp": "かいぎ", "en": "meeting", "romaji": "kaigi"}, {"jp": "とうろく", "en": "registration", "romaji": "touroku"}, {"jp": "ちゅうもん", "en": "order", "romaji": "chuumon"}, {"jp": "ていしょく", "en": "set meal", "romaji": "teishoku"}, {"jp": "ぎゅうどん", "en": "gyudon (beef bowl)", "romaji": "gyuudon"}, {"jp": "おなか", "en": "stomach", "romaji": "onaka"}, {"jp": "のど", "en": "throat", "romaji": "nodo"}, {"jp": "くすり", "en": "medicine", "romaji": "kusuri"}, {"jp": "ふろ", "en": "bath", "romaji": "furo"}, {"jp": "うわぎ", "en": "jacket", "romaji": "uwagi"}, {"jp": "したぎ", "en": "underwear", "romaji": "shitagi"}, {"jp": "のど", "en": "throat", "romaji": "nodo"}, {"jp": "ピアノ", "en": "piano", "romaji": "piano"}, {"jp": "こくさい", "en": "international", "romaji": "kokusai"}, {"jp": "しゅみ", "en": "hobby", "romaji": "shumi"}, {"jp": "にっき", "en": "diary", "romaji": "nikki"}, {"jp": "いのり", "en": "prayer", "romaji": "inori"}, {"jp": "しゃちょう", "en": "company president", "romaji": "shachou"}, {"jp": "ぶちょう", "en": "department chief", "romaji": "buchou"}, {"jp": "かちょう", "en": "section chief", "romaji": "kachou"}, {"jp": "どうぶつ", "en": "animal", "romaji": "doubutsu"}, {"jp": "うま", "en": "horse", "romaji": "uma"}, {"jp": "へび", "en": "snake", "romaji": "hebi"}, {"jp": "ちょうし", "en": "condition", "romaji": "choushi"}, {"jp": "ゴルフ", "en": "golf", "romaji": "gorufu"}, {"jp": "すもう", "en": "sumo", "romaji": "sumou"}, {"jp": "ビザ", "en": "visa", "romaji": "biza"}, {"jp": "きもの", "en": "kimono", "romaji": "kimono"}, {"jp": "こと", "en": "thing", "romaji": "koto"}, {"jp": "ぼく", "en": "I (male)", "romaji": "boku"}, {"jp": "きみ", "en": "you", "romaji": "kimi"}, {"jp": "くん", "en": "Mr. (informal)", "romaji": "kun"}, {"jp": "こっち", "en": "this way (informal)", "romaji": "kocchi"}, {"jp": "そっち", "en": "that way (informal)", "romaji": "socchi"}, {"jp": "あっち", "en": "that way over there (informal)", "romaji": "acchi"}, {"jp": "はらいます", "en": "pay", "romaji": "haraimasu"}, {"jp": "もっていきます", "en": "take (something)", "romaji": "motteikimasu"}, {"jp": "ぬぎます", "en": "take off", "romaji": "nugimasu"}, {"jp": "なくします", "en": "lose", "romaji": "nakushimasu"}, {"jp": "だします", "en": "hand in", "romaji": "dashimasu"}, {"jp": "かえします", "en": "return", "romaji": "kaeshimasu"}, {"jp": "のみます", "en": "take (medicine)", "romaji": "nomimasu"}, {"jp": "はいります", "en": "take a bath", "romaji": "hairimasu"}, {"jp": "おぼえます", "en": "memorize", "romaji": "oboemasu"}, {"jp": "でかけます", "en": "go out", "romaji": "dekakemasu"}, {"jp": "わすれます", "en": "forget", "romaji": "wasuremasu"}, {"jp": "もってきます", "en": "bring", "romaji": "mottekimasu"}, {"jp": "しんぱいします", "en": "worry", "romaji": "shinpaishimasu"}, {"jp": "ざんぎょうします", "en": "work overtime", "romaji": "zangyoushimasu"}, {"jp": "しゅっちょうします", "en": "go on business trip", "romaji": "shucchoushimasu"}, {"jp": "あらいます", "en": "wash", "romaji": "araimasu"}, {"jp": "うたいます", "en": "sing", "romaji": "utaimasu"}, {"jp": "ひきます", "en": "play (instrument)", "romaji": "hikimasu"}, {"jp": "かえます", "en": "exchange", "romaji": "kaemasu"}, {"jp": "すてます", "en": "throw away", "romaji": "sutemasu"}, {"jp": "あつめます", "en": "collect", "romaji": "atsumemasu"}, {"jp": "うんてんします", "en": "drive", "romaji": "untenshimasu"}, {"jp": "よやくします", "en": "reserve", "romaji": "yoyakushimasu"}, {"jp": "けんがくします", "en": "visit for study", "romaji": "kengakushimasu"}, {"jp": "のぼります", "en": "climb", "romaji": "noborimasu"}, {"jp": "とまります", "en": "stay", "romaji": "tomarimasu"}, {"jp": "なります", "en": "become", "romaji": "narimasu"}, {"jp": "そうじします", "en": "clean", "romaji": "soujishimasu"}, {"jp": "せんたくします", "en": "do laundry", "romaji": "sentakushimasu"}, {"jp": "れんしゅうします", "en": "practice", "romaji": "renshuushimasu"}, {"jp": "おもいます", "en": "think", "romaji": "omoimasu"}, {"jp": "いいます", "en": "say", "romaji": "iimasu"}, {"jp": "かちます", "en": "win", "romaji": "kachimasu"}, {"jp": "やくにたつ", "en": "be useful", "romaji": "yakunitatsu"}, {"jp": "さいきんのはなし", "en": "have a festival", "romaji": "saikinnohanashi"}, {"jp": "まけます", "en": "lose", "romaji": "makemasu"}, {"jp": "たります", "en": "be enough", "romaji": "tarimasu"}, {"jp": "はきます", "en": "put on (shoes)", "romaji": "hakimasu"}, {"jp": "かぶります", "en": "put on (hat)", "romaji": "kaburimasu"}, {"jp": "きます", "en": "put on (shirt)", "romaji": "kimasu"}, {"jp": "かけます", "en": "put on (glasses)", "romaji": "kakemasu"}, {"jp": "うまれます", "en": "be born", "romaji": "umaremasu"}, {"jp": "ききます", "en": "ask", "romaji": "kikimasu"}, {"jp": "ひきます", "en": "pull", "romaji": "hikimasu"}, {"jp": "うごきます", "en": "move", "romaji": "ugokimasu"}, {"jp": "あるきます", "en": "walk", "romaji": "arukimasu"}, {"jp": "まわします", "en": "turn", "romaji": "mawashimasu"}, {"jp": "さわります", "en": "touch", "romaji": "sawarimasu"}, {"jp": "わたります", "en": "cross", "romaji": "watarimasu"}, {"jp": "かえます", "en": "change", "romaji": "kaemasu"}, {"jp": "きをつけます", "en": "pay attention", "romaji": "kiwotsukemasu"}, {"jp": "おつりがでます", "en": "get change", "romaji": "otsurigademasu"}, {"jp": "ひっこしします", "en": "move house", "romaji": "hikkoshishimasu"}, {"jp": "つれていきます", "en": "take (someone)", "romaji": "tsureteikimasu"}, {"jp": "おくります", "en": "escort", "romaji": "okurimasu"}, {"jp": "くれます", "en": "give me", "romaji": "kuremasu"}, {"jp": "いれます", "en": "make (coffee)", "romaji": "iremasu"}, {"jp": "つれてきます", "en": "bring (someone)", "romaji": "tsuretekimasu"}, {"jp": "しょうかいします", "en": "introduce", "romaji": "shoukaishimasu"}, {"jp": "あんないします", "en": "show around", "romaji": "annaishimasu"}, {"jp": "せつめいします", "en": "explain", "romaji": "setsumeishimasu"}, {"jp": "つきます", "en": "arrive", "romaji": "tsukimasu"}, {"jp": "とります", "en": "grow old", "romaji": "torimasu"}, {"jp": "かんがえます", "en": "think", "romaji": "kangaemasu"}, {"jp": "りゅうがくします", "en": "study abroad", "romaji": "ryuugakushimasu"}, {"jp": "がんばります", "en": "do one's best", "romaji": "ganbarimasu"}, {"jp": "あぶない", "en": "dangerous", "romaji": "abunai"}, {"jp": "いたい", "en": "painful", "romaji": "itai"}, {"jp": "ねむい", "en": "sleepy", "romaji": "nemui"}, {"jp": "つよい", "en": "strong", "romaji": "tsuyoi"}, {"jp": "よわい", "en": "weak", "romaji": "yowai"}, {"jp": "すごい", "en": "amazing", "romaji": "sugoi"}, {"jp": "たいせつな", "en": "important", "romaji": "taisetsuna"}, {"jp": "だいじょうぶ", "en": "all right", "romaji": "daijoubu"}, {"jp": "むりな", "en": "impossible", "romaji": "murina"}, {"jp": "ふべんな", "en": "inconvenient", "romaji": "fubenna"}, {"jp": "むだな", "en": "wasteful", "romaji": "mudana"}, {"jp": "までに", "en": "by (time)", "romaji": "madeni"}, {"jp": "いちど", "en": "once", "romaji": "ichido"}, {"jp": "いちども", "en": "never", "romaji": "ichidomo"}, {"jp": "だんだん", "en": "gradually", "romaji": "dandan"}, {"jp": "もうすぐ", "en": "soon", "romaji": "mousugu"}, {"jp": "なんかいも", "en": "many times", "romaji": "nankaimo"}, {"jp": "さいきん", "en": "recently", "romaji": "saikin"}, {"jp": "たぶん", "en": "probably", "romaji": "tabun"}, {"jp": "きっと", "en": "surely", "romaji": "kitto"}, {"jp": "ほんとうに", "en": "really", "romaji": "hontouni"}, {"jp": "じぶんで", "en": "by oneself", "romaji": "jibunde"}, {"jp": "ですから", "en": "therefore", "romaji": "desukara"}, {"jp": "しかし", "en": "but", "romaji": "shikashi"}, {"jp": "けど", "en": "but (informal)", "romaji": "kedo"}, {"jp": "ほかに", "en": "besides", "romaji": "hokani"}, {"jp": "どうしましたか", "en": "what's the matter", "romaji": "doushimashitaka"}, {"jp": "おだいじに", "en": "take care", "romaji": "odaijini"}, {"jp": "なかなか", "en": "not easily", "romaji": "nakanaka"}, {"jp": "ほんとう", "en": "really", "romaji": "hontou"}, {"jp": "ぜひ", "en": "by all means", "romaji": "zehi"}, {"jp": "ちょうしがよい", "en": "in good condition", "romaji": "choushigayoi"}, {"jp": "ちょうしがわるい", "en": "in bad condition", "romaji": "choushigawarui"}, {"jp": "からだによい", "en": "good for health", "romaji": "karadaniyoi"}, {"jp": "おかげさまで", "en": "thank you", "romaji": "okagesamade"}, {"jp": "かんぱい", "en": "cheers", "romaji": "kanpai"}, {"jp": "じつは", "en": "actually", "romaji": "jitsuha"}, {"jp": "うん", "en": "yes (informal)", "romaji": "un"}, {"jp": "ううん", "en": "no (informal)", "romaji": "uun"}, {"jp": "について", "en": "about/concerning", "romaji": "nitsuite"}, {"jp": "ごちそうさまでした", "en": "thanks for the meal", "romaji": "gochisousamadeshita"}, {"jp": "おせわになりました", "en": "thank you for everything", "romaji": "osewaninarimashita"}, {"jp": "どうぞおげんきで", "en": "best of luck", "romaji": "douzoogenkide"}, {"jp": "はらいます", "en": "pay", "romaji": "haraimasu"}, {"jp": "もっていきます", "en": "take (something)", "romaji": "motteikimasu"}, {"jp": "ぬぎます", "en": "take off (clothes)", "romaji": "nugimasu"}, {"jp": "わすれます", "en": "forget", "romaji": "wasuremasu"}, {"jp": "もってきます", "en": "bring (something)", "romaji": "mottekimasu"}, {"jp": "しんぱいします", "en": "worry", "romaji": "shinpaishimasu"}, {"jp": "ざんぎょうします", "en": "work overtime", "romaji": "zangyoushimasu"}, {"jp": "しゅっちょうします", "en": "business trip", "romaji": "shucchoushimasu"}, {"jp": "あらいます", "en": "wash", "romaji": "araimasu"}, {"jp": "うたいます", "en": "sing", "romaji": "utaimasu"}, {"jp": "ひきます", "en": "play (instrument)", "romaji": "hikimasu"}, {"jp": "かえます", "en": "change", "romaji": "kaemasu"}, {"jp": "できます", "en": "can/do", "romaji": "dekimasu"}, {"jp": "すてます", "en": "throw away", "romaji": "sutemasu"}, {"jp": "あつめます", "en": "collect", "romaji": "atsumemasu"}, {"jp": "うんてんします", "en": "drive", "romaji": "untenshimasu"}, {"jp": "よやくします", "en": "reserve", "romaji": "yoyakushimasu"}, {"jp": "けんがくします", "en": "visit (for study)", "romaji": "kengakushimasu"}, {"jp": "のぼります", "en": "climb", "romaji": "noborimasu"}, {"jp": "とまります", "en": "stay overnight", "romaji": "tomarimasu"}, {"jp": "なります", "en": "become", "romaji": "narimasu"}, {"jp": "そうじします", "en": "clean", "romaji": "soujishimasu"}, {"jp": "せんたくします", "en": "do laundry", "romaji": "sentakushimasu"}, {"jp": "れんしゅうします", "en": "practice", "romaji": "renshuushimasu"}, {"jp": "おもいます", "en": "think", "romaji": "omoimasu"}, {"jp": "いいます", "en": "say", "romaji": "iimasu"}, {"jp": "かちます", "en": "win", "romaji": "kachimasu"}, {"jp": "やくにたつ", "en": "be useful", "romaji": "yakunitatsu"}, {"jp": "まけます", "en": "lose", "romaji": "makemasu"}, {"jp": "たります", "en": "be enough", "romaji": "tarimasu"}, {"jp": "はきます", "en": "wear (shoes, socks)", "romaji": "hakimasu"}, {"jp": "かけます", "en": "put on (glasses)", "romaji": "kakemasu"}, {"jp": "うまれます", "en": "be born", "romaji": "umaremasu"}, {"jp": "ひきます", "en": "play (string instrument)", "romaji": "hikimasu"}, {"jp": "うごきます", "en": "move", "romaji": "ugokimasu"}, {"jp": "あるきます", "en": "walk", "romaji": "arukimasu"}, {"jp": "まわします", "en": "turn (something)", "romaji": "mawashimasu"}, {"jp": "さわります", "en": "touch", "romaji": "sawarimasu"}, {"jp": "わたります", "en": "cross", "romaji": "watarimasu"}, {"jp": "きをつけます", "en": "be careful", "romaji": "kiwotsukemasu"}, {"jp": "ひっこしします", "en": "move (residence)", "romaji": "hikkoshishimasu"}, {"jp": "つれていきます", "en": "take (someone)", "romaji": "tsureteikimasu"}, {"jp": "つれてきます", "en": "bring (someone)", "romaji": "tsuretekimasu"}, {"jp": "しょうかいします", "en": "introduce", "romaji": "shoukaishimasu"}, {"jp": "あんないします", "en": "guide", "romaji": "annaishimasu"}, {"jp": "せつめいします", "en": "explain", "romaji": "setsumeishimasu"}, {"jp": "つきます", "en": "arrive", "romaji": "tsukimasu"}, {"jp": "かんがえます", "en": "think/consider", "romaji": "kangaemasu"}, {"jp": "りゅうがくします", "en": "study abroad", "romaji": "ryuugakushimasu"}, {"jp": "がんばります", "en": "do one's best", "romaji": "ganbarimasu"}, {"jp": "あぶない", "en": "dangerous", "romaji": "abunai"}, {"jp": "いたい", "en": "painful", "romaji": "itai"}, {"jp": "ねむい", "en": "sleepy", "romaji": "nemui"}, {"jp": "つよい", "en": "strong", "romaji": "tsuyoi"}, {"jp": "よわい", "en": "weak", "romaji": "yowai"}, {"jp": "すごい", "en": "amazing", "romaji": "sugoi"}, {"jp": "たいせつな", "en": "important", "romaji": "taisetsuna"}, {"jp": "だいじょうぶ", "en": "all right", "romaji": "daijoubu"}, {"jp": "むりな", "en": "impossible", "romaji": "murina"}, {"jp": "ふべんな", "en": "inconvenient", "romaji": "fubenna"}, {"jp": "むだな", "en": "wasteful", "romaji": "mudana"}, {"jp": "までに", "en": "by (time)", "romaji": "madeni"}, {"jp": "いちど", "en": "once", "romaji": "ichido"}, {"jp": "いちども", "en": "never", "romaji": "ichidomo"}, {"jp": "もうすぐ", "en": "soon", "romaji": "mousugu"}, {"jp": "なんかいも", "en": "many times", "romaji": "nankaimo"}, {"jp": "さいきん", "en": "recently", "romaji": "saikin"}, {"jp": "たぶん", "en": "probably", "romaji": "tabun"}, {"jp": "ほんとうに", "en": "really", "romaji": "hontouni"}, {"jp": "じぶんで", "en": "by oneself", "romaji": "jibunde"}, {"jp": "ですから", "en": "therefore", "romaji": "desukara"}, {"jp": "しかし", "en": "but", "romaji": "shikashi"}, {"jp": "〜けど", "en": "but", "romaji": "~kedo"}, {"jp": "ほかに", "en": "besides", "romaji": "hokani"}, {"jp": "どうしましたか", "en": "what's wrong?", "romaji": "doushimashitaka"}, {"jp": "おだいじに", "en": "take care", "romaji": "odaijini"}, {"jp": "ほんとう", "en": "really", "romaji": "hontou"}, {"jp": "ぜひ", "en": "please (strongly)", "romaji": "zehi"}, {"jp": "ちょうしがよい", "en": "feeling well", "romaji": "choushigayoi"}, {"jp": "ちょうしがわるい", "en": "feeling unwell", "romaji": "choushigawarui"}, {"jp": "からだによい", "en": "good for health", "romaji": "karadaniyoi"}, {"jp": "おかげさまで", "en": "thanks to you", "romaji": "okagesamade"}, {"jp": "かんぱい", "en": "cheers", "romaji": "kanpai"}, {"jp": "じつは", "en": "actually", "romaji": "jitsuha"}, {"jp": "はい", "en": "yes", "romaji": "hai"}, {"jp": "いいえ", "en": "no", "romaji": "iie"}, {"jp": "スーパー", "en": "supermarket", "romaji": "su-pa-"}, {"jp": "タクシー", "en": "taxi", "romaji": "takushi-"}, {"jp": "ひと", "en": "person", "romaji": "hito"}, {"jp": "ひと", "en": "people", "romaji": "hito"}, {"jp": "うちわ", "en": "fan (Japanese)", "romaji": "uchiwa"}, {"jp": "ロビー", "en": "lobby", "romaji": "robi-"}, {"jp": "ゆうびん", "en": "mail", "romaji": "yuubin"}, {"jp": "だいがくいん", "en": "graduate school", "romaji": "daigakuin"}, {"jp": "ぼうし", "en": "hat", "romaji": "boushi"}, {"jp": "めがね", "en": "glasses", "romaji": "megane"}, {"jp": "アイスクリーム", "en": "ice cream", "romaji": "aisukuri-mu"}, {"jp": "サンドイッチ", "en": "sandwich", "romaji": "sandoicchi"}, {"jp": "カレーライス", "en": "curry and rice", "romaji": "kare-raisu"}, {"jp": "りんご", "en": "apple", "romaji": "ringo"}, {"jp": "みかん", "en": "orange", "romaji": "mikan"}, {"jp": "ビデオ", "en": "video", "romaji": "bideo"}, {"jp": "テープレコーダー", "en": "tape recorder", "romaji": "te-pureko-da-"}, {"jp": "ワープロ", "en": "word processor", "romaji": "wa-puro"}, {"jp": "パンチ", "en": "hole punch", "romaji": "panchi"}, {"jp": "パソコン", "en": "personal computer", "romaji": "pasokon"}, {"jp": "ホッチキス", "en": "stapler", "romaji": "hocchikisu"}, {"jp": "セロテープ", "en": "scotch tape", "romaji": "serote-pu"}, {"jp": "コンサート", "en": "concert", "romaji": "konsa-to"}, {"jp": "カラオケ", "en": "karaoke", "romaji": "karaoke"}, {"jp": "かぶき", "en": "kabuki", "romaji": "kabuki"}, {"jp": "クラシック", "en": "classical music", "romaji": "kurashikku"}, {"jp": "ジャズ", "en": "jazz", "romaji": "jazu"}, {"jp": "かんじ", "en": "kanji character", "romaji": "kanji"}, {"jp": "ひらがな", "en": "hiragana", "romaji": "hiragana"}, {"jp": "チケット", "en": "ticket", "romaji": "chiketto"}, {"jp": "じかん", "en": "time", "romaji": "jikan"}, {"jp": "ようじ", "en": "something to do/errand", "romaji": "youji"}, {"jp": "やくそく", "en": "appointment", "romaji": "yakusoku"}, {"jp": "ごしゅじん", "en": "husband (polite)", "romaji": "goshujin"}, {"jp": "しゅじん", "en": "my husband", "romaji": "shujin"}, {"jp": "おくさん", "en": "wife (polite)", "romaji": "okusan"}, {"jp": "おっと", "en": "my husband", "romaji": "otto"}, {"jp": "つま", "en": "my wife", "romaji": "tsuma"}, {"jp": "かない", "en": "my wife", "romaji": "kanai"}, {"jp": "こども", "en": "child", "romaji": "kodomo"}, {"jp": "おとこのこ", "en": "boy", "romaji": "otokonoko"}, {"jp": "おんなのこ", "en": "girl", "romaji": "onnanoko"}, {"jp": "おとこのひと", "en": "man", "romaji": "otokonohito"}, {"jp": "おんなのひと", "en": "woman", "romaji": "onnanohito"}, {"jp": "いぬ", "en": "dog", "romaji": "inu"}, {"jp": "ねこ", "en": "cat", "romaji": "neko"}, {"jp": "き", "en": "tree/wood", "romaji": "ki"}, {"jp": "もの", "en": "thing", "romaji": "mono"}, {"jp": "フィルム", "en": "film", "romaji": "fuぃrumu"}, {"jp": "でんち", "en": "battery", "romaji": "denchi"}, {"jp": "はこ", "en": "box", "romaji": "hako"}, {"jp": "スイッチ", "en": "switch", "romaji": "suicchi"}, {"jp": "れいぞうこ", "en": "refrigerator", "romaji": "reizouko"}, {"jp": "テーブル", "en": "table", "romaji": "te-buru"}, {"jp": "ベッド", "en": "bed", "romaji": "beddo"}, {"jp": "ドア", "en": "door", "romaji": "doa"}, {"jp": "まど", "en": "window", "romaji": "mado"}, {"jp": "ポスト", "en": "mailbox", "romaji": "posuto"}, {"jp": "ビル", "en": "building", "romaji": "biru"}, {"jp": "こうえん", "en": "park", "romaji": "kouen"}, {"jp": "きっさてん", "en": "coffee shop", "romaji": "kissaten"}, {"jp": "ほんや", "en": "bookstore", "romaji": "honya"}, {"jp": "みせ", "en": "store", "romaji": "mise"}, {"jp": "のりば", "en": "bus stop/station", "romaji": "noriba"}, {"jp": "おく", "en": "back", "romaji": "oku"}, {"jp": "けん", "en": "prefecture", "romaji": "ken"}, {"jp": "うえ", "en": "above/on", "romaji": "ue"}, {"jp": "した", "en": "below/under", "romaji": "shita"}, {"jp": "まえ", "en": "front/before", "romaji": "mae"}, {"jp": "うしろ", "en": "behind", "romaji": "ushiro"}, {"jp": "みぎ", "en": "right", "romaji": "migi"}, {"jp": "ひだり", "en": "left", "romaji": "hidari"}, {"jp": "なか", "en": "inside", "romaji": "naka"}, {"jp": "そと", "en": "outside", "romaji": "soto"}, {"jp": "となり", "en": "next door", "romaji": "tonari"}, {"jp": "ちかく", "en": "near", "romaji": "chikaku"}, {"jp": "あいだ", "en": "between", "romaji": "aida"}, {"jp": "いちばん", "en": "the most", "romaji": "ichiban"}, {"jp": "データ", "en": "data", "romaji": "de-ta"}, {"jp": "しりょう", "en": "materials", "romaji": "shiryou"}, {"jp": "カタログ", "en": "catalog", "romaji": "katarogu"}, {"jp": "じこくひょう", "en": "timetable", "romaji": "jikokuhyou"}, {"jp": "ふく", "en": "clothes", "romaji": "fuku"}, {"jp": "せいひん", "en": "products", "romaji": "seihin"}, {"jp": "ソフト", "en": "software", "romaji": "sofuto"}, {"jp": "せんもん", "en": "specialty", "romaji": "senmon"}, {"jp": "はいしゃ", "en": "dentist", "romaji": "haisha"}, {"jp": "とこや", "en": "barber", "romaji": "tokoya"}, {"jp": "プレイガイド", "en": "ticket agency", "romaji": "pureigaido"}, {"jp": "どくしん", "en": "unmarried", "romaji": "dokushin"}, {"jp": "こうこう", "en": "high school", "romaji": "koukou"}, {"jp": "からだ", "en": "body", "romaji": "karada"}, {"jp": "あたま", "en": "head", "romaji": "atama"}, {"jp": "かみ", "en": "hair", "romaji": "kami"}, {"jp": "かお", "en": "face", "romaji": "kao"}, {"jp": "め", "en": "eye", "romaji": "me"}, {"jp": "みみ", "en": "ear", "romaji": "mimi"}, {"jp": "くち", "en": "mouth", "romaji": "kuchi"}, {"jp": "は", "en": "tooth", "romaji": "ha"}, {"jp": "あし", "en": "leg/foot", "romaji": "ashi"}, {"jp": "サービス", "en": "service", "romaji": "sa-bisu"}, {"jp": "ジョギング", "en": "jogging", "romaji": "jogingu"}, {"jp": "シャワー", "en": "shower", "romaji": "shawa-"}, {"jp": "みどり", "en": "green", "romaji": "midori"}, {"jp": "てら", "en": "temple", "romaji": "tera"}, {"jp": "じんじゃ", "en": "shrine", "romaji": "jinja"}, {"jp": "りゅうがくせい", "en": "foreign student", "romaji": "ryuugakusei"}, {"jp": "おひきだし", "en": "withdrawal", "romaji": "ohikidashi"}, {"jp": "キャッシュカード", "en": "cash card", "romaji": "kyasshuka-do"}, {"jp": "あんしょうばんごう", "en": "PIN", "romaji": "anshoubangou"}, {"jp": "きんがく", "en": "amount of money", "romaji": "kingaku"}, {"jp": "かくにん", "en": "confirmation", "romaji": "kakunin"}, {"jp": "ボタン", "en": "button", "romaji": "botan"}, {"jp": "ベトナム", "en": "Vietnam", "romaji": "betonamu"}, {"jp": "アジア", "en": "Asia", "romaji": "ajia"}, {"jp": "もんだい", "en": "problem/question", "romaji": "mondai"}, {"jp": "こたえ", "en": "answer", "romaji": "kotae"}, {"jp": "きんえん", "en": "no smoking", "romaji": "kinen"}, {"jp": "ほけんしょう", "en": "insurance card", "romaji": "hokenshou"}, {"jp": "かぜ", "en": "cold", "romaji": "kaze"}, {"jp": "ねつ", "en": "fever", "romaji": "netsu"}, {"jp": "びょうき", "en": "illness", "romaji": "byouki"}, {"jp": "くすり", "en": "medicine", "romaji": "kusuri"}, {"jp": "ふろ", "en": "bath", "romaji": "furo"}, {"jp": "うわぎ", "en": "jacket", "romaji": "uwagi"}, {"jp": "したぎ", "en": "underwear", "romaji": "shitagi"}, {"jp": "のど", "en": "throat", "romaji": "nodo"}, {"jp": "ピアノ", "en": "piano", "romaji": "piano"}, {"jp": "メートル", "en": "meter", "romaji": "me-toru"}, {"jp": "げんきん", "en": "cash", "romaji": "genkin"}, {"jp": "しゅみ", "en": "hobby", "romaji": "shumi"}, {"jp": "にっき", "en": "diary", "romaji": "nikki"}, {"jp": "いのり", "en": "prayer", "romaji": "inori"}, {"jp": "しゃちょう", "en": "company president", "romaji": "shachou"}, {"jp": "ぶちょう", "en": "department chief", "romaji": "buchou"}, {"jp": "かちょう", "en": "section chief", "romaji": "kachou"}, {"jp": "どうぶつ", "en": "animal", "romaji": "doubutsu"}, {"jp": "うま", "en": "horse", "romaji": "uma"}, {"jp": "へび", "en": "snake", "romaji": "hebi"}, {"jp": "ちょうし", "en": "condition", "romaji": "choushi"}, {"jp": "ゴルフ", "en": "golf", "romaji": "gorufu"}, {"jp": "すもう", "en": "sumo", "romaji": "sumou"}, {"jp": "パチンコ", "en": "pachinko", "romaji": "pachinko"}, {"jp": "ひ", "en": "day", "romaji": "hi"}, {"jp": "ケーキ", "en": "cake", "romaji": "ke-ki"}, {"jp": "サラリーマン", "en": "office worker", "romaji": "sarari-man"}, {"jp": "ことば", "en": "word", "romaji": "kotoba"}, {"jp": "ぶっか", "en": "prices", "romaji": "bukka"}, {"jp": "きもの", "en": "kimono", "romaji": "kimono"}, {"jp": "ビザ", "en": "visa", "romaji": "biza"}, {"jp": "はじめ", "en": "beginning", "romaji": "hajime"}, {"jp": "おわり", "en": "end", "romaji": "owari"}, {"jp": "おなじ", "en": "the same", "romaji": "onaji"}, {"jp": "しゅしょう", "en": "prime minister", "romaji": "shushou"}, {"jp": "だいとうりょう", "en": "president", "romaji": "daitouryou"}, {"jp": "せいじ", "en": "politics", "romaji": "seiji"}, {"jp": "ニュース", "en": "news", "romaji": "nyu-su"}, {"jp": "スピーチ", "en": "speech", "romaji": "supi-chi"}, {"jp": "しあい", "en": "game/match", "romaji": "shiai"}, {"jp": "アルバイト", "en": "part-time job", "romaji": "arubaito"}, {"jp": "いけん", "en": "opinion", "romaji": "iken"}, {"jp": "はなし", "en": "story/talk", "romaji": "hanashi"}, {"jp": "ユーモア", "en": "humor", "romaji": "yu-moa"}, {"jp": "デザイン", "en": "design", "romaji": "dezain"}, {"jp": "こうつう", "en": "traffic", "romaji": "koutsuu"}, {"jp": "ラッシュ", "en": "rush hour", "romaji": "rasshu"}, {"jp": "コート", "en": "coat", "romaji": "ko-to"}, {"jp": "スーツ", "en": "suit", "romaji": "su-tsu"}, {"jp": "セーター", "en": "sweater", "romaji": "se-ta-"}, {"jp": "めがね", "en": "glasses", "romaji": "megane"}, {"jp": "ぼうし", "en": "hat", "romaji": "boushi"}, {"jp": "やちん", "en": "rent", "romaji": "yachin"}, {"jp": "わしつ", "en": "Japanese room", "romaji": "washitsu"}, {"jp": "おしいれ", "en": "Japanese closet", "romaji": "oshiire"}, {"jp": "ふとん", "en": "futon", "romaji": "futon"}, {"jp": "アパート", "en": "apartment", "romaji": "apa-to"}, {"jp": "でんきや", "en": "electrician", "romaji": "denkiya"}, {"jp": "サイズ", "en": "size", "romaji": "saizu"}, {"jp": "おと", "en": "sound", "romaji": "oto"}, {"jp": "きかい", "en": "machine", "romaji": "kikai"}, {"jp": "つまみ", "en": "knob", "romaji": "tsumami"}, {"jp": "こしょう", "en": "malfunction", "romaji": "koshou"}, {"jp": "みち", "en": "road", "romaji": "michi"}, {"jp": "こうさてん", "en": "intersection", "romaji": "kousaten"}, {"jp": "しんごう", "en": "traffic light", "romaji": "shingou"}, {"jp": "かど", "en": "corner", "romaji": "kado"}, {"jp": "はし", "en": "bridge", "romaji": "hashi"}, {"jp": "しょうがつ", "en": "New Year", "romaji": "shougatsu"}, {"jp": "ちゅうしゃじょう", "en": "parking lot", "romaji": "chuushajou"}, {"jp": "たてもの", "en": "building", "romaji": "tatemono"}, {"jp": "がいこくじんとうろくしょう", "en": "alien registration card", "romaji": "gaikokujintourokushou"}, {"jp": "おじいさん", "en": "grandfather", "romaji": "ojiisan"}, {"jp": "ろうじん", "en": "old man", "romaji": "roujin"}, {"jp": "おばあさん", "en": "grandmother", "romaji": "obaasan"}, {"jp": "おばあさん", "en": "old woman", "romaji": "obaasan"}, {"jp": "じゅんび", "en": "preparation", "romaji": "junbi"}, {"jp": "いみ", "en": "meaning", "romaji": "imi"}, {"jp": "かし", "en": "sweets", "romaji": "kashi"}, {"jp": "ぜんぶ", "en": "all", "romaji": "zenbu"}, {"jp": "べんとう", "en": "box lunch", "romaji": "bentou"}, {"jp": "ははのひ", "en": "Mother's Day", "romaji": "hahanohi"}, {"jp": "いなか", "en": "countryside", "romaji": "inaka"}, {"jp": "たいしかん", "en": "embassy", "romaji": "taishikan"}, {"jp": "グループ", "en": "group", "romaji": "guru-pu"}, {"jp": "チャンス", "en": "chance", "romaji": "chansu"}, {"jp": "おく", "en": "hundred million", "romaji": "oku"}, {"jp": "てんきん", "en": "transfer", "romaji": "tenkin"}, {"jp": "こと", "en": "matter/thing", "romaji": "koto"}, {"jp": "ぼく", "en": "I (male)", "romaji": "boku"}, {"jp": "きみ", "en": "you (informal)", "romaji": "kimi"}, {"jp": "くん", "en": "Mr. (informal)", "romaji": "kun"}, {"jp": "こっち", "en": "this way (informal)", "romaji": "kocchi"}, {"jp": "そっち", "en": "that way (informal)", "romaji": "socchi"}, {"jp": "あっち", "en": "that way over there (informal)", "romaji": "acchi"}, {"jp": "はらいます", "en": "pay", "romaji": "haraimasu"}, {"jp": "もっていきます", "en": "take (something)", "romaji": "motteikimasu"}, {"jp": "ぬぎます", "en": "take off", "romaji": "nugimasu"}, {"jp": "なくします", "en": "lose", "romaji": "nakushimasu"}, {"jp": "だします", "en": "hand in", "romaji": "dashimasu"}, {"jp": "かえします", "en": "return", "romaji": "kaeshimasu"}, {"jp": "のみます", "en": "take (medicine)", "romaji": "nomimasu"}, {"jp": "はいります", "en": "take a bath", "romaji": "hairimasu"}, {"jp": "おぼえます", "en": "memorize", "romaji": "oboemasu"}, {"jp": "でかけます", "en": "go out", "romaji": "dekakemasu"}, {"jp": "わすれます", "en": "forget", "romaji": "wasuremasu"}, {"jp": "もってきます", "en": "bring", "romaji": "mottekimasu"}, {"jp": "しんぱいします", "en": "worry", "romaji": "shinpaishimasu"}, {"jp": "ざんぎょうします", "en": "work overtime", "romaji": "zangyoushimasu"}, {"jp": "しゅっちょうします", "en": "go on business trip", "romaji": "shucchoushimasu"}, {"jp": "あらいます", "en": "wash", "romaji": "araimasu"}, {"jp": "うたいます", "en": "sing", "romaji": "utaimasu"}, {"jp": "ひきます", "en": "play (instrument)", "romaji": "hikimasu"}, {"jp": "かえます", "en": "exchange", "romaji": "kaemasu"}, {"jp": "すてます", "en": "throw away", "romaji": "sutemasu"}, {"jp": "あつめます", "en": "collect", "romaji": "atsumemasu"}, {"jp": "うんてんします", "en": "drive", "romaji": "untenshimasu"}, {"jp": "よやくします", "en": "reserve", "romaji": "yoyakushimasu"}, {"jp": "けんがくします", "en": "visit for study", "romaji": "kengakushimasu"}, {"jp": "のぼります", "en": "climb", "romaji": "noborimasu"}, {"jp": "とまります", "en": "stay", "romaji": "tomarimasu"}, {"jp": "なります", "en": "become", "romaji": "narimasu"}, {"jp": "そうじします", "en": "clean", "romaji": "soujishimasu"}, {"jp": "せんたくします", "en": "do laundry", "romaji": "sentakushimasu"}, {"jp": "れんしゅうします", "en": "practice", "romaji": "renshuushimasu"}, {"jp": "おもいます", "en": "think", "romaji": "omoimasu"}, {"jp": "いいます", "en": "say", "romaji": "iimasu"}, {"jp": "かちます", "en": "win", "romaji": "kachimasu"}, {"jp": "やくにたつ", "en": "be useful", "romaji": "yakunitatsu"}, {"jp": "さいきんのはなし", "en": "have a festival", "romaji": "saikinnohanashi"}, {"jp": "まけます", "en": "lose", "romaji": "makemasu"}, {"jp": "たります", "en": "be enough", "romaji": "tarimasu"}, {"jp": "はきます", "en": "put on (shoes)", "romaji": "hakimasu"}, {"jp": "かぶります", "en": "put on (hat)", "romaji": "kaburimasu"}, {"jp": "きます", "en": "put on (shirt)", "romaji": "kimasu"}, {"jp": "かけます", "en": "put on (glasses)", "romaji": "kakemasu"}, {"jp": "うまれます", "en": "be born", "romaji": "umaremasu"}, {"jp": "ききます", "en": "ask", "romaji": "kikimasu"}, {"jp": "ひきます", "en": "pull", "romaji": "hikimasu"}, {"jp": "うごきます", "en": "move", "romaji": "ugokimasu"}, {"jp": "あるきます", "en": "walk", "romaji": "arukimasu"}, {"jp": "まわします", "en": "turn", "romaji": "mawashimasu"}, {"jp": "さわります", "en": "touch", "romaji": "sawarimasu"}, {"jp": "わたります", "en": "cross", "romaji": "watarimasu"}, {"jp": "かえます", "en": "change", "romaji": "kaemasu"}, {"jp": "きをつけます", "en": "pay attention", "romaji": "kiwotsukemasu"}, {"jp": "おつりがでます", "en": "get change", "romaji": "otsurigademasu"}, {"jp": "ひっこしします", "en": "move house", "romaji": "hikkoshishimasu"}, {"jp": "つれていきます", "en": "take (someone)", "romaji": "tsureteikimasu"}, {"jp": "おくります", "en": "escort", "romaji": "okurimasu"}, {"jp": "くれます", "en": "give me", "romaji": "kuremasu"}, {"jp": "いれます", "en": "make (coffee)", "romaji": "iremasu"}, {"jp": "つれてきます", "en": "bring (someone)", "romaji": "tsuretekimasu"}, {"jp": "しょうかいします", "en": "introduce", "romaji": "shoukaishimasu"}, {"jp": "あんないします", "en": "show around", "romaji": "annaishimasu"}, {"jp": "せつめいします", "en": "explain", "romaji": "setsumeishimasu"}, {"jp": "つきます", "en": "arrive", "romaji": "tsukimasu"}, {"jp": "とります", "en": "grow old", "romaji": "torimasu"}, {"jp": "かんがえます", "en": "think", "romaji": "kangaemasu"}, {"jp": "りゅうがくします", "en": "study abroad", "romaji": "ryuugakushimasu"}, {"jp": "がんばります", "en": "do one's best", "romaji": "ganbarimasu"}, {"jp": "あぶない", "en": "dangerous", "romaji": "abunai"}, {"jp": "いたい", "en": "painful", "romaji": "itai"}, {"jp": "ねむい", "en": "sleepy", "romaji": "nemui"}, {"jp": "つよい", "en": "strong", "romaji": "tsuyoi"}, {"jp": "よわい", "en": "weak", "romaji": "yowai"}, {"jp": "すごい", "en": "amazing", "romaji": "sugoi"}, {"jp": "たいせつな", "en": "important", "romaji": "taisetsuna"}, {"jp": "だいじょうぶ", "en": "all right", "romaji": "daijoubu"}, {"jp": "むりな", "en": "impossible", "romaji": "murina"}, {"jp": "ふべんな", "en": "inconvenient", "romaji": "fubenna"}, {"jp": "むだな", "en": "wasteful", "romaji": "mudana"}, {"jp": "までに", "en": "by (time)", "romaji": "madeni"}, {"jp": "いちど", "en": "once", "romaji": "ichido"}, {"jp": "いちども", "en": "never", "romaji": "ichidomo"}, {"jp": "だんだん", "en": "gradually", "romaji": "dandan"}, {"jp": "もうすぐ", "en": "soon", "romaji": "mousugu"}, {"jp": "なんかいも", "en": "many times", "romaji": "nankaimo"}, {"jp": "さいきん", "en": "recently", "romaji": "saikin"}, {"jp": "たぶん", "en": "probably", "romaji": "tabun"}, {"jp": "きっと", "en": "surely", "romaji": "kitto"}, {"jp": "ほんとうに", "en": "really", "romaji": "hontouni"}, {"jp": "じぶんで", "en": "by oneself", "romaji": "jibunde"}, {"jp": "ですから", "en": "therefore", "romaji": "desukara"}, {"jp": "しかし", "en": "but", "romaji": "shikashi"}, {"jp": "けど", "en": "but (informal)", "romaji": "kedo"}, {"jp": "ほかに", "en": "besides", "romaji": "hokani"}, {"jp": "どうしましたか", "en": "what's the matter", "romaji": "doushimashitaka"}, {"jp": "おだいじに", "en": "take care", "romaji": "odaijini"}, {"jp": "なかなか", "en": "not easily", "romaji": "nakanaka"}, {"jp": "ほんとう", "en": "really", "romaji": "hontou"}, {"jp": "ぜひ", "en": "by all means", "romaji": "zehi"}, {"jp": "ちょうしがよい", "en": "in good condition", "romaji": "choushigayoi"}, {"jp": "ちょうしがわるい", "en": "in bad condition", "romaji": "choushigawarui"}, {"jp": "からだによい", "en": "good for health", "romaji": "karadaniyoi"}, {"jp": "おかげさまで", "en": "thank you", "romaji": "okagesamade"}, {"jp": "かんぱい", "en": "cheers", "romaji": "kanpai"}, {"jp": "じつは", "en": "actually", "romaji": "jitsuha"}, {"jp": "うん", "en": "yes (informal)", "romaji": "un"}, {"jp": "ううん", "en": "no (informal)", "romaji": "uun"}, {"jp": "について", "en": "about/concerning", "romaji": "nitsuite"}, {"jp": "ごちそうさまでした", "en": "thanks for the meal", "romaji": "gochisousamadeshita"}, {"jp": "おせわになりました", "en": "thank you for everything", "romaji": "osewaninarimashita"}, {"jp": "どうぞおげんきで", "en": "best of luck", "romaji": "douzoogenkide"}];
+const PART_LABEL = "Vocab";
+
+let fcData=[], fcIndex=0, fcAnswerShown=false;
+let examData=[], examIndex=0, examScore=0, examResults=[];
+
+function show(id){
+  ['mainMenu','partSelection','flashcardSection','examSection','resultSection']
+    .forEach(s=>document.getElementById(s).classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+}
+function backToMenu(){show('mainMenu');}
+
+/* ══════════════════════════════
+   FLASHCARD
+══════════════════════════════ */
+function startFlashcard(){
+  fcData=[...DATA].sort(()=>Math.random()-0.5);
+  fcIndex=0;
+  show('flashcardSection');
+  renderCard();
+}
+function renderCard(){
+  fcAnswerShown=false;
+  document.getElementById('fcCounter').innerText=(fcIndex+1)+' / '+fcData.length;
+  document.getElementById('fcJp').innerText=fcData[fcIndex].jp;
+  // Hide answer (romaji also hidden until revealed)
+  const enEl=document.getElementById('fcEn');
+  const roEl=document.getElementById('fcRomaji');
+  const divEl=document.getElementById('fcDivider');
+  enEl.classList.add('hidden-ans');
+  enEl.innerText='';
+  roEl.classList.add('hidden-ans');
+  roEl.innerText='';
+  divEl.classList.remove('revealed');
+}
+function showAnswer(){
+  if(fcAnswerShown) return;
+  fcAnswerShown=true;
+  const enEl=document.getElementById('fcEn');
+  const roEl=document.getElementById('fcRomaji');
+  const divEl=document.getElementById('fcDivider');
+  roEl.innerText=fcData[fcIndex].romaji||'';
+  roEl.classList.remove('hidden-ans');
+  enEl.innerText=fcData[fcIndex].en;
+  enEl.classList.remove('hidden-ans');
+  divEl.classList.add('revealed');
+}
+function nextCard(){
+  fcIndex=(fcIndex+1)%fcData.length;
+  renderCard();
+}
+function prevCard(){
+  fcIndex=(fcIndex-1+fcData.length)%fcData.length;
+  renderCard();
+}
+
+/* ══════════════════════════════
+   PART SELECTION
+══════════════════════════════ */
+function showPartSelection(){
+  show('partSelection');
+  const grid=document.getElementById('partGrid');
+  grid.innerHTML='';
+  const totalParts=Math.ceil(DATA.length/20);
+  for(let i=0;i<totalParts;i++){
+    const start=i*20+1;
+    const end=Math.min((i+1)*20,DATA.length);
+    const btn=document.createElement('button');
+    btn.className='part-btn';
+    btn.innerHTML=PART_LABEL+' '+(i+1)+'<br><small style="font-weight:400;opacity:0.55;">('+start+'–'+end+')</small>';
+    btn.onclick=(function(idx){return function(){startExam(idx);};})(i);
+    grid.appendChild(btn);
+  }
+}
+
+/* ══════════════════════════════
+   EXAM
+══════════════════════════════ */
+function startExam(partIndex){
+  const start=partIndex*20;
+  examData=DATA.slice(start,start+20).sort(()=>Math.random()-0.5);
+  examIndex=0;examScore=0;examResults=[];
+  show('examSection');
+  renderQuestion();
+}
+function renderQuestion(){
+  if(examIndex>=examData.length){showResults();return;}
+  const pct=Math.round((examIndex/examData.length)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('examCounter').innerText='Question '+(examIndex+1)+' of '+examData.length;
+  document.getElementById('examJp').innerText=examData[examIndex].jp;
+  // No hint in exam — user must type the English meaning
+  document.getElementById('examEnHint').innerText='';
+  const inp=document.getElementById('answerInput');
+  inp.value='';inp.focus();
+}
+function submitAnswer(){
+  const inp=document.getElementById('answerInput');
+  const user=inp.value.trim().toLowerCase();
+  const correctRaw=(examData[examIndex].en||'');
+  // Accept any slash- or comma-separated answer variant
+  const variants=correctRaw.split(/[\/,]/).map(s=>s.trim().toLowerCase()).filter(Boolean);
+  const ok=variants.some(v=>v===user);
+  if(ok)examScore++;
+  examResults.push({jp:examData[examIndex].jp,romaji:examData[examIndex].romaji||'',correct:examData[examIndex].en,user:inp.value.trim(),ok});
+  examIndex++;
+  renderQuestion();
+}
+function showResults(){
+  show('resultSection');
+  document.getElementById('progressFill').style.width='100%';
+  const pct=Math.round((examScore/examResults.length)*100);
+  document.getElementById('resultsScore').innerText=examScore+' / '+examResults.length;
+  const msg=pct>=80?'Excellent! 🎉':pct>=60?'Good work! 👍':'Keep practicing! 💪';
+  document.getElementById('resultsLabel').innerText='Score: '+pct+'% — '+msg;
+  let html='';
+  examResults.forEach(function(r){
+    if(r.ok){
+      html+='<div class="result-item">'
+        +'<span class="r-icon" style="color:#4ade80;">✔</span>'
+        +'<div><div class="r-jp">'+r.jp+(r.romaji?' <span style="font-family:DM Sans,sans-serif;font-size:14px;font-weight:400;color:rgba(232,234,240,0.45);font-style:italic;">('+r.romaji+')</span>':'')+'</div>'
+        +'<div class="r-en r-gold">'+r.correct+'</div></div>'
+        +'</div>';
+    }else{
+      html+='<div class="result-item">'
+        +'<span class="r-icon" style="color:#ff6b6b;">✘</span>'
+        +'<div><div class="r-jp">'+r.jp+(r.romaji?' <span style="font-family:DM Sans,sans-serif;font-size:14px;font-weight:400;color:rgba(232,234,240,0.45);font-style:italic;">('+r.romaji+')</span>':'')+'</div>'
+        +'<div class="r-en r-gold">'+r.correct+'</div>'
+        +'<div class="r-user">Your answer: &ldquo;'+(r.user||'(blank)')+'&rdquo;</div></div>'
+        +'</div>';
+    }
+  });
+  document.getElementById('resultsList').innerHTML=html;
+}
+document.getElementById('answerInput').addEventListener('keypress',function(e){if(e.key==='Enter')submitAnswer();});
+</script>
+</body>
+</html>
