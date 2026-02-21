@@ -1,0 +1,226 @@
+いる,to exist/to be (animate)
+ある,to exist/to be (inanimate)
+する,to do
+なる,to become
+いく,to go
+くる,to come
+いく,to go
+みる,to see/to watch
+きく,to listen/to hear/to ask
+のむ,to drink
+たべる,to eat
+あるく,to walk
+はなす,to speak/to talk
+かく,to write
+よむ,to read
+かう,to buy
+うる,to sell
+わかる,to understand
+しる,to know
+おぼえる,to remember
+わすれる,to forget
+おもう,to think
+かんがえる,to think/to consider
+しらべる,to investigate/to check
+さがす,to search/to look for
+まつ,to wait
+さそう,to invite
+たずねる,to ask
+おしえる,to teach
+ならう,to learn
+けいけんする,to experience
+すむ,to live/to dwell
+たつ,to stand
+すわる,to sit
+ねる,to sleep
+おきる,to wake up
+あきる,to get tired of
+やめる,to stop/to quit
+続ける,to continue
+始める,to begin
+終わる,to end/to finish
+変わる,to change
+気がつく,to notice
+期待する,to expect
+注意する,to be careful
+決める,to decide
+約束する,to promise
+準備する,to prepare
+練習する,to practice
+もつ,to hold
+とる,to take
+あそぶ,to play
+しぬ,to die
+およぐ,to swim
+かす,to lend
+よやくする,to reserve
+もってくる,to bring
+はたらく,to work
+やすむ,to rest
+きゅうけいする,to take a break
+おわる,to finish
+おきる,to wake up
+べんきょうする,to study
+かえる,to return
+のむ,to drink
+たばこをすう,to smoke
+ききます,to listen/to hear
+みせる,to show
+しゃしんをとる,to take a photo
+ともだちにあう,to meet a friend
+たべる,to eat
+みる,to see/to watch
+する,to do
+しゅくだいをする,to do homework
+テニスをする,to play tennis
+サッカーをする,to play soccer
+はなみをする,to go flower viewing
+かみをきる,to cut paper
+おくる,to send
+もらう,to receive
+ならう,to learn
+あげる,to give
+かりる,to borrow
+おしえる,to teach
+でんわをかける,to make a phone call
+しごとをする,to work
+わかる,to understand
+ある,to have (possession)
+やきゅうをする,to play baseball
+ダンスをする,to dance
+ある,to exist
+かかる,to take (time/money)
+こどもがいる,to have children
+にほんにいる,to be in Japan
+パーティーをする,to have a party
+あそぶ,to play
+およぐ,to swim
+むかえる,to pick up
+つかれる,to get tired
+けっこんする,to get married
+かいものする,to go shopping
+しょくじする,to eat/to dine
+こうえんをさんぽする,to take a walk in the park
+つりをする,to go fishing
+スキーをする,to ski
+かいぎをする,to have a meeting
+とうろくをする,to register
+けす,to turn off
+たつ,to stand
+つかう,to use
+すわる,to sit
+いそぐ,to hurry
+まつ,to wait
+てがみをだす,to send a letter
+もつ,to hold/to carry
+きっさてんにはいる,to enter a cafe
+てつだう,to help
+タクシーをよぶ,to call a taxi
+はなす,to speak
+あめがふる,to rain
+でんきをけす,to turn off the light
+あける,to open
+しめる,to close
+きっさてんをでる,to leave a cafe
+とめる,to stop
+みせる,to show
+じゅうしょをおしえる,to tell one's address
+コピーする,to copy
+おく,to place
+つくる,to make
+うる,to sell
+しる,to know
+すむ,to live
+おもいだす,to remember
+けんきゅうする,to research
+でんしゃにのる,to take a train
+おかねをだす,to withdraw money
+だいがくにはいる,to enter university
+ボタンをおす,to push a button
+おかねをおろす,to withdraw money
+でんしゃをおりる,to get off a train
+のりかえる,to transfer
+あびる,to take a bath
+おかねをいれる,to deposit money
+だいがくをでる,to graduate
+かいぎをはじめる,to start a meeting
+ジョギングをする,to jog
+けんがくする,to visit
+でんわする,to call/to telephone
+なくす,to lose
+はらう,to pay
+かえす,to return
+ぬぐ,to take off (clothes)
+もっていく,to take along
+くすりをのむ,to take medicine
+おふろにはいる,to take a bath
+おぼえる,to remember
+わすれる,to forget
+でかける,to go out
+もってくる,to bring
+しんぱいする,to worry
+ざんぎょうする,to work overtime
+しゅっちょうする,to go on a business trip
+てをあらう,to wash hands
+ひく,to play (instrument)
+うたう,to sing
+できる,to be able to do
+あつめる,to collect
+すてる,to throw away
+かえる,to exchange
+うんてんする,to drive
+よやくする,to reserve
+おいのりをする,to pray
+やまにのぼる,to climb a mountain
+ホテルにとまる,to stay at a hotel
+なる,to become
+そうじする,to clean
+せんたくする,to do laundry
+れんしゅうする,to practice
+ゴルフをする,to play golf
+パチンコをする,to play pachinko
+ダイエットをする,to diet
+いる,to need
+しらべる,to investigate
+しゅうりする,to repair
+おもう,to think
+いけんをいう,to express an opinion
+かつ,to win
+おまつりがある,to have a festival
+うごく,to move
+やくにたつ,to be useful
+まける,to lose
+かいしゃをやめる,to quit a company
+くるまにきをつける,to be careful of cars
+スピーチをする,to give a speech
+アルバイトをする,to work part-time
+りゅうがくする,to study abroad
+くつをはく,to put on shoes
+ぼうしをかぶる,to put on a hat
+シャツをきる,to put on a shirt
+めがねをかける,to put on glasses
+うまれる,to be born
+ネクタイをする,to wear a necktie
+せんせいにきく,to ask the teacher
+つまみをまわす,to turn a dial
+ひく,to pull
+ドアにさわる,to touch a door
+みちをあるく,to walk on a road
+はしをわたる,to cross a bridge
+みぎへまがる,to turn right
+サイズをかえる,to change size
+おつりがでる,to get change
+こしょうする,to break down
+つれていく,to take (someone) along
+ひとをおくる,to send (someone)
+なおす,to fix
+つれてくる,to bring (someone)
+しょうかいする,to introduce
+あんないする,to guide
+せつめいする,to explain
+じゅんびする,to prepare
+つく,to arrive
+とる,to take
+がんばる,to do one's best
+かんがえる,to think
+たりる,to be sufficient
