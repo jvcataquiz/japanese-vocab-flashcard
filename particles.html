@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Jv Cataquiz's Particles - JLPT N5</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.22);
+  --text: #e8eaf0;
+  --muted: rgba(232,234,240,0.45);
+  --gold: #f0c060;
+  --accent: #f97316;
+  --accent2: rgba(249,115,22,0.15);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;position:relative;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px;z-index:0;pointer-events:none;}
+.bg-glow{position:fixed;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,0.1) 0%,transparent 70%);top:-160px;left:50%;transform:translateX(-50%);z-index:0;pointer-events:none;animation:bgpulse 6s ease-in-out infinite;}
+.bg-glow-2{position:fixed;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(240,192,96,0.07) 0%,transparent 70%);bottom:-90px;right:-90px;z-index:0;pointer-events:none;animation:bgpulse 8s ease-in-out infinite reverse;}
+@keyframes bgpulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+/* ─── TOP / BOTTOM BARS ─────────────────────────────────────────────────── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.topbar-brand{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:0.05em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.topbar-tag{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);padding:4px 14px;border-radius:20px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;background:var(--surface);border:1px solid var(--border);padding:5px 14px;border-radius:20px;letter-spacing:0.05em;transition:color .2s,border-color .2s,background .2s;}
+.back-btn:hover{color:var(--text);border-color:var(--border-hover);background:var(--surface-hover);}
+.bottombar{position:fixed;bottom:0;left:0;right:0;z-index:100;text-align:center;padding:12px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);font-size:12px;color:var(--muted);letter-spacing:0.05em;}
+
+/* ─── MAIN LAYOUT ───────────────────────────────────────────────────────── */
+.main{position:relative;z-index:1;width:100%;max-width:900px;padding:100px 28px 72px;display:flex;flex-direction:column;align-items:center;}
+
+/* ─── PAGE HERO ─────────────────────────────────────────────────────────── */
+.page-hero{width:100%;text-align:center;margin-bottom:40px;animation:fadeUp 0.7s ease both;}
+.page-char{font-family:'Shippori Mincho',serif;font-size:64px;font-weight:800;line-height:1;margin-bottom:8px;color:var(--accent);}
+.page-title{font-size:clamp(22px,5vw,32px);font-weight:600;letter-spacing:-0.01em;margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--muted);font-weight:300;}
+
+/* ─── MODE GRID ─────────────────────────────────────────────────────────── */
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;margin-top:8px;animation:fadeUp 0.7s ease 0.1s both;}
+.mode-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 24px;text-align:left;cursor:pointer;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .3s,background .3s;display:flex;flex-direction:column;gap:8px;}
+.mode-card:hover{transform:translateY(-5px);border-color:var(--border-hover);background:var(--surface-hover);box-shadow:0 20px 50px rgba(249,115,22,0.12);}
+.mode-icon{font-size:32px;margin-bottom:4px;}
+.mode-label{font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
+.mode-name{font-size:20px;font-weight:600;}
+.mode-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.5;}
+
+/* ─── SECTION BOX ───────────────────────────────────────────────────────── */
+.section-box{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;animation:fadeUp 0.6s ease both;}
+.section-title{font-size:18px;font-weight:600;margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.cancel-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 22px;border-radius:10px;font-size:14px;cursor:pointer;transition:color .2s,border-color .2s;}
+.cancel-btn:hover{color:var(--text);border-color:var(--border-hover);}
+
+/* ─── PARTICLE BROWSER (list view for choosing particle) ───────────────── */
+.particle-browse-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:12px;margin-bottom:24px;}
+.p-browse-btn{padding:16px 10px;border-radius:14px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:transform .2s,border-color .2s,background .2s;text-align:center;display:flex;flex-direction:column;gap:4px;}
+.p-browse-btn:hover{transform:translateY(-3px);background:var(--surface-hover);border-color:rgba(249,115,22,0.45);box-shadow:0 6px 24px rgba(249,115,22,0.12);}
+.p-browse-particle{font-family:'Shippori Mincho',serif;font-size:26px;font-weight:800;color:var(--accent);}
+.p-browse-name{font-size:10px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);}
+.p-browse-hint{font-size:11px;color:var(--muted);font-weight:300;}
+
+/* ─── PARTICLE FLASHCARD ────────────────────────────────────────────────── */
+.fc-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+
+/* TOP card: particle + name + short meaning */
+.fc-top{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px 32px 28px;text-align:center;margin-bottom:14px;position:relative;overflow:hidden;}
+.fc-top::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),#fbbf24);}
+.fc-counter-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;}
+.fc-counter{font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;}
+.fc-nav-pills{display:flex;gap:6px;}
+.fc-pill{padding:4px 12px;border-radius:20px;font-size:11px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--muted);transition:all .2s;}
+.fc-pill:hover{border-color:var(--accent);color:var(--accent);background:var(--accent2);}
+.fc-particle-big{font-family:'Shippori Mincho',serif;font-size:clamp(60px,14vw,100px);font-weight:800;line-height:1;color:var(--accent);margin-bottom:10px;text-shadow:0 0 60px rgba(249,115,22,0.2);}
+.fc-particle-name{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.fc-divider{width:50px;height:1px;background:var(--border);margin:0 auto 16px;transition:width .4s;}
+.fc-divider.revealed{width:100px;background:rgba(249,115,22,0.3);}
+
+/* answer section */
+.fc-answer-block{transition:opacity .4s,transform .4s;}
+.fc-answer-block.hidden-ans{opacity:0;transform:translateY(10px);pointer-events:none;}
+.fc-meaning-en{font-size:clamp(18px,4vw,26px);font-weight:600;color:var(--gold);margin-bottom:6px;}
+.fc-meaning-jp{font-family:'Shippori Mincho',serif;font-size:18px;color:var(--text);margin-bottom:4px;opacity:.7;}
+.fc-meaning-romaji{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:20px;}
+
+/* explanation box */
+.fc-explanation{background:rgba(249,115,22,0.06);border:1px solid rgba(249,115,22,0.18);border-radius:14px;padding:18px 20px;text-align:left;margin-top:4px;}
+.fc-expl-title{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
+.fc-expl-text{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* EXAMPLES card */
+.fc-examples-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px 28px;margin-bottom:14px;transition:opacity .4s,transform .4s;}
+.fc-examples-card.hidden-ans{opacity:0;transform:translateY(10px);pointer-events:none;}
+.fc-examples-title{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.fc-example-item{padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.fc-example-item:last-child{border-bottom:none;padding-bottom:0;}
+.fc-ex-jp{font-family:'Shippori Mincho',serif;font-size:20px;font-weight:700;line-height:1.3;margin-bottom:3px;}
+.fc-ex-particle-hl{color:var(--accent);}
+.fc-ex-romaji{font-size:12px;color:var(--muted);font-style:italic;margin-bottom:3px;}
+.fc-ex-en{font-size:13px;color:rgba(232,234,240,0.65);font-weight:400;}
+
+/* ─── SHARED BUTTONS ────────────────────────────────────────────────────── */
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn{padding:11px 22px;border-radius:10px;font-size:14px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:transform .2s,background .2s,border-color .2s;font-family:'DM Sans',sans-serif;}
+.btn:hover{transform:translateY(-2px);background:var(--surface-hover);border-color:var(--border-hover);}
+.btn-reveal{background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:var(--accent);}
+.btn-reveal:hover{background:rgba(249,115,22,0.22);border-color:var(--accent);}
+.btn-submit{background:rgba(240,192,96,0.12);border-color:rgba(240,192,96,0.35);color:var(--gold);}
+.btn-submit:hover{background:rgba(240,192,96,0.22);border-color:var(--gold);}
+.btn-primary{border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);}
+.btn-primary:hover{background:rgba(255,255,255,0.12);}
+
+/* ─── EXAM MODE ─────────────────────────────────────────────────────────── */
+.exam-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.exam-progress-bar{width:100%;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:20px;overflow:hidden;}
+.exam-progress-fill{height:100%;border-radius:2px;background:var(--accent);transition:width .4s ease;}
+
+.exam-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:40px 36px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
+.exam-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),#fbbf24);}
+.exam-counter{font-size:11px;color:var(--muted);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;}
+.exam-difficulty{display:inline-block;padding:3px 12px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:20px;}
+.diff-easy{background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;}
+.diff-medium{background:rgba(251,191,36,0.15);border:1px solid rgba(251,191,36,0.3);color:#fbbf24;}
+.diff-hard{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:#f87171;}
+
+/* fill-in-the-blank sentence */
+.exam-sentence-wrap{margin-bottom:8px;}
+.exam-sentence{font-family:'Shippori Mincho',serif;font-size:clamp(20px,5vw,30px);font-weight:700;line-height:1.7;color:var(--text);}
+.exam-blank{display:inline-block;min-width:52px;border-bottom:2px solid var(--accent);color:var(--accent);font-weight:800;vertical-align:middle;padding:0 6px;transition:color .3s;}
+.exam-sentence-romaji{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:8px;}
+.exam-sentence-en{font-size:14px;color:rgba(232,234,240,0.55);margin-bottom:16px;}
+.exam-instruction{font-size:12px;color:var(--muted);margin-bottom:8px;letter-spacing:.05em;}
+
+/* particle buttons for exam */
+.particle-choice-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:18px;}
+.pchoice{padding:10px 24px;border-radius:12px;font-family:'Shippori Mincho',serif;font-size:22px;font-weight:800;cursor:pointer;border:2px solid var(--border);background:var(--surface);color:var(--text);transition:transform .2s,border-color .2s,background .2s,color .2s;min-width:54px;text-align:center;}
+.pchoice:hover{transform:translateY(-3px);border-color:var(--accent);background:var(--accent2);color:var(--accent);}
+.pchoice.selected{border-color:var(--accent);background:var(--accent2);color:var(--accent);}
+.pchoice.correct{border-color:#4ade80;background:rgba(74,222,128,0.15);color:#4ade80;pointer-events:none;}
+.pchoice.wrong{border-color:#f87171;background:rgba(248,113,113,0.15);color:#f87171;pointer-events:none;}
+.pchoice.disabled{opacity:.35;pointer-events:none;}
+
+/* feedback strip */
+.exam-feedback{border-radius:12px;padding:12px 18px;font-size:13px;font-weight:500;text-align:left;margin-bottom:14px;display:none;line-height:1.6;}
+.exam-feedback.correct{background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.25);color:#4ade80;}
+.exam-feedback.wrong{background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.25);color:#f87171;}
+.feedback-explanation{font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;}
+
+/* ─── RESULTS ───────────────────────────────────────────────────────────── */
+.results-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.results-header{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;}
+.results-header::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),#fbbf24);}
+.results-score{font-family:'Shippori Mincho',serif;font-size:clamp(48px,10vw,72px);font-weight:800;line-height:1;color:var(--accent);}
+.results-label{font-size:14px;color:var(--muted);margin-top:8px;}
+.results-list{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:24px;max-height:460px;overflow-y:auto;text-align:left;margin-bottom:16px;}
+.result-item{padding:13px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.result-item:last-child{border-bottom:none;padding-bottom:0;}
+.result-item-top{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+.r-icon{font-size:16px;flex-shrink:0;}
+.r-sentence{font-family:'Shippori Mincho',serif;font-size:18px;font-weight:700;}
+.r-particle-correct{color:var(--accent);}
+.r-particle-wrong{color:#f87171;text-decoration:underline wavy;}
+.r-en{font-size:13px;color:var(--muted);margin-left:26px;}
+.r-user-ans{font-size:12px;color:#f87171;margin-left:26px;margin-top:2px;}
+
+.hidden{display:none!important;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+/* ─── RESPONSIVE ────────────────────────────────────────────────────────── */
+@media(max-width:640px){
+  .topbar{padding:12px 16px;}
+  .topbar-tag{display:none;}
+  .main{padding:88px 14px 64px;}
+  .mode-grid{grid-template-columns:1fr;}
+  .fc-top{padding:28px 18px 22px;}
+  .fc-examples-card{padding:20px 16px;}
+  .exam-card{padding:28px 18px;}
+  .particle-browse-grid{grid-template-columns:repeat(auto-fill,minmax(100px,1fr));}
+  .btn{padding:10px 16px;font-size:13px;}
+  .pchoice{font-size:18px;padding:9px 18px;}
+}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<header class="topbar">
+  <span class="topbar-brand">✨ Jv Cataquiz's Learning Hub</span>
+  <div class="topbar-right">
+    <span class="topbar-tag">JLPT N5</span>
+    <a href="index.html" class="back-btn">← Hub</a>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- PAGE HERO -->
+  <div class="page-hero">
+    <div class="page-char">助</div>
+    <div class="page-title">Particles</div>
+    <div class="page-sub">JLPT N5 Basic Particles &nbsp;·&nbsp; 18 particles &nbsp;·&nbsp; Full explanations &amp; examples &nbsp;·&nbsp; Fill-in-the-blank exam</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ MAIN MENU -->
+  <div id="mainMenu" class="mode-grid">
+    <div class="mode-card" onclick="showParticleBrowser()">
+      <div class="mode-icon">📖</div>
+      <div class="mode-label">Mode 01</div>
+      <div class="mode-name">Study Flashcard</div>
+      <div class="mode-desc">Choose a particle and study its usage, explanation (Japanese, romaji, English) and multiple real example sentences.</div>
+    </div>
+    <div class="mode-card" onclick="showDifficultySelect()">
+      <div class="mode-icon">✏️</div>
+      <div class="mode-label">Mode 02</div>
+      <div class="mode-name">Exam · Fill-in-Blank</div>
+      <div class="mode-desc">Read a sentence with a blank and choose the correct particle. Questions go from easy to difficult.</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ PARTICLE BROWSER -->
+  <div id="particleBrowser" class="section-box hidden">
+    <div class="section-title">Choose a Particle to Study</div>
+    <div class="section-sub">Tap any particle to open its full flashcard</div>
+    <div class="particle-browse-grid" id="browseGrid"></div>
+    <button class="cancel-btn" onclick="backToMenu()">← Cancel</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════ FLASHCARD -->
+  <div id="flashcardSection" class="fc-wrap hidden">
+
+    <div class="fc-top">
+      <div class="fc-counter-row">
+        <span class="fc-counter" id="fcCounter"></span>
+        <div class="fc-nav-pills">
+          <span class="fc-pill" onclick="fcPrev()">← Prev</span>
+          <span class="fc-pill" onclick="fcNext()">Next →</span>
+        </div>
+      </div>
+      <div class="fc-particle-big" id="fcParticle"></div>
+      <div class="fc-particle-name" id="fcName"></div>
+      <div class="fc-divider" id="fcDivider"></div>
+
+      <div class="fc-answer-block hidden-ans" id="fcAnswerBlock">
+        <div class="fc-meaning-en" id="fcMeaningEn"></div>
+        <div class="fc-meaning-jp" id="fcMeaningJp"></div>
+        <div class="fc-meaning-romaji" id="fcMeaningRomaji"></div>
+        <div class="fc-explanation">
+          <div class="fc-expl-title">📌 Usage &amp; Explanation</div>
+          <div class="fc-expl-text" id="fcExplanation"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fc-examples-card hidden-ans" id="fcExamplesCard">
+      <div class="fc-examples-title">💬 Example Sentences</div>
+      <div id="fcExamplesList"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-reveal" onclick="fcReveal()" id="fcRevealBtn">Reveal ✦</button>
+      <button class="btn" onclick="showParticleBrowser()">← All Particles</button>
+      <button class="btn" onclick="backToMenu()">Main Menu</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ DIFFICULTY SELECT -->
+  <div id="difficultySelect" class="section-box hidden">
+    <div class="section-title">Choose Difficulty</div>
+    <div class="section-sub">Questions are ordered from simple to complex within each level</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:24px;">
+      <div class="p-browse-btn" onclick="startExam('easy')" style="padding:22px 14px;">
+        <span style="font-size:28px;">🌱</span>
+        <span style="font-size:14px;font-weight:600;color:#4ade80;">Easy</span>
+        <span style="font-size:11px;color:var(--muted);">は・が・を・に・で</span>
+      </div>
+      <div class="p-browse-btn" onclick="startExam('medium')" style="padding:22px 14px;">
+        <span style="font-size:28px;">🌿</span>
+        <span style="font-size:14px;font-weight:600;color:#fbbf24;">Medium</span>
+        <span style="font-size:11px;color:var(--muted);">へ・と・も・の・から・まで</span>
+      </div>
+      <div class="p-browse-btn" onclick="startExam('hard')" style="padding:22px 14px;">
+        <span style="font-size:28px;">🔥</span>
+        <span style="font-size:14px;font-weight:600;color:#f87171;">Hard</span>
+        <span style="font-size:11px;color:var(--muted);">より・ね・よ・か・だけ・しか・など・ばかり</span>
+      </div>
+      <div class="p-browse-btn" onclick="startExam('all')" style="padding:22px 14px;">
+        <span style="font-size:28px;">⚡</span>
+        <span style="font-size:14px;font-weight:600;color:var(--accent);">All Mixed</span>
+        <span style="font-size:11px;color:var(--muted);">All 18 particles · randomized</span>
+      </div>
+    </div>
+    <button class="cancel-btn" onclick="backToMenu()">← Cancel</button>
+  </div>
+
+  <!-- ══════════════════════════════════════════ EXAM -->
+  <div id="examSection" class="exam-wrap hidden">
+    <div class="exam-progress-bar"><div class="exam-progress-fill" id="progressFill" style="width:0%"></div></div>
+
+    <div class="exam-card">
+      <div class="exam-counter" id="examCounter"></div>
+      <div class="exam-difficulty" id="examDiff"></div>
+      <div class="exam-sentence-wrap">
+        <div class="exam-sentence" id="examSentence"></div>
+      </div>
+      <div class="exam-sentence-romaji" id="examRomaji"></div>
+      <div class="exam-sentence-en" id="examEn"></div>
+      <div class="exam-instruction">👇 Choose the correct particle</div>
+    </div>
+
+    <div class="particle-choice-grid" id="choiceGrid"></div>
+
+    <div class="exam-feedback" id="examFeedback">
+      <div id="feedbackMain"></div>
+      <div class="feedback-explanation" id="feedbackExpl"></div>
+    </div>
+
+    <div class="btn-row" id="examBtnRow" style="display:none;">
+      <button class="btn btn-submit" onclick="nextQuestion()">Next →</button>
+      <button class="btn" onclick="showDifficultySelect()">← Quit</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ RESULTS -->
+  <div id="resultSection" class="results-wrap hidden">
+    <div class="results-header">
+      <div class="results-score" id="resultsScore"></div>
+      <div class="results-label" id="resultsLabel"></div>
+    </div>
+    <div class="results-list" id="resultsList"></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="showDifficultySelect()">Try Again</button>
+      <button class="btn" onclick="backToMenu()">Main Menu</button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="bottombar">© 2026 ✨ Jv Cataquiz's Learning Platform &nbsp;·&nbsp; All rights reserved</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// PARTICLE DATA
+// Each particle has: particle, name, meanings (en/jp/romaji), explanation,
+// examples [{jp, jpParts (array of {text,highlight}), romaji, en}]
+// ═══════════════════════════════════════════════════════════════════════════
+const PARTICLES = [
+  {
+    particle: "は",
+    name: "Topic Marker · wa",
+    meanings: {
+      en: "as for… / speaking of…",
+      jp: "〜は（〜については）",
+      romaji: "〜 wa"
+    },
+    explanation: "は (wa) marks the <strong>topic</strong> of a sentence — what the sentence is about. It does not always mark the subject. It can also show contrast between two things.\n\nRomaji: wa\nNote: The hiragana は is pronounced 'wa' when used as a particle.",
+    examples: [
+      { jp: ["わたし", "は", "がくせい", "です。"], hl: [false,true,false,false], romaji: "Watashi wa gakusei desu.", en: "I am a student." },
+      { jp: ["これ", "は", "ほん", "です。"], hl: [false,true,false,false], romaji: "Kore wa hon desu.", en: "This is a book." },
+      { jp: ["やまだ", "さん", "は", "にほんじん", "です。"], hl: [false,false,true,false,false], romaji: "Yamada-san wa Nihonjin desu.", en: "Mr. Yamada is Japanese." },
+      { jp: ["わたし", "は", "コーヒー", "が", "すき", "です。"], hl: [false,true,false,false,false,false], romaji: "Watashi wa koohii ga suki desu.", en: "I like coffee." },
+      { jp: ["きょう", "は", "あつい", "です", "ね。"], hl: [false,true,false,false,false], romaji: "Kyou wa atsui desu ne.", en: "It's hot today, isn't it?" }
+    ]
+  },
+  {
+    particle: "が",
+    name: "Subject Marker · ga",
+    meanings: {
+      en: "subject of the sentence",
+      jp: "〜が（主語）",
+      romaji: "〜 ga"
+    },
+    explanation: "が (ga) marks the <strong>grammatical subject</strong> — the doer or experiencer. Use が to introduce new information, with potential/desire verbs (できる, ほしい, すき), or when the subject needs emphasis.\n\nRomaji: ga\nContrast with は: は = known topic, が = new/emphasized subject.",
+    examples: [
+      { jp: ["だれ", "が", "きた", "の？"], hl: [false,true,false,false], romaji: "Dare ga kita no?", en: "Who came?" },
+      { jp: ["ねこ", "が", "います。"], hl: [false,true,false], romaji: "Neko ga imasu.", en: "There is a cat." },
+      { jp: ["にほんご", "が", "わかります。"], hl: [false,true,false], romaji: "Nihongo ga wakarimasu.", en: "I understand Japanese." },
+      { jp: ["みず", "が", "のみたい", "です。"], hl: [false,true,false,false], romaji: "Mizu ga nomitai desu.", en: "I want to drink water." },
+      { jp: ["あの", "えいが", "が", "すき", "です。"], hl: [false,false,true,false,false], romaji: "Ano eiga ga suki desu.", en: "I like that movie." }
+    ]
+  },
+  {
+    particle: "を",
+    name: "Object Marker · o",
+    meanings: {
+      en: "direct object (thing being acted on)",
+      jp: "〜を（目的語）",
+      romaji: "〜 o"
+    },
+    explanation: "を (o) marks the <strong>direct object</strong> of an action verb — the thing that is being done to. It answers 'what?' after a transitive verb.\n\nRomaji: o\nNote: The hiragana を is pronounced 'o' when used as a particle.",
+    examples: [
+      { jp: ["パン", "を", "たべます。"], hl: [false,true,false], romaji: "Pan wo tabemasu.", en: "I eat bread." },
+      { jp: ["みず", "を", "のみます。"], hl: [false,true,false], romaji: "Mizu wo nomimasu.", en: "I drink water." },
+      { jp: ["にほんご", "を", "べんきょう", "します。"], hl: [false,true,false,false], romaji: "Nihongo wo benkyou shimasu.", en: "I study Japanese." },
+      { jp: ["おんがく", "を", "ききます。"], hl: [false,true,false], romaji: "Ongaku wo kikimasu.", en: "I listen to music." },
+      { jp: ["えいが", "を", "みました。"], hl: [false,true,false], romaji: "Eiga wo mimashita.", en: "I watched a movie." }
+    ]
+  },
+  {
+    particle: "に",
+    name: "Direction / Time / Location · ni",
+    meanings: {
+      en: "to / at / in / on (direction, time, location of existence)",
+      jp: "〜に（方向・時間・存在場所）",
+      romaji: "〜 ni"
+    },
+    explanation: "に (ni) has several uses:\n① <strong>Direction</strong> — destination of movement (いく・くる・かえる)\n② <strong>Time</strong> — specific time (7時に、月曜日に)\n③ <strong>Location of existence</strong> — where something exists (います・あります)\n④ <strong>Purpose</strong> — going somewhere for a reason\n\nRomaji: ni",
+    examples: [
+      { jp: ["がっこう", "に", "いきます。"], hl: [false,true,false], romaji: "Gakkou ni ikimasu.", en: "I go to school." },
+      { jp: ["なな", "じ", "に", "おきます。"], hl: [false,false,true,false], romaji: "Shichi-ji ni okimasu.", en: "I wake up at 7 o'clock." },
+      { jp: ["つくえ", "の", "うえ", "に", "ほん", "が", "あります。"], hl: [false,false,false,true,false,false,false], romaji: "Tsukue no ue ni hon ga arimasu.", en: "There is a book on the desk." },
+      { jp: ["にほん", "に", "すんで", "います。"], hl: [false,true,false,false], romaji: "Nihon ni sunde imasu.", en: "I live in Japan." },
+      { jp: ["ともだち", "に", "あいます。"], hl: [false,true,false], romaji: "Tomodachi ni aimasu.", en: "I meet a friend." }
+    ]
+  },
+  {
+    particle: "で",
+    name: "Location of Action / Means · de",
+    meanings: {
+      en: "at / in (place of action) / by / with (means/tool)",
+      jp: "〜で（動作の場所・手段）",
+      romaji: "〜 de"
+    },
+    explanation: "で (de) marks:\n① <strong>Place where an action happens</strong> (not existence — use に for that)\n② <strong>Means or tool</strong> used to do something\n③ <strong>Material/reason</strong>\n\nRomaji: de\nKey: で = action location, に = existence location.",
+    examples: [
+      { jp: ["としょかん", "で", "べんきょう", "します。"], hl: [false,true,false,false], romaji: "Toshokan de benkyou shimasu.", en: "I study at the library." },
+      { jp: ["バス", "で", "がっこう", "に", "いきます。"], hl: [false,true,false,false,false], romaji: "Basu de gakkou ni ikimasu.", en: "I go to school by bus." },
+      { jp: ["はし", "で", "たべます。"], hl: [false,true,false], romaji: "Hashi de tabemasu.", en: "I eat with chopsticks." },
+      { jp: ["えいご", "で", "はなして", "ください。"], hl: [false,true,false,false], romaji: "Eigo de hanashite kudasai.", en: "Please speak in English." },
+      { jp: ["にほん", "で", "にほんご", "を", "まなびます。"], hl: [false,true,false,false,false], romaji: "Nihon de nihongo wo manabimasu.", en: "I learn Japanese in Japan." }
+    ]
+  },
+  {
+    particle: "へ",
+    name: "Direction · e",
+    meanings: {
+      en: "toward / to (direction of movement)",
+      jp: "〜へ（方向）",
+      romaji: "〜 e"
+    },
+    explanation: "へ (e) marks the <strong>direction of movement</strong>. It is similar to に for destinations, but へ emphasizes the direction/toward, while に emphasizes arrival.\n\nRomaji: e\nNote: The hiragana へ is pronounced 'e' when used as a particle.",
+    examples: [
+      { jp: ["とうきょう", "へ", "いきます。"], hl: [false,true,false], romaji: "Toukyou e ikimasu.", en: "I'm going to Tokyo." },
+      { jp: ["うち", "へ", "かえります。"], hl: [false,true,false], romaji: "Uchi e kaerimasu.", en: "I return home." },
+      { jp: ["みぎ", "へ", "まがって", "ください。"], hl: [false,true,false,false], romaji: "Migi e magatte kudasai.", en: "Please turn right." },
+      { jp: ["がっこう", "へ", "あるいて", "いきます。"], hl: [false,true,false,false], romaji: "Gakkou e aruite ikimasu.", en: "I walk to school." },
+      { jp: ["にほん", "へ", "ようこそ！"], hl: [false,true,false], romaji: "Nihon e youkoso!", en: "Welcome to Japan!" }
+    ]
+  },
+  {
+    particle: "と",
+    name: "With / And (listing) · to",
+    meanings: {
+      en: "and (exhaustive list) / with (together)",
+      jp: "〜と（並列・共に）",
+      romaji: "〜 to"
+    },
+    explanation: "と (to) has two main uses:\n① <strong>And</strong> — listing ALL items (exhaustive): りんごとみかん\n② <strong>With</strong> — doing something together with someone\n\nRomaji: to\nNote: Use や for a non-exhaustive list.",
+    examples: [
+      { jp: ["りんご", "と", "みかん", "を", "かいました。"], hl: [false,true,false,false,false], romaji: "Ringo to mikan wo kaimashita.", en: "I bought apples and oranges." },
+      { jp: ["ともだち", "と", "えいが", "を", "みます。"], hl: [false,true,false,false,false], romaji: "Tomodachi to eiga wo mimasu.", en: "I watch a movie with a friend." },
+      { jp: ["せんせい", "と", "はなしました。"], hl: [false,true,false], romaji: "Sensei to hanashimashita.", en: "I talked with the teacher." },
+      { jp: ["コーヒー", "と", "ケーキ", "を", "ください。"], hl: [false,true,false,false,false], romaji: "Koohii to keeki wo kudasai.", en: "Please give me coffee and cake." },
+      { jp: ["かぞく", "と", "たべます。"], hl: [false,true,false], romaji: "Kazoku to tabemasu.", en: "I eat with my family." }
+    ]
+  },
+  {
+    particle: "も",
+    name: "Also / Too / Either · mo",
+    meanings: {
+      en: "also / too / as well / either (with negative)",
+      jp: "〜も（〜も〜も、添加）",
+      romaji: "〜 mo"
+    },
+    explanation: "も (mo) means <strong>also, too, as well</strong>. It replaces は or が when adding another item that shares the same quality or action. With negatives, it means 'either / not ~ either'.\n\nRomaji: mo",
+    examples: [
+      { jp: ["わたし", "も", "がくせい", "です。"], hl: [false,true,false,false], romaji: "Watashi mo gakusei desu.", en: "I am also a student." },
+      { jp: ["これ", "も", "おいしい", "です。"], hl: [false,true,false,false], romaji: "Kore mo oishii desu.", en: "This is delicious too." },
+      { jp: ["にほんご", "も", "えいご", "も", "はなします。"], hl: [false,true,false,true,false], romaji: "Nihongo mo eigo mo hanashimasu.", en: "I speak both Japanese and English." },
+      { jp: ["なに", "も", "たべません", "でした。"], hl: [false,true,false,false], romaji: "Nani mo tabemasen deshita.", en: "I didn't eat anything." },
+      { jp: ["かれ", "も", "きました。"], hl: [false,true,false], romaji: "Kare mo kimashita.", en: "He came too." }
+    ]
+  },
+  {
+    particle: "の",
+    name: "Possession / Noun Modifier · no",
+    meanings: {
+      en: "of / 's (possession, noun connection)",
+      jp: "〜の（所有・修飾）",
+      romaji: "〜 no"
+    },
+    explanation: "の (no) connects two nouns — the first modifies or owns the second. Think of it like the English apostrophe-s ('s) or 'of'.\n\nRomaji: no\nStructure: [owner / modifier] + の + [thing]\nの can also nominalize verbs/adjectives (turns them into nouns).",
+    examples: [
+      { jp: ["これ", "は", "わたし", "の", "ほん", "です。"], hl: [false,false,false,true,false,false], romaji: "Kore wa watashi no hon desu.", en: "This is my book." },
+      { jp: ["にほん", "の", "たべもの", "が", "すき", "です。"], hl: [false,true,false,false,false,false], romaji: "Nihon no tabemono ga suki desu.", en: "I like Japanese food." },
+      { jp: ["がっこう", "の", "せんせい"], hl: [false,true,false], romaji: "Gakkou no sensei", en: "school teacher / teacher of the school" },
+      { jp: ["あの", "しろい", "の", "は", "なん", "です", "か？"], hl: [false,false,true,false,false,false,false], romaji: "Ano shiroi no wa nan desu ka?", en: "What is that white one?" },
+      { jp: ["やまだ", "さん", "の", "くるま", "は", "あかい", "です。"], hl: [false,false,true,false,false,false,false], romaji: "Yamada-san no kuruma wa akai desu.", en: "Mr. Yamada's car is red." }
+    ]
+  },
+  {
+    particle: "から",
+    name: "From / Because · kara",
+    meanings: {
+      en: "from (starting point) / because / since",
+      jp: "〜から（起点・理由）",
+      romaji: "〜 kara"
+    },
+    explanation: "から (kara) has two uses:\n① <strong>From</strong> — starting point of time, place, or sequence\n② <strong>Because / Since</strong> — giving a reason (at end of clause: 〜から、〜)\n\nRomaji: kara",
+    examples: [
+      { jp: ["とうきょう", "から", "きました。"], hl: [false,true,false], romaji: "Toukyou kara kimashita.", en: "I came from Tokyo." },
+      { jp: ["くじ", "から", "じゅぎょう", "が", "はじまります。"], hl: [false,true,false,false,false], romaji: "Kuji kara jugyou ga hajimarimasu.", en: "Classes start from 9 o'clock." },
+      { jp: ["あめ", "が", "ふって", "いる", "から、", "いえ", "に", "います。"], hl: [false,false,false,false,true,false,false,false], romaji: "Ame ga futte iru kara, ie ni imasu.", en: "Because it's raining, I'm at home." },
+      { jp: ["にほんご", "が", "すき", "だ", "から、", "べんきょう", "します。"], hl: [false,false,false,false,true,false,false], romaji: "Nihongo ga suki dakara, benkyou shimasu.", en: "I study because I like Japanese." },
+      { jp: ["これ", "から", "はじめます。"], hl: [false,true,false], romaji: "Kore kara hajimemasu.", en: "We will start from now." }
+    ]
+  },
+  {
+    particle: "まで",
+    name: "Until / Up to · made",
+    meanings: {
+      en: "until / up to / as far as (endpoint of time or place)",
+      jp: "〜まで（終点）",
+      romaji: "〜 made"
+    },
+    explanation: "まで (made) marks the <strong>endpoint</strong> of time, place, or range. It is often paired with から (from) to express 'from … to …'.\n\nRomaji: made\nStructure: から〜まで = from ~ to ~",
+    examples: [
+      { jp: ["くじ", "から", "ごご", "ろくじ", "まで", "はたらきます。"], hl: [false,false,false,false,true,false], romaji: "Kuji kara gogo rokuji made hatarakimasu.", en: "I work from 9 to 6 PM." },
+      { jp: ["えき", "まで", "あるきます。"], hl: [false,true,false], romaji: "Eki made arukimasu.", en: "I walk to the station." },
+      { jp: ["いつ", "まで", "いますか？"], hl: [false,true,false], romaji: "Itsu made imasu ka?", en: "Until when will you be here?" },
+      { jp: ["なんじ", "まで", "まちますか？"], hl: [false,true,false], romaji: "Nanji made machimasu ka?", en: "Until what time will you wait?" },
+      { jp: ["ここ", "から", "とうきょう", "まで", "どのくらい", "かかります", "か？"], hl: [false,false,false,true,false,false,false], romaji: "Koko kara toukyou made dono kurai kakarimasu ka?", en: "How long does it take from here to Tokyo?" }
+    ]
+  },
+  {
+    particle: "より",
+    name: "Comparison · yori",
+    meanings: {
+      en: "than (used in comparisons)",
+      jp: "〜より（比較）",
+      romaji: "〜 yori"
+    },
+    explanation: "より (yori) means <strong>than</strong> and is used for comparisons. The structure is: A は B より [adjective/adverb] — A is more [adj] than B.\n\nRomaji: yori\nStructure: [A] は [B] より [adj] です。",
+    examples: [
+      { jp: ["にほんご", "は", "えいご", "より", "むずかしい", "です。"], hl: [false,false,false,true,false,false], romaji: "Nihongo wa eigo yori muzukashii desu.", en: "Japanese is more difficult than English." },
+      { jp: ["あに", "は", "わたし", "より", "せが", "たかい", "です。"], hl: [false,false,false,true,false,false,false], romaji: "Ani wa watashi yori se ga takai desu.", en: "My older brother is taller than me." },
+      { jp: ["バス", "より", "でんしゃ", "の", "ほう", "が", "はやい", "です。"], hl: [false,true,false,false,false,false,false,false], romaji: "Basu yori densha no hou ga hayai desu.", en: "The train is faster than the bus." },
+      { jp: ["きのう", "より", "きょう", "の", "ほう", "が", "あつい", "です。"], hl: [false,true,false,false,false,false,false,false], romaji: "Kinou yori kyou no hou ga atsui desu.", en: "Today is hotter than yesterday." },
+      { jp: ["おちゃ", "より", "コーヒー", "が", "すき", "です。"], hl: [false,true,false,false,false,false], romaji: "Ocha yori koohii ga suki desu.", en: "I prefer coffee over tea." }
+    ]
+  },
+  {
+    particle: "ね",
+    name: "Seeking Agreement · ne",
+    meanings: {
+      en: "isn't it? / right? (seeking confirmation or sharing feeling)",
+      jp: "〜ね（同意・確認）",
+      romaji: "〜 ne"
+    },
+    explanation: "ね (ne) is a <strong>sentence-ending particle</strong> that seeks agreement or confirmation from the listener. It softens statements and creates a conversational, friendly tone — similar to 'right?', 'isn't it?' or 'don't you think?'.\n\nRomaji: ne",
+    examples: [
+      { jp: ["きょう", "は", "いい", "てんき", "です", "ね。"], hl: [false,false,false,false,false,true], romaji: "Kyou wa ii tenki desu ne.", en: "It's nice weather today, isn't it?" },
+      { jp: ["おいしい", "です", "ね！"], hl: [false,false,true], romaji: "Oishii desu ne!", en: "It's delicious, right!" },
+      { jp: ["むずかしい", "です", "ね。"], hl: [false,false,true], romaji: "Muzukashii desu ne.", en: "It's difficult, isn't it?" },
+      { jp: ["やまださん", "は", "やさしい", "です", "ね。"], hl: [false,false,false,false,true], romaji: "Yamada-san wa yasashii desu ne.", en: "Yamada-san is kind, isn't she?" },
+      { jp: ["そう", "です", "ね。"], hl: [false,false,true], romaji: "Sou desu ne.", en: "That's right, isn't it." }
+    ]
+  },
+  {
+    particle: "よ",
+    name: "Assertion / Informing · yo",
+    meanings: {
+      en: "I tell you! / you know (asserting new info to listener)",
+      jp: "〜よ（断定・新情報）",
+      romaji: "〜 yo"
+    },
+    explanation: "よ (yo) is a <strong>sentence-ending particle</strong> that asserts information the listener doesn't know. It's used to inform, advise, or emphasize. It can sound assertive or even pushy if overused.\n\nRomaji: yo\nContrast: ね = shared/confirm, よ = telling new info",
+    examples: [
+      { jp: ["これ", "は", "おいしい", "です", "よ！"], hl: [false,false,false,false,true], romaji: "Kore wa oishii desu yo!", en: "This is delicious, I tell you!" },
+      { jp: ["そこ", "は", "あぶない", "です", "よ。"], hl: [false,false,false,false,true], romaji: "Soko wa abunai desu yo.", en: "That place is dangerous, you know." },
+      { jp: ["もう", "じゅうじ", "です", "よ。"], hl: [false,false,false,true], romaji: "Mou juu-ji desu yo.", en: "It's already 10 o'clock, you know." },
+      { jp: ["あした", "は", "しけん", "です", "よ。"], hl: [false,false,false,false,true], romaji: "Ashita wa shiken desu yo.", en: "Tomorrow is the exam, I'm telling you." },
+      { jp: ["そっち", "じゃ", "ない", "です", "よ。"], hl: [false,false,false,false,true], romaji: "Socchi ja nai desu yo.", en: "It's not that way, I'm telling you." }
+    ]
+  },
+  {
+    particle: "か",
+    name: "Question Marker · ka",
+    meanings: {
+      en: "? (turns a sentence into a question)",
+      jp: "〜か（疑問）",
+      romaji: "〜 ka"
+    },
+    explanation: "か (ka) is placed at the end of a sentence to form a <strong>yes/no question</strong> or WH-question. In polite speech, sentences end with です/ます + か. In casual speech, か alone at the end raises the pitch.\n\nRomaji: ka",
+    examples: [
+      { jp: ["がくせい", "です", "か？"], hl: [false,false,true], romaji: "Gakusei desu ka?", en: "Are you a student?" },
+      { jp: ["にほんご", "が", "わかります", "か？"], hl: [false,false,false,true], romaji: "Nihongo ga wakarimasu ka?", en: "Do you understand Japanese?" },
+      { jp: ["これ", "は", "なん", "です", "か？"], hl: [false,false,false,false,true], romaji: "Kore wa nan desu ka?", en: "What is this?" },
+      { jp: ["いつ", "きます", "か？"], hl: [false,false,true], romaji: "Itsu kimasu ka?", en: "When are you coming?" },
+      { jp: ["コーヒー", "か", "おちゃ", "が", "いい", "です", "か？"], hl: [false,true,false,false,false,false,true], romaji: "Koohii ka ocha ga ii desu ka?", en: "Would you prefer coffee or tea?" }
+    ]
+  },
+  {
+    particle: "だけ",
+    name: "Only / Just · dake",
+    meanings: {
+      en: "only / just / merely",
+      jp: "〜だけ（限定）",
+      romaji: "〜 dake"
+    },
+    explanation: "だけ (dake) means <strong>only, just</strong>. It limits or restricts a quantity, person, thing, or action. It attaches directly to nouns, verbs (plain form), and adjectives.\n\nRomaji: dake",
+    examples: [
+      { jp: ["すこし", "だけ", "たべます。"], hl: [false,true,false], romaji: "Sukoshi dake tabemasu.", en: "I eat just a little." },
+      { jp: ["ひとつ", "だけ", "ください。"], hl: [false,true,false], romaji: "Hitotsu dake kudasai.", en: "Please give me just one." },
+      { jp: ["にほんご", "だけ", "はなして", "ください。"], hl: [false,true,false,false], romaji: "Nihongo dake hanashite kudasai.", en: "Please speak only Japanese." },
+      { jp: ["かれ", "だけ", "が", "しって", "いる。"], hl: [false,true,false,false,false], romaji: "Kare dake ga shitte iru.", en: "Only he knows." },
+      { jp: ["みる", "だけ", "で", "かわない", "です。"], hl: [false,true,false,false,false], romaji: "Miru dake de kawanai desu.", en: "I'm just looking, not buying." }
+    ]
+  },
+  {
+    particle: "しか",
+    name: "Only (with negative) · shika",
+    meanings: {
+      en: "only (always with a negative verb — 'nothing but')",
+      jp: "〜しか〜ない（限定・否定）",
+      romaji: "〜 shika ~ nai"
+    },
+    explanation: "しか (shika) means <strong>only</strong> but is <em>always</em> followed by a negative verb. It expresses that there is nothing else, implying a sense of limitation or disappointment.\n\nRomaji: shika\nStructure: [noun] + しか + [negative verb]\nCompare: だけ (neutral 'only') vs しか (negative 'only, nothing but')",
+    examples: [
+      { jp: ["ひゃくえん", "しか", "ない", "です。"], hl: [false,true,false,false], romaji: "Hyaku-en shika nai desu.", en: "I have only 100 yen (nothing more)." },
+      { jp: ["みず", "しか", "のみません", "でした。"], hl: [false,true,false,false], romaji: "Mizu shika nomimasen deshita.", en: "I drank nothing but water." },
+      { jp: ["ひとり", "しか", "きません", "でした。"], hl: [false,true,false,false], romaji: "Hitori shika kimasen deshita.", en: "Only one person came." },
+      { jp: ["すこし", "しか", "わかりません。"], hl: [false,true,false], romaji: "Sukoshi shika wakarimasen.", en: "I understand only a little." },
+      { jp: ["あなた", "しか", "いない", "です。"], hl: [false,true,false,false], romaji: "Anata shika inai desu.", en: "There's only you." }
+    ]
+  },
+  {
+    particle: "や",
+    name: "Non-exhaustive List · ya",
+    meanings: {
+      en: "and (among other things) — non-exhaustive list",
+      jp: "〜や〜（など）非網羅的な列挙",
+      romaji: "〜 ya"
+    },
+    explanation: "や (ya) connects nouns in a list like と, but と lists ALL items (exhaustive) while や implies there are <strong>other items not mentioned</strong> (non-exhaustive). It is often combined with など (etc.).\n\nRomaji: ya\nCompare: と = A and B (complete list) / や = A and B (and more)",
+    examples: [
+      { jp: ["りんご", "や", "みかん", "を", "かいました。"], hl: [false,true,false,false,false], romaji: "Ringo ya mikan wo kaimashita.", en: "I bought apples, oranges, and other things." },
+      { jp: ["ほん", "や", "ざっし", "を", "よみます。"], hl: [false,true,false,false,false], romaji: "Hon ya zasshi wo yomimasu.", en: "I read books, magazines, etc." },
+      { jp: ["にほんご", "や", "えいご", "を", "べんきょう", "します。"], hl: [false,true,false,false,false,false], romaji: "Nihongo ya eigo wo benkyou shimasu.", en: "I study Japanese, English, and so on." },
+      { jp: ["スポーツ", "や", "おんがく", "が", "すき", "です。"], hl: [false,true,false,false,false,false], romaji: "Supootsu ya ongaku ga suki desu.", en: "I like sports, music, and things like that." },
+      { jp: ["くだもの", "や", "やさい", "を", "たべます。"], hl: [false,true,false,false,false], romaji: "Kudamono ya yasai wo tabemasu.", en: "I eat fruit, vegetables, and so on." }
+    ]
+  }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EXAM QUESTIONS  (easy → medium → hard)
+// Each question: { sentence (array: [{text, blank}]), answer, choices,
+//                 romaji, en, difficulty, explanation }
+// ═══════════════════════════════════════════════════════════════════════════
+const EXAM_QUESTIONS = {
+  easy: [
+    { parts:["わたし","___","がくせい","です。"], answer:"は", choices:["は","が","を","に"], romaji:"Watashi ___ gakusei desu.", en:"I am a student.", expl:"は marks the topic of the sentence. 'Watashi wa' = 'As for me'" },
+    { parts:["これ","___","ほん","です。"], answer:"は", choices:["は","が","で","の"], romaji:"Kore ___ hon desu.", en:"This is a book.", expl:"は marks the topic. 'Kore wa' = 'This (as topic) is a book.'" },
+    { parts:["パン","___","たべます。"], answer:"を", choices:["を","は","が","に"], romaji:"Pan ___ tabemasu.", en:"I eat bread.", expl:"を marks the direct object. 'Pan wo tabemasu' = eat bread." },
+    { parts:["がっこう","___","いきます。"], answer:"に", choices:["に","は","を","で"], romaji:"Gakkou ___ ikimasu.", en:"I go to school.", expl:"に marks direction/destination with movement verbs like いく." },
+    { parts:["ねこ","___","います。"], answer:"が", choices:["が","は","を","に"], romaji:"Neko ___ imasu.", en:"There is a cat.", expl:"が introduces new subject. Used with existence verbs います/あります." },
+    { parts:["みず","___","のみます。"], answer:"を", choices:["を","は","が","で"], romaji:"Mizu ___ nomimasu.", en:"I drink water.", expl:"を marks the direct object (what is being drunk)." },
+    { parts:["としょかん","___","べんきょう","します。"], answer:"で", choices:["で","に","は","が"], romaji:"Toshokan ___ benkyou shimasu.", en:"I study at the library.", expl:"で marks the place where an action takes place." },
+    { parts:["バス","___","いきます。"], answer:"で", choices:["で","に","を","は"], romaji:"Basu ___ ikimasu.", en:"I go by bus.", expl:"で marks the means of transportation." },
+    { parts:["これ","___","わたし","の","ほん","です。"], answer:"は", choices:["は","が","も","で"], romaji:"Kore ___ watashi no hon desu.", en:"This is my book.", expl:"は marks the topic of the sentence." },
+    { parts:["わたし","___","がくせい","です。"], answer:"も", choices:["も","は","が","を"], romaji:"Watashi ___ gakusei desu.", en:"I am also a student.", expl:"も means 'also/too' and replaces は when adding another subject." },
+    { parts:["だれ","___","きた？"], answer:"が", choices:["が","は","を","で"], romaji:"Dare ___ kita?", en:"Who came?", expl:"が is used with question words like だれ (who) for subjects." },
+    { parts:["とうきょう","___","いきます。"], answer:"へ", choices:["へ","を","は","が"], romaji:"Toukyou ___ ikimasu.", en:"I'm going to Tokyo.", expl:"へ marks direction toward a destination." },
+    { parts:["これ","___","なん","です","か？"], answer:"は", choices:["は","が","を","で"], romaji:"Kore ___ nan desu ka?", en:"What is this?", expl:"は marks the topic. What is this (topic) thing?" },
+    { parts:["がくせい","です","___？"], answer:"か", choices:["か","ね","よ","も"], romaji:"Gakusei desu ___?", en:"Are you a student?", expl:"か at the end of a sentence turns it into a question." },
+    { parts:["にほんご","___","べんきょう","します。"], answer:"を", choices:["を","が","に","で"], romaji:"Nihongo ___ benkyou shimasu.", en:"I study Japanese.", expl:"を marks the direct object (what is being studied)." }
+  ],
+  medium: [
+    { parts:["りんご","___","みかん","を","かいました。"], answer:"と", choices:["と","も","や","が"], romaji:"Ringo ___ mikan wo kaimashita.", en:"I bought apples and oranges.", expl:"と connects nouns in a complete exhaustive list." },
+    { parts:["ともだち","___","えいが","を","みます。"], answer:"と", choices:["と","に","も","で"], romaji:"Tomodachi ___ eiga wo mimasu.", en:"I watch a movie with a friend.", expl:"と means 'with' when doing something together." },
+    { parts:["にほん","___","たべもの","が","すき","です。"], answer:"の", choices:["の","を","に","は"], romaji:"Nihon ___ tabemono ga suki desu.", en:"I like Japanese food.", expl:"の connects nouns — Nihon no tabemono = food of Japan." },
+    { parts:["とうきょう","___","きました。"], answer:"から", choices:["から","まで","に","へ"], romaji:"Toukyou ___ kimashita.", en:"I came from Tokyo.", expl:"から marks the starting point (from)." },
+    { parts:["くじ","___","ごごろくじ","まで","はたらきます。"], answer:"から", choices:["から","まで","に","で"], romaji:"Kuji ___ gogo rokuji made hatarakimasu.", en:"I work from 9 until 6 PM.", expl:"から marks the start of a time range; まで marks the end." },
+    { parts:["えき","___","あるきます。"], answer:"まで", choices:["まで","から","に","で"], romaji:"Eki ___ arukimasu.", en:"I walk to the station.", expl:"まで marks the endpoint/destination of movement or range." },
+    { parts:["ほん","___","ざっし","を","よみます。"], answer:"や", choices:["や","と","も","か"], romaji:"Hon ___ zasshi wo yomimasu.", en:"I read books, magazines, etc.", expl:"や lists items non-exhaustively — implying 'and things like that'." },
+    { parts:["わたし","も","にほんご","___","えいご","も","はなします。"], answer:"も", choices:["も","と","や","は"], romaji:"Watashi mo nihongo ___ eigo mo hanashimasu.", en:"I speak both Japanese and English.", expl:"も〜も means 'both ~ and ~'." },
+    { parts:["あめ","が","ふって","いる","___","いえ","に","います。"], answer:"から", choices:["から","まで","ので","でも"], romaji:"Ame ga futte iru ___, ie ni imasu.", en:"Because it's raining, I'm at home.", expl:"から at the end of a clause means 'because/since'." },
+    { parts:["きょう","は","いい","てんき","です","___。"], answer:"ね", choices:["ね","よ","か","も"], romaji:"Kyou wa ii tenki desu ___.", en:"It's nice weather today, isn't it?", expl:"ね seeks confirmation or agreement from the listener." },
+    { parts:["これ","は","おいしい","です","___！"], answer:"よ", choices:["よ","ね","か","も"], romaji:"Kore wa oishii desu ___!", en:"This is delicious, I tell you!", expl:"よ asserts information to someone who didn't know it." },
+    { parts:["にほんご","が","わかります","___？"], answer:"か", choices:["か","ね","よ","の"], romaji:"Nihongo ga wakarimasu ___?", en:"Do you understand Japanese?", expl:"か turns a sentence into a question." },
+    { parts:["うち","___","かえります。"], answer:"へ", choices:["へ","に","を","で"], romaji:"Uchi ___ kaerimasu.", en:"I return home.", expl:"へ expresses direction. Both に and へ work, but へ emphasizes 'toward'." },
+    { parts:["なんじ","___","まちますか？"], answer:"まで", choices:["まで","から","に","で"], romaji:"Nanji ___ machimasu ka?", en:"Until what time will you wait?", expl:"まで marks the endpoint in time. 'Until what time?'" },
+    { parts:["これ","___","さとうさん","の","かばん","です。"], answer:"は", choices:["は","が","も","で"], romaji:"Kore ___ Satou-san no kaban desu.", en:"This is Mr. Satou's bag.", expl:"は marks the topic. の marks possession." }
+  ],
+  hard: [
+    { parts:["にほんご","は","えいご","___","むずかしい","です。"], answer:"より", choices:["より","から","まで","だけ"], romaji:"Nihongo wa eigo ___ muzukashii desu.", en:"Japanese is more difficult than English.", expl:"より means 'than' in comparisons. A は B より [adj] = A is more [adj] than B." },
+    { parts:["すこし","___","たべます。"], answer:"だけ", choices:["だけ","しか","も","より"], romaji:"Sukoshi ___ tabemasu.", en:"I eat just a little.", expl:"だけ means 'only/just'. Neutral limitation — no negative verb needed." },
+    { parts:["ひゃくえん","___","ない","です。"], answer:"しか", choices:["しか","だけ","も","より"], romaji:"Hyaku-en ___ nai desu.", en:"I only have 100 yen (nothing more).", expl:"しか always goes with a NEGATIVE verb. It means 'nothing but'." },
+    { parts:["みず","___","のみません","でした。"], answer:"しか", choices:["しか","だけ","も","から"], romaji:"Mizu ___ nomimasen deshita.", en:"I drank nothing but water.", expl:"しか + negative = 'only'. The negative verb is required." },
+    { parts:["バス","___","でんしゃ","の","ほう","が","はやい","です。"], answer:"より", choices:["より","から","も","だけ"], romaji:"Basu ___ densha no hou ga hayai desu.", en:"The train is faster than the bus.", expl:"より is used in the pattern: B より A のほうが [adj] = A is more [adj] than B." },
+    { parts:["かれ","___","が","しって","いる。"], answer:"だけ", choices:["だけ","しか","も","より"], romaji:"Kare ___ ga shitte iru.", en:"Only he knows.", expl:"だけ limits the subject. 'Only he (of everyone) knows.'" },
+    { parts:["そこ","は","あぶない","です","___。"], answer:"よ", choices:["よ","ね","か","だけ"], romaji:"Soko wa abunai desu ___.", en:"That place is dangerous, you know.", expl:"よ asserts new information or warnings to the listener." },
+    { parts:["そう","です","___。"], answer:"ね", choices:["ね","よ","か","も"], romaji:"Sou desu ___.", en:"That's right, isn't it.", expl:"ね at the end softly agrees and invites the listener to confirm." },
+    { parts:["スポーツ","___","おんがく","が","すき","です。"], answer:"や", choices:["や","と","も","か"], romaji:"Supootsu ___ ongaku ga suki desu.", en:"I like sports, music, and things like that.", expl:"や lists things non-exhaustively — implies more unstated items." },
+    { parts:["みる","___","で","かわない","です。"], answer:"だけ", choices:["だけ","しか","も","より"], romaji:"Miru ___ de kawanai desu.", en:"I'm just looking, not buying.", expl:"だけ + で = 'just by doing ~'. Just looking, that's all." },
+    { parts:["あした","は","しけん","です","___。"], answer:"よ", choices:["よ","ね","か","も"], romaji:"Ashita wa shiken desu ___.", en:"Tomorrow is the exam, I'm telling you.", expl:"よ informs the listener of something they may not know." },
+    { parts:["ひとつ","___","ください。"], answer:"だけ", choices:["だけ","しか","も","より"], romaji:"Hitotsu ___ kudasai.", en:"Please give me just one.", expl:"だけ limits the quantity — just one, nothing more." },
+    { parts:["きのう","___","きょう","の","ほう","が","あつい","です。"], answer:"より", choices:["より","から","まで","も"], romaji:"Kinou ___ kyou no hou ga atsui desu.", en:"Today is hotter than yesterday.", expl:"より is used in comparison: [B] より [A] のほうが [adj]." },
+    { parts:["すこし","___","わかりません。"], answer:"しか", choices:["しか","だけ","も","より"], romaji:"Sukoshi ___ wakarimasen.", en:"I understand only a little.", expl:"しか + negative verb = 'only a little' with a nuance of regret/limitation." },
+    { parts:["コーヒー","___","おちゃ","が","いい","です","か？"], answer:"か", choices:["か","や","と","ね"], romaji:"Koohii ___ ocha ga ii desu ka?", en:"Would you prefer coffee or tea?", expl:"か between nouns means 'or'. Different from か as a question marker at the end." }
+  ]
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+let fcIndex = 0;
+let fcAllParticles = PARTICLES;
+let examQueue = [];
+let examIndex = 0;
+let examScore = 0;
+let examResults = [];
+let currentDifficulty = 'all';
+let waitingForNext = false;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════════════════════════
+const SCREENS = ['mainMenu','particleBrowser','flashcardSection','difficultySelect','examSection','resultSection'];
+function show(id){SCREENS.forEach(s=>document.getElementById(s).classList.add('hidden'));document.getElementById(id).classList.remove('hidden');}
+function backToMenu(){show('mainMenu');}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PARTICLE BROWSER
+// ═══════════════════════════════════════════════════════════════════════════
+function showParticleBrowser(){
+  show('particleBrowser');
+  const grid = document.getElementById('browseGrid');
+  grid.innerHTML = '';
+  PARTICLES.forEach((p, idx) => {
+    const btn = document.createElement('div');
+    btn.className = 'p-browse-btn';
+    btn.innerHTML = `<span class="p-browse-particle">${p.particle}</span>
+      <span class="p-browse-name">${p.name.split('·')[1]?.trim() || ''}</span>
+      <span class="p-browse-hint">${p.meanings.en.slice(0,28)}…</span>`;
+    btn.onclick = () => openFlashcard(idx);
+    grid.appendChild(btn);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FLASHCARD
+// ═══════════════════════════════════════════════════════════════════════════
+function openFlashcard(idx){
+  fcIndex = idx;
+  show('flashcardSection');
+  renderFlashcard();
+}
+
+function renderFlashcard(){
+  const p = PARTICLES[fcIndex];
+  document.getElementById('fcCounter').textContent = (fcIndex+1) + ' / ' + PARTICLES.length + ' — ' + p.name;
+  document.getElementById('fcParticle').textContent = p.particle;
+  document.getElementById('fcName').textContent = p.name;
+  document.getElementById('fcDivider').classList.remove('revealed');
+
+  // reset answer blocks
+  document.getElementById('fcAnswerBlock').classList.add('hidden-ans');
+  document.getElementById('fcExamplesCard').classList.add('hidden-ans');
+  document.getElementById('fcRevealBtn').style.display = '';
+
+  // pre-fill meaning (hidden)
+  document.getElementById('fcMeaningEn').textContent = p.meanings.en;
+  document.getElementById('fcMeaningJp').textContent = p.meanings.jp;
+  document.getElementById('fcMeaningRomaji').textContent = p.meanings.romaji;
+  document.getElementById('fcExplanation').innerHTML = p.explanation.replace(/\n/g,'<br>');
+
+  // examples
+  const list = document.getElementById('fcExamplesList');
+  list.innerHTML = '';
+  p.examples.forEach(ex => {
+    const div = document.createElement('div');
+    div.className = 'fc-example-item';
+    // build JP sentence with highlighted particle
+    const jpHtml = ex.jp.map((seg, i) =>
+      `<span class="${ex.hl[i] ? 'fc-ex-particle-hl' : ''}">${seg}</span>`
+    ).join('');
+    div.innerHTML = `<div class="fc-ex-jp">${jpHtml}</div>
+      <div class="fc-ex-romaji">${ex.romaji}</div>
+      <div class="fc-ex-en">${ex.en}</div>`;
+    list.appendChild(div);
+  });
+}
+
+function fcReveal(){
+  document.getElementById('fcDivider').classList.add('revealed');
+  document.getElementById('fcAnswerBlock').classList.remove('hidden-ans');
+  document.getElementById('fcExamplesCard').classList.remove('hidden-ans');
+  document.getElementById('fcRevealBtn').style.display = 'none';
+}
+
+function fcNext(){
+  fcIndex = (fcIndex + 1) % PARTICLES.length;
+  renderFlashcard();
+}
+function fcPrev(){
+  fcIndex = (fcIndex - 1 + PARTICLES.length) % PARTICLES.length;
+  renderFlashcard();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EXAM
+// ═══════════════════════════════════════════════════════════════════════════
+function showDifficultySelect(){show('difficultySelect');}
+
+function startExam(difficulty){
+  currentDifficulty = difficulty;
+  if(difficulty === 'all'){
+    examQueue = [
+      ...EXAM_QUESTIONS.easy,
+      ...EXAM_QUESTIONS.medium,
+      ...EXAM_QUESTIONS.hard
+    ].sort(() => Math.random() - 0.5);
+  } else {
+    examQueue = [...EXAM_QUESTIONS[difficulty]].sort(() => Math.random() - 0.5);
+  }
+  examIndex = 0; examScore = 0; examResults = [];
+  waitingForNext = false;
+  show('examSection');
+  renderExamQuestion();
+}
+
+function getDiffLabel(difficulty){
+  const map = {easy:'🌱 Easy', medium:'🌿 Medium', hard:'🔥 Hard', all:'⚡ Mixed'};
+  return map[difficulty] || difficulty;
+}
+function getDiffClass(difficulty){
+  const map = {easy:'diff-easy', medium:'diff-medium', hard:'diff-hard', all:'diff-hard'};
+  return map[difficulty] || 'diff-easy';
+}
+
+function renderExamQuestion(){
+  if(examIndex >= examQueue.length){ showResults(); return; }
+  waitingForNext = false;
+  const q = examQueue[examIndex];
+  const pct = Math.round((examIndex / examQueue.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('examCounter').textContent = 'Question ' + (examIndex+1) + ' of ' + examQueue.length;
+
+  // difficulty badge
+  const diffEl = document.getElementById('examDiff');
+  const diff = currentDifficulty === 'all' ? detectDifficulty(q) : currentDifficulty;
+  diffEl.textContent = getDiffLabel(diff);
+  diffEl.className = 'exam-difficulty ' + getDiffClass(diff);
+
+  // sentence with blank
+  const sentEl = document.getElementById('examSentence');
+  sentEl.innerHTML = q.parts.map(p => p === '___'
+    ? `<span class="exam-blank" id="blankSpan">　＿＿　</span>`
+    : p
+  ).join('');
+
+  document.getElementById('examRomaji').textContent = q.romaji;
+  document.getElementById('examEn').textContent = '🔤 ' + q.en;
+
+  // choice buttons
+  const grid = document.getElementById('choiceGrid');
+  grid.innerHTML = '';
+  q.choices.forEach(choice => {
+    const btn = document.createElement('button');
+    btn.className = 'pchoice';
+    btn.textContent = choice;
+    btn.onclick = () => submitExamAnswer(choice, btn, q);
+    grid.appendChild(btn);
+  });
+
+  // hide feedback & next button
+  const fb = document.getElementById('examFeedback');
+  fb.style.display = 'none';
+  fb.className = 'exam-feedback';
+  document.getElementById('examBtnRow').style.display = 'none';
+}
+
+function detectDifficulty(q){
+  if(EXAM_QUESTIONS.easy.includes(q)) return 'easy';
+  if(EXAM_QUESTIONS.medium.includes(q)) return 'medium';
+  return 'hard';
+}
+
+function submitExamAnswer(choice, btn, q){
+  if(waitingForNext) return;
+  waitingForNext = true;
+
+  const isCorrect = choice === q.answer;
+  if(isCorrect) examScore++;
+
+  // mark buttons
+  document.querySelectorAll('.pchoice').forEach(b => {
+    if(b.textContent === q.answer){
+      b.classList.add('correct');
+    } else if(b === btn && !isCorrect){
+      b.classList.add('wrong');
+    } else {
+      b.classList.add('disabled');
+    }
+  });
+
+  // fill blank with answer
+  const blank = document.getElementById('blankSpan');
+  if(blank){
+    blank.textContent = ' ' + q.answer + ' ';
+    blank.style.color = isCorrect ? '#4ade80' : '#f87171';
+    blank.style.borderBottomColor = isCorrect ? '#4ade80' : '#f87171';
+  }
+
+  // feedback
+  const fb = document.getElementById('examFeedback');
+  fb.style.display = 'block';
+  fb.className = 'exam-feedback ' + (isCorrect ? 'correct' : 'wrong');
+  document.getElementById('feedbackMain').innerHTML = isCorrect
+    ? '✅ Correct! <strong>' + q.answer + '</strong> is right.'
+    : '❌ The correct particle is <strong>' + q.answer + '</strong>.';
+  document.getElementById('feedbackExpl').textContent = q.expl;
+
+  examResults.push({parts:q.parts, answer:q.answer, user:choice, ok:isCorrect, romaji:q.romaji, en:q.en});
+
+  document.getElementById('examBtnRow').style.display = 'flex';
+}
+
+function nextQuestion(){
+  examIndex++;
+  renderExamQuestion();
+}
+
+function showResults(){
+  show('resultSection');
+  document.getElementById('progressFill').style.width = '100%';
+  const pct = Math.round((examScore / examResults.length) * 100);
+  document.getElementById('resultsScore').textContent = examScore + ' / ' + examResults.length;
+  const msg = pct >= 90 ? 'Perfect! 🏆' : pct >= 70 ? 'Great work! 🎉' : pct >= 50 ? 'Good effort! 👍' : 'Keep practicing! 💪';
+  document.getElementById('resultsLabel').textContent = 'Score: ' + pct + '% — ' + msg;
+
+  let html = '';
+  examResults.forEach(r => {
+    const sentHtml = r.parts.map(p => {
+      if(p === '___'){
+        if(r.ok) return `<span class="r-particle-correct">[${r.answer}]</span>`;
+        return `<span class="r-particle-correct">[${r.answer}]</span>`;
+      }
+      return p;
+    }).join('');
+    html += `<div class="result-item">
+      <div class="result-item-top">
+        <span class="r-icon">${r.ok ? '✅' : '❌'}</span>
+        <span class="r-sentence">${sentHtml}</span>
+      </div>
+      <div class="r-en">${r.en}</div>
+      ${!r.ok ? `<div class="r-user-ans">Your answer: 「${r.user}」</div>` : ''}
+    </div>`;
+  });
+  document.getElementById('resultsList').innerHTML = html;
+}
+</script>
+</body>
+</html>
