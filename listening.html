@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N5 Listening Practice - Jv Cataquiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.2);
+  --text: #e8eaf0;
+  --muted: rgba(232,234,240,0.45);
+  --gold: #f0c060;
+  --listening: #ff6b9d;
+  --correct: #4ade80;
+  --wrong: #ff6b6b;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  z-index: 0; pointer-events: none;
+}
+
+.topbar {
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 32px;
+  background: rgba(8,12,20,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-brand {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 15px; font-weight: 700;
+  color: var(--gold); letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.topbar-tag {
+  font-size: 12px; color: var(--muted);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 4px 14px; border-radius: 20px;
+}
+
+.container {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto;
+  padding: 100px 32px 60px;
+}
+
+.header {
+  text-align: center; margin-bottom: 48px;
+}
+
+.header-icon {
+  font-size: 64px; display: block; margin-bottom: 12px;
+}
+
+.header-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 48px; font-weight: 800;
+  background: linear-gradient(135deg, #ff6b9d 0%, #ffa6c1 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 12px;
+}
+
+.header-subtitle {
+  font-size: 14px; color: var(--muted);
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+
+.progress-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  height: 32px; margin-bottom: 32px;
+  overflow: hidden; position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b9d, #ffa6c1);
+  transition: width 0.5s ease;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 600;
+  color: #fff;
+}
+
+.question-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.question-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 24px;
+}
+
+.question-type {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--listening);
+  background: rgba(255,107,157,0.1);
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid rgba(255,107,157,0.2);
+}
+
+.question-num {
+  font-size: 13px; color: var(--muted);
+  font-weight: 600;
+}
+
+.audio-player {
+  display: flex; align-items: center; gap: 16px;
+  background: rgba(255,107,157,0.08);
+  border: 1px solid rgba(255,107,157,0.2);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 32px;
+}
+
+.play-btn {
+  width: 56px; height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b9d, #ffa6c1);
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  flex-shrink: 0;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+}
+
+.play-btn:active {
+  transform: scale(0.95);
+}
+
+.audio-info {
+  flex: 1;
+}
+
+.audio-label {
+  font-size: 11px; color: var(--muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.audio-text {
+  font-size: 14px; color: var(--text);
+  font-weight: 500;
+}
+
+.question-text {
+  font-size: 18px; font-weight: 500;
+  color: var(--text); margin-bottom: 28px;
+  line-height: 1.6;
+}
+
+.options {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 24px;
+}
+
+.option {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex; align-items: center; gap: 14px;
+  font-size: 15px;
+}
+
+.option:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+.option.selected {
+  border-color: var(--listening);
+  background: rgba(255,107,157,0.08);
+}
+
+.option.correct {
+  border-color: var(--correct);
+  background: rgba(74,222,128,0.08);
+}
+
+.option.wrong {
+  border-color: var(--wrong);
+  background: rgba(255,107,107,0.08);
+}
+
+.option-letter {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 14px;
+  flex-shrink: 0;
+}
+
+.option.selected .option-letter {
+  background: var(--listening);
+  color: #fff;
+}
+
+.option.correct .option-letter {
+  background: var(--correct);
+  color: #fff;
+}
+
+.option.wrong .option-letter {
+  background: var(--wrong);
+  color: #fff;
+}
+
+.picture-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.picture-option {
+  aspect-ratio: 1;
+  background: var(--surface);
+  border: 3px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+  font-size: 48px;
+  position: relative;
+}
+
+.picture-option:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+  transform: scale(1.02);
+}
+
+.picture-option.selected {
+  border-color: var(--listening);
+  background: rgba(255,107,157,0.08);
+}
+
+.picture-option.correct {
+  border-color: var(--correct);
+  background: rgba(74,222,128,0.08);
+}
+
+.picture-option.wrong {
+  border-color: var(--wrong);
+  background: rgba(255,107,107,0.08);
+}
+
+.picture-label {
+  font-size: 13px;
+  color: var(--text);
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.btn-group {
+  display: flex; gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 14px 32px;
+  border-radius: 12px;
+  border: none;
+  font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ff6b9d, #ffa6c1);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255,107,157,0.3);
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 14px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.feedback.correct {
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.3);
+  color: var(--correct);
+}
+
+.feedback.wrong {
+  background: rgba(255,107,107,0.08);
+  border: 1px solid rgba(255,107,107,0.3);
+  color: var(--wrong);
+}
+
+.results-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px;
+  text-align: center;
+}
+
+.results-icon {
+  font-size: 80px; margin-bottom: 24px;
+}
+
+.results-title {
+  font-family: 'Shippori Mincho', serif;
+  font-size: 36px; font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.results-score {
+  font-size: 48px; font-weight: 800;
+  background: linear-gradient(135deg, #ff6b9d, #ffa6c1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 32px;
+}
+
+.results-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.stat {
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 32px; font-weight: 700;
+  color: var(--text);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 90px 20px 40px; }
+  .question-card { padding: 28px 20px; }
+  .picture-options { grid-template-columns: repeat(2, 1fr); }
+  .results-stats { grid-template-columns: 1fr; gap: 16px; }
+  .topbar { padding: 12px 20px; }
+  .topbar-tag { display: none; }
+}
+
+.hidden { display: none; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.question-card { animation: fadeIn 0.4s ease; }
+</style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+
+<header class="topbar">
+  <a href="index.html" class="topbar-brand">✨ Jv Cataquiz's Learning Hub</a>
+  <span class="topbar-tag">N5 Listening</span>
+</header>
+
+<div class="container">
+  <div class="header">
+    <span class="header-icon">🎧</span>
+    <h1 class="header-title">聴解練習</h1>
+    <p class="header-subtitle">N5 Listening Practice - 200 Questions</p>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressBar">0 / 200</div>
+  </div>
+
+  <div id="quizContainer"></div>
+
+  <div id="resultsContainer" class="hidden"></div>
+</div>
+
+<script>
+const questions = [
+  // CONVERSATION QUESTIONS (1-100)
+  {type: 'conversation', audio: 'すみません、駅はどこですか。', question: 'この人は何を探していますか。', options: ['駅', 'トイレ', '図書館', '病院'], correct: 0},
+  {type: 'conversation', audio: 'お名前は何ですか。', question: '何を聞いていますか。', options: ['年齢', '名前', '住所', '電話番号'], correct: 1},
+  {type: 'conversation', audio: 'コーヒーを飲みませんか。', question: '話し手は何をしたいですか。', options: ['お茶を飲む', '食事をする', 'コーヒーを飲む', '帰る'], correct: 2},
+  {type: 'conversation', audio: '明日、映画を見に行きましょう。', question: '話し手は何を提案していますか。', options: ['買い物', '映画', '食事', '旅行'], correct: 1},
+  {type: 'conversation', audio: 'この本はいくらですか。', question: '何について聞いていますか。', options: ['本の名前', '本の値段', '本の作者', '本の内容'], correct: 1},
+  
+  {type: 'conversation', audio: '今、何時ですか。', question: '何を知りたいですか。', options: ['日付', '曜日', '時間', '場所'], correct: 2},
+  {type: 'conversation', audio: 'ここに座ってもいいですか。', question: '話し手は何を求めていますか。', options: ['許可', '説明', '案内', '助け'], correct: 0},
+  {type: 'conversation', audio: '日本語が上手ですね。', question: 'これは何ですか。', options: ['質問', '褒め言葉', '謝罪', '命令'], correct: 1},
+  {type: 'conversation', audio: '今日は雨が降りそうです。', question: '天気はどうですか。', options: ['晴れ', '曇り', '雨', '雪'], correct: 2},
+  {type: 'conversation', audio: 'お誕生日おめでとうございます。', question: '何を祝っていますか。', options: ['結婚', '誕生日', '卒業', '就職'], correct: 1},
+  
+  {type: 'conversation', audio: '図書館はどこにありますか。', question: '話し手は何を探していますか。', options: ['トイレ', '図書館', 'レストラン', '病院'], correct: 1},
+  {type: 'conversation', audio: 'ペンを貸してください。', question: '何を借りたいですか。', options: ['本', 'ペン', '消しゴム', 'ノート'], correct: 1},
+  {type: 'conversation', audio: 'もう一度言ってください。', question: '話し手は何を求めていますか。', options: ['繰り返し', '説明', '許可', '助け'], correct: 0},
+  {type: 'conversation', audio: '週末は何をしますか。', question: '何について聞いていますか。', options: ['仕事', '趣味', '週末の予定', '家族'], correct: 2},
+  {type: 'conversation', audio: 'いただきます。', question: 'この人は何をしますか。', options: ['寝る', '食べる', '帰る', '勉強する'], correct: 1},
+  
+  {type: 'conversation', audio: 'お疲れ様でした。', question: 'いつ言いますか。', options: ['朝', '仕事の後', '食事の前', '寝る前'], correct: 1},
+  {type: 'conversation', audio: 'お先に失礼します。', question: 'この人は何をしますか。', options: ['入る', '先に帰る', '座る', '待つ'], correct: 1},
+  {type: 'conversation', audio: '電車に乗り遅れました。', question: '何が起きましたか。', options: ['電車に乗った', '電車に乗れなかった', '電車が来た', '電車が早かった'], correct: 1},
+  {type: 'conversation', audio: 'ごちそうさまでした。', question: 'この人は何をしましたか。', options: ['食事を始めた', '食事を終えた', '料理を作った', '食事を注文した'], correct: 1},
+  {type: 'conversation', audio: 'お元気ですか。', question: '何を聞いていますか。', options: ['名前', '年齢', '健康状態', '職業'], correct: 2},
+  
+  {type: 'conversation', audio: 'すみません、遅れました。', question: 'この人は何をしましたか。', options: ['早く来た', '遅く来た', '来なかった', '時間通りに来た'], correct: 1},
+  {type: 'conversation', audio: '窓を開けてもいいですか。', question: '話し手は何をしたいですか。', options: ['窓を開ける', '窓を閉める', 'ドアを開ける', 'ドアを閉める'], correct: 0},
+  {type: 'conversation', audio: 'ちょっと待ってください。', question: '話し手は何を求めていますか。', options: ['すぐ来る', '待つ', '帰る', '急ぐ'], correct: 1},
+  {type: 'conversation', audio: 'これは私のです。', question: '何を言っていますか。', options: ['所有', '場所', '時間', '理由'], correct: 0},
+  {type: 'conversation', audio: 'どうぞお入りください。', question: '話し手は何を言っていますか。', options: ['出て行く', '入る', '座る', '立つ'], correct: 1},
+  
+  {type: 'conversation', audio: '日本料理が好きですか。', question: '何について聞いていますか。', options: ['日本語', '日本料理', '日本の歴史', '日本の文化'], correct: 1},
+  {type: 'conversation', audio: '宿題を忘れました。', question: '何を忘れましたか。', options: ['本', '宿題', '財布', '鍵'], correct: 1},
+  {type: 'conversation', audio: 'お会計をお願いします。', question: 'この人は何をしたいですか。', options: ['注文する', '支払う', '予約する', '待つ'], correct: 1},
+  {type: 'conversation', audio: 'いらっしゃいませ。', question: 'どこで聞きますか。', options: ['病院', '学校', '店', '公園'], correct: 2},
+  {type: 'conversation', audio: 'お大事に。', question: 'いつ言いますか。', options: ['朝', '病気の人に', '食事の前', '別れる時'], correct: 1},
+  
+  {type: 'conversation', audio: '今日は暑いですね。', question: '天気はどうですか。', options: ['寒い', '暑い', '涼しい', '寒い'], correct: 1},
+  {type: 'conversation', audio: '手伝いましょうか。', question: '話し手は何を提案していますか。', options: ['一緒に行く', '手伝う', '待つ', '帰る'], correct: 1},
+  {type: 'conversation', audio: 'このカバンは重いです。', question: 'カバンはどうですか。', options: ['軽い', '重い', '小さい', '大きい'], correct: 1},
+  {type: 'conversation', audio: '電話番号を教えてください。', question: '何を教えてほしいですか。', options: ['名前', '住所', '電話番号', 'メールアドレス'], correct: 2},
+  {type: 'conversation', audio: 'バスで行きましょう。', question: '何で行きますか。', options: ['電車', 'バス', '車', '自転車'], correct: 1},
+  
+  {type: 'conversation', audio: '私は学生です。', question: 'この人は何ですか。', options: ['先生', '学生', '医者', '会社員'], correct: 1},
+  {type: 'conversation', audio: '昨日、友達に会いました。', question: 'いつ友達に会いましたか。', options: ['今日', '昨日', '明日', '来週'], correct: 1},
+  {type: 'conversation', audio: 'この映画は面白かったです。', question: '映画はどうでしたか。', options: ['つまらない', '面白い', '怖い', '悲しい'], correct: 1},
+  {type: 'conversation', audio: '毎朝、コーヒーを飲みます。', question: 'いつコーヒーを飲みますか。', options: ['毎晩', '毎朝', '毎週', '毎月'], correct: 1},
+  {type: 'conversation', audio: '京都に住んでいます。', question: 'どこに住んでいますか。', options: ['東京', '大阪', '京都', '神戸'], correct: 2},
+  
+  {type: 'conversation', audio: '兄は医者です。', question: '兄の職業は何ですか。', options: ['先生', '医者', '学生', '会社員'], correct: 1},
+  {type: 'conversation', audio: '公園で遊びましょう。', question: 'どこで遊びますか。', options: ['学校', '家', '公園', '図書館'], correct: 2},
+  {type: 'conversation', audio: 'このシャツは高いです。', question: 'シャツはどうですか。', options: ['安い', '高い', '新しい', '古い'], correct: 1},
+  {type: 'conversation', audio: '明日は休みです。', question: '明日はどうですか。', options: ['仕事', '休み', '忙しい', '学校'], correct: 1},
+  {type: 'conversation', audio: '犬が好きです。', question: '何が好きですか。', options: ['猫', '犬', '鳥', '魚'], correct: 1},
+  
+  {type: 'conversation', audio: '部屋がきれいです。', question: '部屋はどうですか。', options: ['汚い', 'きれい', '広い', '狭い'], correct: 1},
+  {type: 'conversation', audio: '今、勉強しています。', question: '今、何をしていますか。', options: ['食べている', '寝ている', '勉強している', '遊んでいる'], correct: 2},
+  {type: 'conversation', audio: 'パンを買いました。', question: '何を買いましたか。', options: ['パン', '牛乳', '卵', '肉'], correct: 0},
+  {type: 'conversation', audio: '毎日、学校に行きます。', question: 'どこに行きますか。', options: ['図書館', '学校', '公園', '病院'], correct: 1},
+  {type: 'conversation', audio: '母は料理が上手です。', question: '母は何が上手ですか。', options: ['歌', '料理', 'スポーツ', '絵'], correct: 1},
+  
+  {type: 'conversation', audio: '静かにしてください。', question: '何を求めていますか。', options: ['静かにする', '話す', '歌う', '笑う'], correct: 0},
+  {type: 'conversation', audio: '寒いので、窓を閉めます。', question: 'なぜ窓を閉めますか。', options: ['暑いから', '寒いから', '雨だから', '風が強いから'], correct: 1},
+  {type: 'conversation', audio: '妹は高校生です。', question: '妹は何ですか。', options: ['大学生', '高校生', '中学生', '小学生'], correct: 1},
+  {type: 'conversation', audio: '昼ごはんを食べましょう。', question: '何を食べますか。', options: ['朝ごはん', '昼ごはん', '晩ごはん', 'おやつ'], correct: 1},
+  {type: 'conversation', audio: 'テストは難しかったです。', question: 'テストはどうでしたか。', options: ['簡単', '難しい', '面白い', '楽しい'], correct: 1},
+  
+  {type: 'conversation', audio: '日曜日は暇です。', question: '日曜日はどうですか。', options: ['忙しい', '暇', '楽しい', '疲れた'], correct: 1},
+  {type: 'conversation', audio: '彼は背が高いです。', question: '彼の体はどうですか。', options: ['背が低い', '背が高い', '太っている', '痩せている'], correct: 1},
+  {type: 'conversation', audio: '水を飲んでください。', question: '何を飲みますか。', options: ['お茶', 'コーヒー', '水', 'ジュース'], correct: 2},
+  {type: 'conversation', audio: '駅まで歩きます。', question: 'どうやって行きますか。', options: ['歩く', '走る', '乗る', '飛ぶ'], correct: 0},
+  {type: 'conversation', audio: 'テレビを見ません。', question: 'テレビをどうしますか。', options: ['見る', '見ない', '買う', '売る'], correct: 1},
+  
+  {type: 'conversation', audio: '友達と話します。', question: '誰と話しますか。', options: ['先生', '家族', '友達', '知らない人'], correct: 2},
+  {type: 'conversation', audio: '新しい靴を買いたいです。', question: '何を買いたいですか。', options: ['服', 'カバン', '靴', '帽子'], correct: 2},
+  {type: 'conversation', audio: 'スーパーで買い物をします。', question: 'どこで買い物をしますか。', options: ['デパート', 'コンビニ', 'スーパー', '市場'], correct: 2},
+  {type: 'conversation', audio: '疲れたので、休みます。', question: 'なぜ休みますか。', options: ['暇だから', '疲れたから', '眠いから', 'お腹が空いたから'], correct: 1},
+  {type: 'conversation', audio: '彼女は親切です。', question: '彼女はどんな人ですか。', options: ['親切', '意地悪', '厳しい', '怖い'], correct: 0},
+  
+  {type: 'conversation', audio: '日本語を勉強しています。', question: '何を勉強していますか。', options: ['英語', '日本語', '中国語', '韓国語'], correct: 1},
+  {type: 'conversation', audio: '来月、日本に行きます。', question: 'いつ日本に行きますか。', options: ['今月', '来月', '来年', '先月'], correct: 1},
+  {type: 'conversation', audio: '朝、ジョギングをします。', question: 'いつジョギングをしますか。', options: ['朝', '昼', '夜', '晩'], correct: 0},
+  {type: 'conversation', audio: 'この道は狭いです。', question: '道はどうですか。', options: ['広い', '狭い', '長い', '短い'], correct: 1},
+  {type: 'conversation', audio: '音楽が聞こえます。', question: '何が聞こえますか。', options: ['声', '音楽', '雨', '風'], correct: 1},
+  
+  {type: 'conversation', audio: '今日は誕生日です。', question: '今日は何の日ですか。', options: ['休日', '誕生日', '記念日', '祭日'], correct: 1},
+  {type: 'conversation', audio: '早く起きました。', question: 'いつ起きましたか。', options: ['遅く', '早く', '普通に', 'まだ起きていない'], correct: 1},
+  {type: 'conversation', audio: '写真を撮りましょう。', question: '何をしますか。', options: ['絵を描く', '写真を撮る', 'ビデオを撮る', '手紙を書く'], correct: 1},
+  {type: 'conversation', audio: '彼は優しいです。', question: '彼はどんな人ですか。', options: ['厳しい', '優しい', '怖い', '冷たい'], correct: 1},
+  {type: 'conversation', audio: '夜、本を読みます。', question: 'いつ本を読みますか。', options: ['朝', '昼', '夜', '明日'], correct: 2},
+  
+  {type: 'conversation', audio: '試験に合格しました。', question: '試験はどうでしたか。', options: ['不合格', '合格', '難しい', '簡単'], correct: 1},
+  {type: 'conversation', audio: '速く走れます。', question: 'どうやって走りますか。', options: ['遅く', '速く', 'ゆっくり', '普通に'], correct: 1},
+  {type: 'conversation', audio: '赤い花が咲いています。', question: '花は何色ですか。', options: ['青い', '黄色い', '白い', '赤い'], correct: 3},
+  {type: 'conversation', audio: '図書館で本を借りました。', question: 'どこで本を借りましたか。', options: ['本屋', '図書館', '学校', '家'], correct: 1},
+  {type: 'conversation', audio: '妹と遊びます。', question: '誰と遊びますか。', options: ['兄', '姉', '妹', '弟'], correct: 2},
+  
+  {type: 'conversation', audio: '夏休みに旅行します。', question: 'いつ旅行しますか。', options: ['春休み', '夏休み', '冬休み', '週末'], correct: 1},
+  {type: 'conversation', audio: '美味しい料理を作ります。', question: 'どんな料理を作りますか。', options: ['まずい', '美味しい', '辛い', '甘い'], correct: 1},
+  {type: 'conversation', audio: '今、お腹が空いています。', question: 'どんな状態ですか。', options: ['眠い', 'お腹が空いている', '疲れた', '暇'], correct: 1},
+  {type: 'conversation', audio: '毎週、映画を見ます。', question: 'いつ映画を見ますか。', options: ['毎日', '毎週', '毎月', '毎年'], correct: 1},
+  {type: 'conversation', audio: '駅の近くに住んでいます。', question: 'どこに住んでいますか。', options: ['駅の近く', '駅から遠い', '学校の近く', '公園の近く'], correct: 0},
+  
+  {type: 'conversation', audio: 'バスが来ました。', question: '何が来ましたか。', options: ['電車', 'バス', 'タクシー', '車'], correct: 1},
+  {type: 'conversation', audio: '彼はギターが弾けます。', question: '彼は何ができますか。', options: ['ピアノを弾く', 'ギターを弾く', '歌を歌う', '絵を描く'], correct: 1},
+  {type: 'conversation', audio: '白いシャツを着ています。', question: 'シャツは何色ですか。', options: ['黒い', '白い', '青い', '赤い'], correct: 1},
+  {type: 'conversation', audio: '今日は寒いです。', question: '今日の天気はどうですか。', options: ['暑い', '暖かい', '寒い', '涼しい'], correct: 2},
+  {type: 'conversation', audio: '子供が遊んでいます。', question: '子供は何をしていますか。', options: ['勉強している', '寝ている', '遊んでいる', '食べている'], correct: 2},
+  
+  {type: 'conversation', audio: 'コンビニに寄ります。', question: 'どこに寄りますか。', options: ['スーパー', 'コンビニ', '郵便局', '銀行'], correct: 1},
+  {type: 'conversation', audio: '宿題が終わりました。', question: '宿題はどうなりましたか。', options: ['始まった', '終わった', '難しい', '簡単'], correct: 1},
+  {type: 'conversation', audio: 'お茶を入れます。', question: '何をしますか。', options: ['お茶を飲む', 'お茶を入れる', 'お茶を買う', 'お茶をもらう'], correct: 1},
+  {type: 'conversation', audio: '雨が降っています。', question: '今の天気はどうですか。', options: ['晴れ', '曇り', '雨', '雪'], correct: 2},
+  {type: 'conversation', audio: '眠いので寝ます。', question: 'なぜ寝ますか。', options: ['疲れたから', '眠いから', '暇だから', '暗いから'], correct: 1},
+  
+  {type: 'conversation', audio: '教室が明るいです。', question: '教室はどうですか。', options: ['暗い', '明るい', '広い', '狭い'], correct: 1},
+  {type: 'conversation', audio: '友達にメールを送ります。', question: '何を送りますか。', options: ['手紙', 'メール', 'プレゼント', '本'], correct: 1},
+  {type: 'conversation', audio: 'ドアが開いています。', question: 'ドアはどうなっていますか。', options: ['開いている', '閉まっている', '壊れている', '新しい'], correct: 0},
+  {type: 'conversation', audio: '財布を忘れました。', question: '何を忘れましたか。', options: ['鍵', '財布', '携帯', 'カバン'], correct: 1},
+  {type: 'conversation', audio: '大きい犬がいます。', question: '犬はどんな犬ですか。', options: ['小さい', '大きい', '黒い', '白い'], correct: 1},
+
+  // PICTURE SELECTION QUESTIONS (101-160)
+  {type: 'picture', audio: 'りんごを食べています。', question: '何を食べていますか。', pictures: ['🍎', '🍌', '🍊'], labels: ['りんご', 'バナナ', 'オレンジ'], correct: 0},
+  {type: 'picture', audio: '自転車に乗っています。', question: '何に乗っていますか。', pictures: ['🚲', '🚗', '🚌'], labels: ['自転車', '車', 'バス'], correct: 0},
+  {type: 'picture', audio: '本を読んでいます。', question: '何をしていますか。', pictures: ['📖', '✏️', '🎵'], labels: ['本を読む', '書く', '音楽を聞く'], correct: 0},
+  {type: 'picture', audio: '雨が降っています。', question: '天気はどうですか。', pictures: ['☀️', '☁️', '🌧️'], labels: ['晴れ', '曇り', '雨'], correct: 2},
+  {type: 'picture', audio: 'コーヒーを飲んでいます。', question: '何を飲んでいますか。', pictures: ['☕', '🥛', '🍵'], labels: ['コーヒー', '牛乳', 'お茶'], correct: 0},
+  
+  {type: 'picture', audio: '犬と散歩しています。', question: '誰と散歩していますか。', pictures: ['🐕', '🐈', '🐦'], labels: ['犬', '猫', '鳥'], correct: 0},
+  {type: 'picture', audio: 'パソコンで仕事をしています。', question: '何で仕事をしていますか。', pictures: ['💻', '📱', '📚'], labels: ['パソコン', '携帯', '本'], correct: 0},
+  {type: 'picture', audio: '時計を見ています。', question: '何を見ていますか。', pictures: ['⏰', '📺', '📷'], labels: ['時計', 'テレビ', 'カメラ'], correct: 0},
+  {type: 'picture', audio: 'ピザを食べています。', question: '何を食べていますか。', pictures: ['🍕', '🍔', '🍜'], labels: ['ピザ', 'ハンバーガー', 'ラーメン'], correct: 0},
+  {type: 'picture', audio: 'サッカーをしています。', question: '何をしていますか。', pictures: ['⚽', '🏀', '⚾'], labels: ['サッカー', 'バスケ', '野球'], correct: 0},
+  
+  {type: 'picture', audio: '花を見ています。', question: '何を見ていますか。', pictures: ['🌸', '🌳', '🌈'], labels: ['花', '木', '虹'], correct: 0},
+  {type: 'picture', audio: 'ケーキを作っています。', question: '何を作っていますか。', pictures: ['🍰', '🍞', '🍪'], labels: ['ケーキ', 'パン', 'クッキー'], correct: 0},
+  {type: 'picture', audio: '電話をかけています。', question: '何をしていますか。', pictures: ['📞', '✉️', '💬'], labels: ['電話', 'メール', 'チャット'], correct: 0},
+  {type: 'picture', audio: 'ギターを弾いています。', question: '何をしていますか。', pictures: ['🎸', '🎹', '🥁'], labels: ['ギター', 'ピアノ', 'ドラム'], correct: 0},
+  {type: 'picture', audio: 'バスに乗ります。', question: '何に乗りますか。', pictures: ['🚌', '🚂', '✈️'], labels: ['バス', '電車', '飛行機'], correct: 0},
+  
+  {type: 'picture', audio: '雪が降っています。', question: '天気はどうですか。', pictures: ['🌧️', '❄️', '⛈️'], labels: ['雨', '雪', '雷'], correct: 1},
+  {type: 'picture', audio: '帽子をかぶっています。', question: '何をかぶっていますか。', pictures: ['🎩', '👓', '👔'], labels: ['帽子', 'メガネ', 'ネクタイ'], correct: 0},
+  {type: 'picture', audio: '魚を食べています。', question: '何を食べていますか。', pictures: ['🐟', '🍖', '🍗'], labels: ['魚', '肉', 'チキン'], correct: 0},
+  {type: 'picture', audio: '絵を描いています。', question: '何をしていますか。', pictures: ['🎨', '📝', '🔍'], labels: ['絵を描く', '書く', '探す'], correct: 0},
+  {type: 'picture', audio: '山に登っています。', question: 'どこにいますか。', pictures: ['⛰️', '🏖️', '🏙️'], labels: ['山', '海', '街'], correct: 0},
+  
+  {type: 'picture', audio: 'プレゼントをもらいました。', question: '何をもらいましたか。', pictures: ['🎁', '💐', '🎂'], labels: ['プレゼント', '花', 'ケーキ'], correct: 0},
+  {type: 'picture', audio: '星を見ています。', question: '何を見ていますか。', pictures: ['⭐', '🌙', '☀️'], labels: ['星', '月', '太陽'], correct: 0},
+  {type: 'picture', audio: 'タクシーで行きます。', question: '何で行きますか。', pictures: ['🚕', '🚲', '🚶'], labels: ['タクシー', '自転車', '歩き'], correct: 0},
+  {type: 'picture', audio: 'アイスクリームを食べています。', question: '何を食べていますか。', pictures: ['🍦', '🍰', '🍩'], labels: ['アイス', 'ケーキ', 'ドーナツ'], correct: 0},
+  {type: 'picture', audio: '猫がいます。', question: '何がいますか。', pictures: ['🐈', '🐕', '🐇'], labels: ['猫', '犬', 'うさぎ'], correct: 0},
+  
+  {type: 'picture', audio: '飛行機で旅行します。', question: '何で旅行しますか。', pictures: ['✈️', '🚂', '🚢'], labels: ['飛行機', '電車', '船'], correct: 0},
+  {type: 'picture', audio: 'カメラで写真を撮ります。', question: '何を使いますか。', pictures: ['📷', '📱', '💻'], labels: ['カメラ', '携帯', 'パソコン'], correct: 0},
+  {type: 'picture', audio: '映画を見ています。', question: '何をしていますか。', pictures: ['🎬', '📺', '📖'], labels: ['映画', 'テレビ', '本'], correct: 0},
+  {type: 'picture', audio: '靴を買いました。', question: '何を買いましたか。', pictures: ['👟', '👕', '👖'], labels: ['靴', 'シャツ', 'ズボン'], correct: 0},
+  {type: 'picture', audio: 'トマトが好きです。', question: '何が好きですか。', pictures: ['🍅', '🥕', '🥒'], labels: ['トマト', '人参', 'きゅうり'], correct: 0},
+  
+  {type: 'picture', audio: '手紙を書いています。', question: '何をしていますか。', pictures: ['✉️', '📱', '💻'], labels: ['手紙', '携帯', 'パソコン'], correct: 0},
+  {type: 'picture', audio: '夜です。', question: 'いつですか。', pictures: ['🌙', '☀️', '🌅'], labels: ['夜', '昼', '朝'], correct: 0},
+  {type: 'picture', audio: 'ジュースを飲んでいます。', question: '何を飲んでいますか。', pictures: ['🧃', '🥤', '🍷'], labels: ['ジュース', 'ソーダ', 'ワイン'], correct: 0},
+  {type: 'picture', audio: 'バナナを食べています。', question: '何を食べていますか。', pictures: ['🍌', '🍎', '🍇'], labels: ['バナナ', 'りんご', 'ぶどう'], correct: 0},
+  {type: 'picture', audio: '傘を持っています。', question: '何を持っていますか。', pictures: ['☂️', '👜', '📱'], labels: ['傘', 'カバン', '携帯'], correct: 0},
+  
+  {type: 'picture', audio: '公園で遊んでいます。', question: 'どこで遊んでいますか。', pictures: ['🏞️', '🏫', '🏠'], labels: ['公園', '学校', '家'], correct: 0},
+  {type: 'picture', audio: 'ラーメンを食べています。', question: '何を食べていますか。', pictures: ['🍜', '🍕', '🍔'], labels: ['ラーメン', 'ピザ', 'ハンバーガー'], correct: 0},
+  {type: 'picture', audio: '鳥がいます。', question: '何がいますか。', pictures: ['🐦', '🐕', '🐈'], labels: ['鳥', '犬', '猫'], correct: 0},
+  {type: 'picture', audio: '赤い車です。', question: '何色の車ですか。', pictures: ['🔴', '🔵', '🟡'], labels: ['赤', '青', '黄色'], correct: 0},
+  {type: 'picture', audio: '海で泳いでいます。', question: 'どこで泳いでいますか。', pictures: ['🏖️', '🏊', '⛰️'], labels: ['海', 'プール', '山'], correct: 0},
+  
+  {type: 'picture', audio: 'パンを食べています。', question: '何を食べていますか。', pictures: ['🍞', '🍚', '🍝'], labels: ['パン', 'ご飯', 'パスタ'], correct: 0},
+  {type: 'picture', audio: '家にいます。', question: 'どこにいますか。', pictures: ['🏠', '🏫', '🏢'], labels: ['家', '学校', '会社'], correct: 0},
+  {type: 'picture', audio: 'メガネをかけています。', question: '何をかけていますか。', pictures: ['👓', '🎩', '⌚'], labels: ['メガネ', '帽子', '時計'], correct: 0},
+  {type: 'picture', audio: 'ケーキを食べています。', question: '何を食べていますか。', pictures: ['🍰', '🍪', '🍩'], labels: ['ケーキ', 'クッキー', 'ドーナツ'], correct: 0},
+  {type: 'picture', audio: '青い空です。', question: '空は何色ですか。', pictures: ['🔵', '⚪', '⚫'], labels: ['青', '白', '黒'], correct: 0},
+  
+  {type: 'picture', audio: '学校に行きます。', question: 'どこに行きますか。', pictures: ['🏫', '🏠', '🏪'], labels: ['学校', '家', '店'], correct: 0},
+  {type: 'picture', audio: 'サンドイッチを食べています。', question: '何を食べていますか。', pictures: ['🥪', '🍕', '🍔'], labels: ['サンドイッチ', 'ピザ', 'ハンバーガー'], correct: 0},
+  {type: 'picture', audio: '水を飲んでいます。', question: '何を飲んでいますか。', pictures: ['💧', '☕', '🥛'], labels: ['水', 'コーヒー', '牛乳'], correct: 0},
+  {type: 'picture', audio: '電車で通勤します。', question: '何で通勤しますか。', pictures: ['🚂', '🚌', '🚗'], labels: ['電車', 'バス', '車'], correct: 0},
+  {type: 'picture', audio: 'りんごが好きです。', question: '何が好きですか。', pictures: ['🍎', '🍌', '🍊'], labels: ['りんご', 'バナナ', 'オレンジ'], correct: 0},
+  
+  {type: 'picture', audio: '晴れています。', question: '天気はどうですか。', pictures: ['☀️', '🌧️', '☁️'], labels: ['晴れ', '雨', '曇り'], correct: 0},
+  {type: 'picture', audio: '走っています。', question: '何をしていますか。', pictures: ['🏃', '🚶', '🧘'], labels: ['走る', '歩く', '座る'], correct: 0},
+  {type: 'picture', audio: 'チョコレートを食べています。', question: '何を食べていますか。', pictures: ['🍫', '🍬', '🍭'], labels: ['チョコ', 'キャンディー', 'あめ'], correct: 0},
+  {type: 'picture', audio: '病院に行きます。', question: 'どこに行きますか。', pictures: ['🏥', '🏫', '🏪'], labels: ['病院', '学校', '店'], correct: 0},
+  {type: 'picture', audio: '卵を食べています。', question: '何を食べていますか。', pictures: ['🥚', '🍖', '🐟'], labels: ['卵', '肉', '魚'], correct: 0},
+  
+  {type: 'picture', audio: '木があります。', question: '何がありますか。', pictures: ['🌳', '🌸', '🌈'], labels: ['木', '花', '虹'], correct: 0},
+  {type: 'picture', audio: '牛乳を飲んでいます。', question: '何を飲んでいますか。', pictures: ['🥛', '🧃', '☕'], labels: ['牛乳', 'ジュース', 'コーヒー'], correct: 0},
+  {type: 'picture', audio: '黄色い花です。', question: '花は何色ですか。', pictures: ['🟡', '🔴', '🔵'], labels: ['黄色', '赤', '青'], correct: 0},
+  {type: 'picture', audio: 'ハンバーガーを食べています。', question: '何を食べていますか。', pictures: ['🍔', '🍕', '🌭'], labels: ['ハンバーガー', 'ピザ', 'ホットドッグ'], correct: 0},
+  {type: 'picture', audio: '歩いています。', question: '何をしていますか。', pictures: ['🚶', '🏃', '🚴'], labels: ['歩く', '走る', '自転車'], correct: 0},
+
+  // MARU/BATSU QUESTIONS (161-200)
+  {type: 'marubatsu', audio: '東京は日本の首都です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '日本語は簡単です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '犬は動物です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '東京タワーは大阪にあります。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: 'すしは日本料理です。', question: 'この文は正しいですか。', correct: true},
+  
+  {type: 'marubatsu', audio: '一週間は八日です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '富士山は日本で一番高い山です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'コーヒーは野菜です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '猫はペットです。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '一年は十ヶ月です。', question: 'この文は正しいですか。', correct: false},
+  
+  {type: 'marubatsu', audio: '桜は春に咲きます。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '水は熱いです。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '日本は島国です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'りんごは肉です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '電車は交通手段です。', question: 'この文は正しいですか。', correct: true},
+  
+  {type: 'marubatsu', audio: '月は太陽より大きいです。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '学校で勉強します。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'バナナは青い果物です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '図書館で本を読めます。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '車は空を飛びます。', question: 'この文は正しいですか。', correct: false},
+  
+  {type: 'marubatsu', audio: '夏は暑いです。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '魚は木に住んでいます。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '病院は病気の人が行く場所です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'パンは飲み物です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '日本語にはひらがながあります。', question: 'この文は正しいですか。', correct: true},
+  
+  {type: 'marubatsu', audio: '冬は寒いです。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '靴は頭にかぶります。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: 'スーパーで食べ物を買えます。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '机は食べ物です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '朝ごはんは朝食べます。', question: 'この文は正しいですか。', correct: true},
+  
+  {type: 'marubatsu', audio: '日本の通貨は円です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'ペンは動物です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: 'レストランで食事ができます。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'テレビは食べられます。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '水泳はスポーツです。', question: 'この文は正しいですか。', correct: true},
+  
+  {type: 'marubatsu', audio: '本は読みます。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: '椅子は飛びます。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '新幹線は速い電車です。', question: 'この文は正しいですか。', correct: true},
+  {type: 'marubatsu', audio: 'カレーは飲み物です。', question: 'この文は正しいですか。', correct: false},
+  {type: 'marubatsu', audio: '郵便局で手紙を送れます。', question: 'この文は正しいですか。', correct: true}
+];
+
+let currentQuestion = 0;
+let score = 0;
+let userAnswers = [];
+
+const synth = window.speechSynthesis;
+let japaneseVoice = null;
+
+// Initialize Japanese voice
+function initVoice() {
+  const voices = synth.getVoices();
+  japaneseVoice = voices.find(v => v.lang === 'ja-JP') || voices.find(v => v.lang.startsWith('ja'));
+  if (!japaneseVoice) {
+    console.warn('Japanese voice not found, using default');
+  }
+}
+
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = initVoice;
+}
+initVoice();
+
+function playAudio(text) {
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ja-JP';
+  utterance.rate = 0.85;
+  if (japaneseVoice) {
+    utterance.voice = japaneseVoice;
+  }
+  synth.speak(utterance);
+}
+
+function updateProgress() {
+  const progress = ((currentQuestion) / questions.length) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progressBar').textContent = `${currentQuestion} / ${questions.length}`;
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  const container = document.getElementById('quizContainer');
+  
+  let typeLabel = '';
+  if (q.type === 'conversation') typeLabel = '会話理解';
+  else if (q.type === 'picture') typeLabel = '絵を選ぶ';
+  else if (q.type === 'marubatsu') typeLabel = '○✕問題';
+  
+  let optionsHTML = '';
+  
+  if (q.type === 'conversation') {
+    optionsHTML = '<div class="options">';
+    q.options.forEach((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      optionsHTML += `
+        <div class="option" data-index="${i}">
+          <div class="option-letter">${letter}</div>
+          <span>${opt}</span>
+        </div>
+      `;
+    });
+    optionsHTML += '</div>';
+  } else if (q.type === 'picture') {
+    optionsHTML = '<div class="picture-options">';
+    q.pictures.forEach((pic, i) => {
+      optionsHTML += `
+        <div class="picture-option" data-index="${i}">
+          <div style="font-size:64px;">${pic}</div>
+          <div class="picture-label">${q.labels[i]}</div>
+        </div>
+      `;
+    });
+    optionsHTML += '</div>';
+  } else if (q.type === 'marubatsu') {
+    optionsHTML = `
+      <div class="options">
+        <div class="option" data-value="true">
+          <div class="option-letter">○</div>
+          <span>正しい (Maru)</span>
+        </div>
+        <div class="option" data-value="false">
+          <div class="option-letter">✕</div>
+          <span>間違い (Batsu)</span>
+        </div>
+      </div>
+    `;
+  }
+  
+  container.innerHTML = `
+    <div class="question-card">
+      <div class="question-header">
+        <div class="question-type">${typeLabel}</div>
+        <div class="question-num">問題 ${currentQuestion + 1} / ${questions.length}</div>
+      </div>
+      
+      <div class="audio-player">
+        <button class="play-btn" onclick="playAudio('${q.audio.replace(/'/g, "\\'")}')">▶</button>
+        <div class="audio-info">
+          <div class="audio-label">音声を聞いてください</div>
+          <div class="audio-text">クリックして再生</div>
+        </div>
+      </div>
+      
+      <div class="question-text">${q.question}</div>
+      
+      ${optionsHTML}
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" id="submitBtn" disabled>答える</button>
+      </div>
+      
+      <div id="feedback"></div>
+    </div>
+  `;
+  
+  // Add click handlers
+  const options = container.querySelectorAll('.option, .picture-option');
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      options.forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      document.getElementById('submitBtn').disabled = false;
+    });
+  });
+  
+  document.getElementById('submitBtn').addEventListener('click', checkAnswer);
+  
+  // Auto-play audio
+  setTimeout(() => playAudio(q.audio), 300);
+}
+
+function checkAnswer() {
+  const q = questions[currentQuestion];
+  const selected = document.querySelector('.option.selected, .picture-option.selected');
+  
+  if (!selected) return;
+  
+  let userAnswer;
+  let isCorrect;
+  
+  if (q.type === 'marubatsu') {
+    userAnswer = selected.dataset.value === 'true';
+    isCorrect = userAnswer === q.correct;
+  } else {
+    userAnswer = parseInt(selected.dataset.index);
+    isCorrect = userAnswer === q.correct;
+  }
+  
+  userAnswers.push({
+    question: currentQuestion,
+    userAnswer: userAnswer,
+    correct: isCorrect
+  });
+  
+  if (isCorrect) {
+    score++;
+    selected.classList.add('correct');
+  } else {
+    selected.classList.add('wrong');
+    // Show correct answer
+    if (q.type === 'marubatsu') {
+      document.querySelector(`.option[data-value="${q.correct}"]`).classList.add('correct');
+    } else {
+      document.querySelectorAll('.option, .picture-option')[q.correct].classList.add('correct');
+    }
+  }
+  
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  feedback.innerHTML = isCorrect 
+    ? '✓ 正解です！ (Correct!)' 
+    : `✗ 残念。正解は: ${q.type === 'marubatsu' ? (q.correct ? '○ 正しい' : '✕ 間違い') : (q.type === 'conversation' ? q.options[q.correct] : q.labels[q.correct])}`;
+  
+  document.getElementById('submitBtn').textContent = currentQuestion < questions.length - 1 ? '次へ' : '結果を見る';
+  document.getElementById('submitBtn').onclick = nextQuestion;
+}
+
+function nextQuestion() {
+  currentQuestion++;
+  updateProgress();
+  
+  if (currentQuestion < questions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function showResults() {
+  const percentage = Math.round((score / questions.length) * 100);
+  const container = document.getElementById('quizContainer');
+  
+  let emoji = '🎉';
+  let message = '素晴らしい！';
+  
+  if (percentage >= 90) {
+    emoji = '🏆';
+    message = '完璧です！';
+  } else if (percentage >= 70) {
+    emoji = '🎉';
+    message = '素晴らしい！';
+  } else if (percentage >= 50) {
+    emoji = '👍';
+    message = '良くできました！';
+  } else {
+    emoji = '💪';
+    message = 'もう少し頑張りましょう！';
+  }
+  
+  container.innerHTML = `
+    <div class="results-card">
+      <div class="results-icon">${emoji}</div>
+      <h2 class="results-title">${message}</h2>
+      <div class="results-score">${percentage}%</div>
+      
+      <div class="results-stats">
+        <div class="stat">
+          <span class="stat-num">${score}</span>
+          <span class="stat-label">正解</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">${questions.length - score}</span>
+          <span class="stat-label">不正解</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">${questions.length}</span>
+          <span class="stat-label">合計</span>
+        </div>
+      </div>
+      
+      <div class="btn-group">
+        <button class="btn btn-primary" onclick="location.reload()">もう一度</button>
+        <button class="btn btn-secondary" onclick="location.href='index.html'">ホームへ</button>
+      </div>
+    </div>
+  `;
+}
+
+// Initialize
+updateProgress();
+renderQuestion();
+</script>
+
+</body>
+</html>
