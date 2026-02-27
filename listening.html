@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>✨ Jv Cataquiz's Listening - JLPT N5</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c14;
+  --surface: rgba(255,255,255,0.04);
+  --surface-hover: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --border-hover: rgba(255,255,255,0.18);
+  --text: #e8eaf0;
+  --muted: rgba(232,234,240,0.45);
+  --gold: #f0c060;
+  --listening: #ff6b9d;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;position:relative;}
+.bg-grid{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.025) 1px,transparent 1px);background-size:60px 60px;z-index:0;pointer-events:none;}
+.bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;top:-150px;left:50%;transform:translateX(-50%);z-index:0;pointer-events:none;animation:bgpulse 6s ease-in-out infinite;}
+.bg-glow-2{position:fixed;width:350px;height:350px;border-radius:50%;bottom:-80px;right:-80px;z-index:0;pointer-events:none;animation:bgpulse 8s ease-in-out infinite reverse;}
+@keyframes bgpulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:14px 32px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.topbar-brand{font-family:'Shippori Mincho',serif;font-size:15px;font-weight:700;color:var(--gold);letter-spacing:0.05em;}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.topbar-tag{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;background:var(--surface);border:1px solid var(--border);padding:4px 14px;border-radius:20px;}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;background:var(--surface);border:1px solid var(--border);padding:5px 14px;border-radius:20px;letter-spacing:0.05em;transition:color 0.2s,border-color 0.2s,background 0.2s;}
+.back-btn:hover{color:var(--text);border-color:var(--border-hover);background:var(--surface-hover);}
+.bottombar{position:fixed;bottom:0;left:0;right:0;z-index:100;text-align:center;padding:12px;background:rgba(8,12,20,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);font-size:12px;color:var(--muted);letter-spacing:0.05em;}
+.main{position:relative;z-index:1;width:100%;max-width:860px;padding:100px 28px 72px;display:flex;flex-direction:column;align-items:center;}
+.page-hero{width:100%;text-align:center;margin-bottom:40px;animation:fadeUp 0.7s ease both;}
+.hero-image{width:120px;height:120px;border-radius:50%;margin:0 auto 20px;overflow:hidden;border:3px solid var(--listening);box-shadow:0 8px 32px rgba(255,107,157,0.2);animation:float 3s ease-in-out infinite;}
+.hero-image img{width:100%;height:100%;object-fit:cover;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.page-char{font-family:'Shippori Mincho',serif;font-size:64px;font-weight:800;line-height:1;margin-bottom:8px;}
+.page-title{font-size:clamp(22px,5vw,32px);font-weight:600;letter-spacing:-0.01em;margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--muted);font-weight:300;}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;width:100%;margin-top:8px;animation:fadeUp 0.7s ease 0.1s both;}
+.mode-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px 24px;text-align:left;cursor:pointer;transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.3s,border-color 0.3s,background 0.3s;display:flex;flex-direction:column;gap:8px;}
+.mode-card:hover{transform:translateY(-5px);border-color:var(--border-hover);background:var(--surface-hover);}
+.mode-icon{font-size:32px;margin-bottom:4px;}
+.mode-label{font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);}
+.mode-name{font-size:20px;font-weight:600;}
+.mode-desc{font-size:13px;color:var(--muted);font-weight:300;line-height:1.5;}
+.section-box{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px;animation:fadeUp 0.6s ease both;}
+.section-title{font-size:18px;font-weight:600;margin-bottom:4px;}
+.section-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.part-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-bottom:20px;}
+.part-btn{padding:18px 14px;border-radius:14px;cursor:pointer;font-weight:600;font-size:13px;border:1px solid var(--border);background:var(--surface);color:var(--text);transition:transform 0.2s,border-color 0.2s,background 0.2s;line-height:1.5;text-align:center;}
+.part-btn:hover{transform:translateY(-2px);background:var(--surface-hover);}
+.cancel-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:9px 22px;border-radius:10px;font-size:14px;cursor:pointer;transition:color 0.2s,border-color 0.2s;}
+.cancel-btn:hover{color:var(--text);border-color:var(--border-hover);}
+
+/* EXAM */
+.exam-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.exam-progress-bar{width:100%;height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:20px;overflow:hidden;}
+.exam-progress-fill{height:100%;border-radius:2px;transition:width 0.4s ease;}
+.exam-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:48px 40px 40px;text-align:center;margin-bottom:20px;min-height:200px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;}
+.exam-counter{font-size:11px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:24px;}
+.exam-jp{font-family:'Shippori Mincho',serif;font-size:clamp(34px,8vw,54px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+
+.audio-player{display:flex;align-items:center;gap:16px;background:rgba(255,107,157,0.08);border:1px solid rgba(255,107,157,0.2);border-radius:16px;padding:20px;margin-bottom:24px;width:100%;}
+.play-btn{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#ff6b9d,#ffa6c1);border:none;color:#fff;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform 0.2s,box-shadow 0.2s;flex-shrink:0;}
+.play-btn:hover{transform:scale(1.05);box-shadow:0 8px 24px rgba(255,107,157,0.3);}
+.play-btn:active{transform:scale(0.95);}
+.audio-info{flex:1;text-align:left;}
+.audio-label{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;}
+.audio-text{font-size:14px;color:var(--text);font-weight:500;}
+
+.question-text{font-size:18px;font-weight:500;color:var(--text);margin-bottom:20px;line-height:1.6;}
+
+.question-image{width:100%;max-width:400px;margin:0 auto 24px;border-radius:16px;overflow:hidden;border:2px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.2);}
+.question-image img{width:100%;height:auto;display:block;}
+
+.options{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+.option{background:var(--surface);border:2px solid var(--border);border-radius:14px;padding:18px 24px;cursor:pointer;transition:all 0.2s ease;display:flex;align-items:center;gap:14px;font-size:15px;}
+.option:hover{background:var(--surface-hover);border-color:var(--border-hover);}
+.option.selected{border-color:var(--listening);background:rgba(255,107,157,0.08);}
+.option.correct{border-color:#4ade80;background:rgba(74,222,128,0.08);}
+.option.wrong{border-color:#ff6b6b;background:rgba(255,107,107,0.08);}
+.option-letter{width:32px;height:32px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0;}
+.option.selected .option-letter{background:var(--listening);color:#fff;}
+.option.correct .option-letter{background:#4ade80;color:#fff;}
+.option.wrong .option-letter{background:#ff6b6b;color:#fff;}
+
+.picture-options{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:24px;}
+.picture-option{aspect-ratio:1;background:var(--surface);border:3px solid var(--border);border-radius:16px;cursor:pointer;transition:all 0.2s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;position:relative;}
+.picture-option:hover{background:var(--surface-hover);border-color:var(--border-hover);transform:scale(1.02);}
+.picture-option.selected{border-color:var(--listening);background:rgba(255,107,157,0.08);}
+.picture-option.correct{border-color:#4ade80;background:rgba(74,222,128,0.08);}
+.picture-option.wrong{border-color:#ff6b6b;background:rgba(255,107,107,0.08);}
+.picture-emoji{font-size:64px;margin-bottom:12px;}
+.picture-label{font-size:13px;color:var(--muted);font-weight:500;}
+
+/* MAP STYLES */
+.map-container{position:relative;background:var(--surface);border:2px solid var(--border);border-radius:16px;padding:30px;margin-bottom:24px;max-width:600px;width:100%;}
+.map-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative;}
+.map-cell{aspect-ratio:1;background:rgba(255,255,255,0.03);border:2px solid var(--border);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center;font-size:13px;transition:all 0.2s;}
+.map-cell.selectable{cursor:pointer;}
+.map-cell.selectable:hover{background:var(--surface-hover);border-color:var(--border-hover);transform:scale(1.05);}
+.map-cell.selected{border-color:var(--listening);background:rgba(255,107,157,0.08);}
+.map-cell.correct{border-color:#4ade80;background:rgba(74,222,128,0.08);}
+.map-cell.wrong{border-color:#ff6b6b;background:rgba(255,107,107,0.08);}
+.map-icon{font-size:36px;margin-bottom:4px;}
+.map-label{font-size:11px;color:var(--muted);}
+
+/* INPUT STYLES */
+.input-group{display:flex;flex-direction:column;gap:12px;margin-bottom:24px;max-width:400px;width:100%;}
+.input-label{font-size:14px;color:var(--muted);text-align:left;}
+.text-input{width:100%;padding:14px 18px;font-size:16px;font-family:'DM Sans',sans-serif;background:rgba(255,255,255,0.05);border:2px solid var(--border);border-radius:12px;color:var(--text);outline:none;transition:border-color 0.2s,background 0.2s;}
+.text-input:focus{border-color:var(--listening);background:rgba(255,255,255,0.08);}
+.text-input.correct{border-color:#4ade80;background:rgba(74,222,128,0.05);}
+.text-input.wrong{border-color:#ff6b6b;background:rgba(255,107,107,0.05);}
+
+.feedback{padding:14px 20px;border-radius:12px;margin-top:16px;font-size:14px;font-weight:500;text-align:center;}
+.feedback.correct{background:rgba(74,222,128,0.15);border:1px solid rgba(74,222,128,0.3);color:#4ade80;}
+.feedback.wrong{background:rgba(255,107,107,0.15);border:1px solid rgba(255,107,107,0.3);color:#ff6b6b;}
+
+/* Shared Buttons */
+.btn-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+.btn{padding:11px 22px;border-radius:10px;font-size:14px;font-weight:500;border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;transition:transform 0.2s,background 0.2s,border-color 0.2s;font-family:'DM Sans',sans-serif;}
+.btn:hover{transform:translateY(-2px);background:var(--surface-hover);border-color:var(--border-hover);}
+.btn-primary{border-color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.07);}
+.btn-primary:hover{background:rgba(255,255,255,0.12);}
+.btn:disabled{opacity:0.5;cursor:not-allowed;transform:none!important;}
+
+/* Results */
+.results-wrap{width:100%;animation:fadeUp 0.6s ease both;}
+.results-header{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:36px;text-align:center;margin-bottom:16px;}
+.results-score{font-family:'Shippori Mincho',serif;font-size:clamp(48px,10vw,72px);font-weight:800;line-height:1;}
+.results-label{font-size:14px;color:var(--muted);margin-top:8px;}
+.results-stats{display:flex;gap:24px;justify-content:center;margin:24px 0;}
+.stat{text-align:center;}
+.stat-num{font-size:32px;font-weight:700;color:var(--text);display:block;margin-bottom:4px;}
+.stat-label{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;}
+
+.hidden{display:none!important;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:600px){
+  .topbar{padding:12px 16px;}
+  .topbar-tag{display:none;}
+  .main{padding:88px 16px 64px;}
+  .mode-grid{grid-template-columns:1fr;}
+  .exam-card{padding:36px 22px 30px;}
+  .section-box{padding:22px 16px;}
+  .part-grid{grid-template-columns:repeat(auto-fill,minmax(105px,1fr));}
+  .btn{padding:10px 16px;font-size:13px;}
+  .picture-options{grid-template-columns:1fr;}
+  .map-grid{grid-template-columns:repeat(3,1fr);gap:8px;}
+  .map-cell{padding:8px;}
+  .map-icon{font-size:28px;}
+}
+</style>
+
+<style>
+.page-char{color:#ff6b9d;}
+.mode-card:hover{box-shadow:0 20px 50px rgba(255,107,157,0.12);}
+.btn-submit{background:rgba(240,192,96,0.12);border-color:rgba(240,192,96,0.35);color:var(--gold);}
+.btn-submit:hover{background:rgba(240,192,96,0.22);border-color:var(--gold);}
+.exam-progress-fill{background:#ff6b9d;}
+.part-btn:hover{border-color:#ff6b9d70;box-shadow:0 4px 20px rgba(255,107,157,0.12);}
+.bg-glow{background:radial-gradient(circle,rgba(255,107,157,0.1) 0%,transparent 70%);}
+.bg-glow-2{background:radial-gradient(circle,rgba(240,192,96,0.06) 0%,transparent 70%);}
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="bg-glow-2"></div>
+
+<header class="topbar">
+  <span class="topbar-brand">✨ Jv Cataquiz's Learning Hub</span>
+  <div class="topbar-right">
+    <span class="topbar-tag">JLPT N5</span>
+    <a href="index.html" class="back-btn">← Hub</a>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- Page Hero -->
+  <div id="mainMenu" class="page-hero">
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=300&h=300&fit=crop&crop=faces" alt="Woman listening">
+    </div>
+    <div class="page-char">聴</div>
+    <div class="page-title">Listening Practice</div>
+    <div class="page-sub">N5 Level • Audio Practice</div>
+  </div>
+
+  <!-- Mode Selection -->
+  <div id="modeSelection" class="mode-grid">
+    <div class="mode-card" onclick="selectMode('exam')">
+      <div class="mode-icon">📝</div>
+      <div class="mode-label">Mode 01</div>
+      <div class="mode-name">Exam Mode</div>
+      <div class="mode-desc">Test your listening comprehension with timed questions across 20 parts.</div>
+    </div>
+  </div>
+
+  <!-- Part Selection Screen -->
+  <div id="partSelection" class="section-box hidden">
+    <h2 class="section-title">Select Exam Part</h2>
+    <p class="section-sub">Choose which listening category you want to practice</p>
+    <div class="part-grid" id="partGrid"></div>
+    <button class="cancel-btn" onclick="backToMenu()">← Back to Menu</button>
+  </div>
+
+  <!-- Exam Screen -->
+  <div id="examScreen" class="exam-wrap hidden">
+    <div class="exam-progress-bar">
+      <div class="exam-progress-fill" id="progressBar" style="width:0%;">0 / 0</div>
+    </div>
+    <div class="exam-card" id="questionCard"></div>
+  </div>
+
+  <!-- Results Screen -->
+  <div id="resultsScreen" class="results-wrap hidden">
+    <div class="results-header">
+      <div class="results-score" id="finalScore">0%</div>
+      <div class="results-label" id="scoreMessage">けっか</div>
+      <div class="results-stats">
+        <div class="stat">
+          <span class="stat-num" id="correctCount">0</span>
+          <span class="stat-label">正解 (Correct)</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="wrongCount">0</span>
+          <span class="stat-label">不正解 (Wrong)</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num" id="totalCount">0</span>
+          <span class="stat-label">合計 (Total)</span>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="backToMenu()">← Back to Menu</button>
+      <button class="btn btn-secondary" onclick="location.href='index.html'">🏠 Home</button>
+    </div>
+  </div>
+
+</main>
+
+<footer class="bottombar">© 2026 ✨ Jv Cataquiz's Learning Platform &nbsp;·&nbsp; All rights reserved</footer>
+
+<script>
+// ============================================================================
+// JAPANESE NUMBERING
+// ============================================================================
+const japaneseNumbers = [
+  'いちばん', 'にばん', 'さんばん', 'よんばん', 'ごばん',
+  'ろくばん', 'ななばん', 'はちばん', 'きゅうばん', 'じゅうばん',
+  'じゅういちばん', 'じゅうにばん', 'じゅうさんばん', 'じゅうよんばん', 'じゅうごばん',
+  'じゅうろくばん', 'じゅうななばん', 'じゅうはちばん', 'じゅうきゅうばん', 'にじゅうばん'
+];
+
+// ============================================================================
+// DATA STRUCTURE - Enhanced with new question types
+// ============================================================================
+
+const listeningData = {
+  // Part 1: まる/ばつ - Basic sentences (20 items with images)
+  1: [
+    {type:'marubatsu', audio:'さくらははるにさきます。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1522383225653-ed111181a951?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'みずはあついです。', question:'このぶんはただしいですか。', correct:false, image:'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'にほんはしまぐにです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'りんごはにくです。', question:'このぶんはただしいですか。', correct:false, image:'https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'でんしゃはこうつうしゅだんです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1464037866556-6812c9d1c72e?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'なつはあついです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'ふゆはさむいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1483664852095-d6cc6870702d?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'あきはすずしいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1477414956199-7dafc86a4f1a?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'はるはあたたかいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'ねこはどうぶつです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'ほんはたべものです。', question:'このぶんはただしいですか。', correct:false, image:'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'くるまははやいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'つきはおおきいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1509803874385-db7c23652552?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'たいようはつめたいです。', question:'このぶんはただしいですか。', correct:false, image:'https://images.unsplash.com/photo-1532693322450-2cb5c511067d?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'やまはたかいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'うみはしずかです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1505142468610-359e7d316be0?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'いぬはあかいです。', question:'このぶんはただしいですか。', correct:false, image:'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'はなはきれいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'そらはあおいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1517483000871-1dbf64a6e1c6?w=400&h=300&fit=crop'},
+    {type:'marubatsu', audio:'かみはくろいです。', question:'このぶんはただしいですか。', correct:true, image:'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=400&h=300&fit=crop'}
+  ],
+
+  // Part 2: Asking for directions (20 items with images)
+  2: [
+    {type:'direction', audio:'すみません、えきはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:0, image:'https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'ゆうびんきょくはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:1, image:'https://images.unsplash.com/photo-1603796846097-bee99e4a601f?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'トイレはどこですか。', question:'なんとこたえますか。', options:['にかいです。','いっかいです。','そとです。','むこうです。'], correct:0, image:'https://images.unsplash.com/photo-1585412727339-54e4bae3bbf9?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'すみません、がっこうはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:0, image:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'すみません、びょういんはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:1, image:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'すみません、こうばんはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:2, image:'https://images.unsplash.com/photo-1593115057322-e94b77572f20?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'ぎんこうはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:0, image:'https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'レストランはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:2, image:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'ホテルはどこですか。', question:'なんとこたえますか。', options:['にかいです。','いっかいです。','そとです。','むこうです。'], correct:3, image:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'こうえんはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:1, image:'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'としょかんはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:1, image:'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'スーパーはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:2, image:'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'カフェはどこですか。', question:'なんとこたえますか。', options:['にかいです。','いっかいです。','そとです。','むこうです。'], correct:1, image:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'くすりやはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:0, image:'https://images.unsplash.com/photo-1576602976047-174e57a47881?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'コンビニはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:0, image:'https://images.unsplash.com/photo-1555637411-90c97e4d8c82?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'バスていはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:2, image:'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'でぐちはどこですか。', question:'なんとこたえますか。', options:['にかいです。','いっかいです。','そとです。','むこうです。'], correct:2, image:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'うけつけはどこですか。', question:'なんとこたえますか。', options:['まっすぐいってください。','みぎにまがってください。','ひだりにまがってください。','もどってください。'], correct:1, image:'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'エレベーターはどこですか。', question:'なんとこたえますか。', options:['つぎのかどをみぎです。','つぎのかどをひだりです。','まっすぐです。','うしろです。'], correct:3, image:'https://images.unsplash.com/photo-1545558014-8692077e9b5c?w=400&h=300&fit=crop'},
+    {type:'direction', audio:'かいだんはどこですか。', question:'なんとこたえますか。', options:['にかいです。','いっかいです。','そとです。','むこうです。'], correct:3, image:'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=400&h=300&fit=crop'}
+  ],
+
+  // Part 3: "Where is it?" with location prepositions (120 items with maps)
+
+  // Part 3: "Where is it?" with location prepositions (20 items)
+  3: [
+    {type:'location', audio:'ねこはゆうびんきょくのまえにいます。', question:'ねこはどこですか。', mapLayout:['🏠','🐈','🚗','🏢','📮','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'📮', referenceLabel:'ゆうびんきょく'},
+    {type:'location', audio:'いぬはこうえんのとなりにいます。', question:'いぬはどこですか。', mapLayout:['🏠','🐕','🚗','🏢','🌳','🏪','🚌','📮','🏫'], correctPosition:1, referenceIcon:'🌳', referenceLabel:'こうえん'},
+    {type:'location', audio:'くるまはみせのうしろにあります。', question:'くるまはどこですか。', mapLayout:['🏠','🚗','🏢','📮','🏪','🚌','🌳','🐈','🏫'], correctPosition:1, referenceIcon:'🏪', referenceLabel:'みせ'},
+    {type:'location', audio:'ねこはがっこうのまえにいます。', question:'ねこはどこですか。', mapLayout:['🏠','🐈','🚗','🏢','🏫','🏪','🌳','🚌','📮'], correctPosition:1, referenceIcon:'🏫', referenceLabel:'がっこう'},
+    {type:'location', audio:'いぬはうちのとなりにいます。', question:'いぬはどこですか。', mapLayout:['🏠','🐕','🚗','🏢','🌳','🏪','🚌','📮','🏫'], correctPosition:1, referenceIcon:'🏠', referenceLabel:'うち'},
+    {type:'location', audio:'くるまはえきのうしろにあります。', question:'くるまはどこですか。', mapLayout:['🏠','🚗','🏢','📮','🚉','🏪','🌳','🐈','🏫'], correctPosition:1, referenceIcon:'🚉', referenceLabel:'えき'},
+    {type:'location', audio:'とりはきのうえにいます。', question:'とりはどこですか。', mapLayout:['🏠','🦜','🚗','🏢','🌳','🏪','🚌','📮','🏫'], correctPosition:1, referenceIcon:'🌳', referenceLabel:'き'},
+    {type:'location', audio:'ほんはつくえのうえにあります。', question:'ほんはどこですか。', mapLayout:['📚','🏠','🚗','🏢','🪑','🏪','🌳','🚌','🏫'], correctPosition:0, referenceIcon:'🪑', referenceLabel:'つくえ'},
+    {type:'location', audio:'かばんはいすのしたにあります。', question:'かばんはどこですか。', mapLayout:['🏠','💼','🚗','🏢','🪑','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🪑', referenceLabel:'いす'},
+    {type:'location', audio:'とけいはかべにあります。', question:'とけいはどこですか。', mapLayout:['🏠','⏰','🚗','🏢','🧱','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🧱', referenceLabel:'かべ'},
+    {type:'location', audio:'ねこはテーブルのしたにいます。', question:'ねこはどこですか。', mapLayout:['🏠','🐈','🚗','🏢','🍽️','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🍽️', referenceLabel:'テーブル'},
+    {type:'location', audio:'いぬははこのなかにいます。', question:'いぬはどこですか。', mapLayout:['🏠','🐕','🚗','🏢','📦','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'📦', referenceLabel:'はこ'},
+    {type:'location', audio:'かさはドアのよこにあります。', question:'かさはどこですか。', mapLayout:['🏠','☂️','🚗','🏢','🚪','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🚪', referenceLabel:'ドア'},
+    {type:'location', audio:'くつはげんかんにあります。', question:'くつはどこですか。', mapLayout:['🏠','👟','🚗','🏢','🚪','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🚪', referenceLabel:'げんかん'},
+    {type:'location', audio:'ボールはにわのそとにあります。', question:'ボールはどこですか。', mapLayout:['🏠','⚽','🚗','🏢','🏡','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🏡', referenceLabel:'にわ'},
+    {type:'location', audio:'じてんしゃはいえのまえにあります。', question:'じてんしゃはどこですか。', mapLayout:['🏠','🚲','🚗','🏢','📮','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🏠', referenceLabel:'いえ'},
+    {type:'location', audio:'こどもはこうえんのなかにいます。', question:'こどもはどこですか。', mapLayout:['🏠','👧','🚗','🏢','🌳','🏪','🚌','📮','🏫'], correctPosition:1, referenceIcon:'🌳', referenceLabel:'こうえん'},
+    {type:'location', audio:'はなはまどのそばにあります。', question:'はなはどこですか。', mapLayout:['🏠','🌸','🚗','🏢','🪟','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🪟', referenceLabel:'まど'},
+    {type:'location', audio:'でんわはベッドのよこにあります。', question:'でんわはどこですか。', mapLayout:['🏠','📱','🚗','🏢','🛏️','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🛏️', referenceLabel:'ベッド'},
+    {type:'location', audio:'ねこはソファーのうえにいます。', question:'ねこはどこですか。', mapLayout:['🏠','🐈','🚗','🏢','🛋️','🏪','🌳','🚌','🏫'], correctPosition:1, referenceIcon:'🛋️', referenceLabel:'ソファー'}
+  ],
+
+  // Part 4: Price questions (20 items)
+  4: [
+    {type:'price', audio:'このりんごはいくらですか。ひゃくえんです。', question:'いくらですか。', correctAnswer:'100', unit:'えん'},
+    {type:'price', audio:'このペンはいくらですか。ごじゅうえんです。', question:'いくらですか。', correctAnswer:'50', unit:'えん'},
+    {type:'price', audio:'このほんはいくらですか。はっぴゃくえんです。', question:'いくらですか。', correctAnswer:'800', unit:'えん'},
+    {type:'price', audio:'このノートはいくらですか。にひゃくえんです。', question:'いくらですか。', correctAnswer:'200', unit:'えん'},
+    {type:'price', audio:'このけしゴムはいくらですか。さんじゅうえんです。', question:'いくらですか。', correctAnswer:'30', unit:'えん'},
+    {type:'price', audio:'このかばんはいくらですか。さんぜんえんです。', question:'いくらですか。', correctAnswer:'3000', unit:'えん'},
+    {type:'price', audio:'このくつはいくらですか。ごせんえんです。', question:'いくらですか。', correctAnswer:'5000', unit:'えん'},
+    {type:'price', audio:'このシャツはいくらですか。にせんごひゃくえんです。', question:'いくらですか。', correctAnswer:'2500', unit:'えん'},
+    {type:'price', audio:'このとけいはいくらですか。いちまんえんです。', question:'いくらですか。', correctAnswer:'10000', unit:'えん'},
+    {type:'price', audio:'このけいたいはいくらですか。ごまんえんです。', question:'いくらですか。', correctAnswer:'50000', unit:'えん'},
+    {type:'price', audio:'このコーヒーはいくらですか。さんびゃくえんです。', question:'いくらですか。', correctAnswer:'300', unit:'えん'},
+    {type:'price', audio:'このケーキはいくらですか。よんひゃくえんです。', question:'いくらですか。', correctAnswer:'400', unit:'えん'},
+    {type:'price', audio:'このパンはいくらですか。ひゃくごじゅうえんです。', question:'いくらですか。', correctAnswer:'150', unit:'えん'},
+    {type:'price', audio:'このみずはいくらですか。ひゃくにじゅうえんです。', question:'いくらですか。', correctAnswer:'120', unit:'えん'},
+    {type:'price', audio:'このおちゃはいくらですか。にひゃくごじゅうえんです。', question:'いくらですか。', correctAnswer:'250', unit:'えん'},
+    {type:'price', audio:'このおべんとうはいくらですか。ろっぴゃくえんです。', question:'いくらですか。', correctAnswer:'600', unit:'えん'},
+    {type:'price', audio:'このサンドイッチはいくらですか。さんびゃくごじゅうえんです。', question:'いくらですか。', correctAnswer:'350', unit:'えん'},
+    {type:'price', audio:'このジュースはいくらですか。にひゃくはちじゅうえんです。', question:'いくらですか。', correctAnswer:'280', unit:'えん'},
+    {type:'price', audio:'このアイスはいくらですか。さんびゃくえんです。', question:'いくらですか。', correctAnswer:'300', unit:'えん'},
+    {type:'price', audio:'このおかしはいくらですか。いっぴゃくはちじゅうえんです。', question:'いくらですか。', correctAnswer:'180', unit:'えん'}
+  ],
+
+  // Part 5: あいさつ (Greetings) - 20 unique items
+  5: [
+    {type:'conversation', audio:'おはようございます。', question:'なんとこたえますか。', options:['おはようございます。','こんにちは。','こんばんは。','おやすみなさい。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'こんにちは。', question:'なんとこたえますか。', options:['おはようございます。','こんにちは。','こんばんは。','おやすみなさい。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'こんばんは。', question:'なんとこたえますか。', options:['おはようございます。','こんにちは。','こんばんは。','おやすみなさい。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'おやすみなさい。', question:'なんとこたえますか。', options:['おはようございます。','こんにちは。','こんばんは。','おやすみなさい。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'はじめまして。', question:'なんとこたえますか。', options:['はじめまして。どうぞよろしく。','さようなら。','ありがとう。','おかえり。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おひさしぶりです。', question:'なんとこたえますか。', options:['そうですね。','おひさしぶりですね。','はじめまして。','おやすみなさい。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'いってきます。', question:'なんとこたえますか。', options:['おかえりなさい。','いってらっしゃい。','ただいま。','おはよう。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'ただいま。', question:'なんとこたえますか。', options:['いってらっしゃい。','こんにちは。','おかえりなさい。','さようなら。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'さようなら。', question:'なんとこたえますか。', options:['こんにちは。','さようなら。','おはよう。','ただいま。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'またね。', question:'なんとこたえますか。', options:['はじめまして。','またね。','おかえり。','いただきます。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'いただきます。', question:'なんとこたえますか。', options:['ごちそうさま。','いただきます。','おはよう。','さようなら。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'ごちそうさまでした。', question:'なんとこたえますか。', options:['おそまつさまでした。','いただきます。','ありがとう。','こんにちは。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おじゃまします。', question:'なんとこたえますか。', options:['さようなら。','どうぞ。','ありがとう。','ただいま。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'おはよう。', question:'なんとこたえますか。', options:['おやすみ。','おはよう。','こんばんは。','またね。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'げんきですか。', question:'なんとこたえますか。', options:['はい、げんきです。','さようなら。','ありがとう。','いいえ、さむいです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'よろしくおねがいします。', question:'なんとこたえますか。', options:['さようなら。','こちらこそよろしくおねがいします。','おはよう。','いただきます。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'おつかれさまです。', question:'なんとこたえますか。', options:['おつかれさまです。','はじめまして。','いってきます。','ごちそうさま。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'すみません。', question:'なんとこたえますか。', options:['はい、なんですか。','さようなら。','おはよう。','ただいま。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しつれいします。', question:'なんとこたえますか。', options:['おかえり。','どうぞ。','ありがとう。','おはよう。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'おめでとうございます。', question:'なんとこたえますか。', options:['ありがとうございます。','さようなら。','おはよう。','いただきます。'], correct:0, voice:'female'}
+  ],
+
+  // Part 6: へんじ (Responses) - 20 unique items
+  6: [
+    {type:'conversation', audio:'ありがとうございます。', question:'なんとこたえますか。', options:['どういたしまして。','ごめんなさい。','さようなら。','はじめまして。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ごめんなさい。', question:'なんとこたえますか。', options:['どういたしまして。','だいじょうぶです。','さようなら。','いいえ。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'おねがいします。', question:'なんとこたえますか。', options:['はい、わかりました。','さようなら。','いいえ。','ありがとう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'てつだってください。', question:'なんとこたえますか。', options:['いいですよ。','さようなら。','ちがいます。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'もういちどいってください。', question:'なんとこたえますか。', options:['はい、どうぞ。','ありがとう。','さようなら。','いいえ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'わかりましたか。', question:'なんとこたえますか。', options:['はい、わかりました。','さようなら。','いいえ、ありません。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'すこしまってください。', question:'なんとこたえますか。', options:['はい、わかりました。','さようなら。','ありがとう。','どういたしまして。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どうぞ。', question:'なんとこたえますか。', options:['ありがとうございます。','さようなら。','いいえ。','ごめんなさい。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いいですか。', question:'なんとこたえますか。', options:['はい、いいです。','さようなら。','ちがいます。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しってますか。', question:'なんとこたえますか。', options:['はい、しっています。','さようなら。','いいえ、ありません。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'できますか。', question:'なんとこたえますか。', options:['はい、できます。','さようなら。','いいえ、ちがいます。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'これでいいですか。', question:'なんとこたえますか。', options:['はい、いいです。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'たすかります。', question:'なんとこたえますか。', options:['どういたしまして。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きをつけてください。', question:'なんとこたえますか。', options:['はい、わかりました。','さようなら。','ありがとう。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'よかったですね。', question:'なんとこたえますか。', options:['ありがとうございます。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'たいへんでしたね。', question:'なんとこたえますか。', options:['ええ、そうです。','さようなら。','ありがとう。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おつかれさまでした。', question:'なんとこたえますか。', options:['ありがとうございます。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どうぞよろしく。', question:'なんとこたえますか。', options:['こちらこそよろしく。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'またきてください。', question:'なんとこたえますか。', options:['はい、またきます。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おげんきで。', question:'なんとこたえますか。', options:['ありがとうございます。','さようなら。','ごめんなさい。','おはよう。'], correct:0, voice:'female'}
+  ],
+
+  // Part 7: これ/それ/あれ (Demonstratives) - 20 unique items
+  7: [
+    {type:'conversation', audio:'これはなんですか。', question:'なんとこたえますか。', options:['これはペンです。','それはほんです。','あれはくるまです。','これです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'それはなんですか。', question:'なんとこたえますか。', options:['これはペンです。','それはほんです。','あれはくるまです。','これです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'あれはなんですか。', question:'なんとこたえますか。', options:['これはペンです。','それはほんです。','あれはくるまです。','これです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'どれですか。', question:'なんとこたえますか。', options:['これはペンです。','それはほんです。','あれはくるまです。','これです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'これはだれのですか。', question:'なんとこたえますか。', options:['わたしのです。','あのひとです。','これです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'それはどこにありますか。', question:'なんとこたえますか。', options:['つくえのうえです。','それはほんです。','あちらです。','そこにあります。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'こちらはなんですか。', question:'なんとこたえますか。', options:['こちらはトイレです。','そちらはほんです。','あちらはでぐちです。','こちらです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'そちらはなんですか。', question:'なんとこたえますか。', options:['こちらはトイレです。','そちらはかいぎしつです。','あちらはでぐちです。','こちらです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'あちらはなんですか。', question:'なんとこたえますか。', options:['こちらはトイレです。','そちらはほんです。','あちらはでぐちです。','こちらです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'これはいくらですか。', question:'なんとこたえますか。', options:['ひゃくえんです。','それはほんです。','あそこです。','わかりません。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'それはだれのかばんですか。', question:'なんとこたえますか。', options:['わたしのです。','そこです。','これです。','ひゃくえんです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あれはなんのたてものですか。', question:'なんとこたえますか。', options:['あれはがっこうです。','これはほんです。','そこです。','こちらです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'これはなにでできていますか。', question:'なんとこたえますか。', options:['きでできています。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'それはどこでかいましたか。', question:'なんとこたえますか。', options:['デパートでかいました。','それはほんです。','こちらです。','ひゃくえんです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あれはなにいろですか。', question:'なんとこたえますか。', options:['あおいろです。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このペンはだれのですか。', question:'なんとこたえますか。', options:['たなかさんのです。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'そのかばんはいくらですか。', question:'なんとこたえますか。', options:['さんぜんえんです。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あのくるまはなんですか。', question:'なんとこたえますか。', options:['たなかさんのくるまです。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'これをください。', question:'なんとこたえますか。', options:['はい、どうぞ。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'それはいいですね。', question:'なんとこたえますか。', options:['ありがとうございます。','それはほんです。','こちらです。','そこです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 8: じかん (Time Questions) - 20 unique items
+  8: [
+    {type:'conversation', audio:'いまなんじですか。', question:'なんとこたえますか。', options:['くじです。','きょうです。','もくようびです。','しちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんにちですか。', question:'なんとこたえますか。', options:['くじです。','じゅうごにちです。','もくようびです。','しちがつです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'なんようびですか。', question:'なんとこたえますか。', options:['くじです。','じゅうごにちです。','かようびです。','しちがつです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'なんがつですか。', question:'なんとこたえますか。', options:['くじです。','じゅうごにちです。','もくようびです。','はちがつです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'なんねんですか。', question:'なんとこたえますか。', options:['にせんにじゅうごねんです。','じゅうごにちです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'バスはなんじにきますか。', question:'なんとこたえますか。', options:['じゅうじにきます。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えいがはなんじからですか。', question:'なんとこたえますか。', options:['しちじからです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんじにおきますか。', question:'なんとこたえますか。', options:['ろくじにおきます。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かいぎはなんじじゅうですか。', question:'なんとこたえますか。', options:['くじじゅっぷんです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'たんじょうびはいつですか。', question:'なんとこたえますか。', options:['さんがつみっかです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'やすみはいつですか。', question:'なんとこたえますか。', options:['にちようびです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しゅくだいはいつですか。', question:'なんとこたえますか。', options:['あしたです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おみせはなんじにしまりますか。', question:'なんとこたえますか。', options:['くじにしまります。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'つぎのでんしゃはなんじですか。', question:'なんとこたえますか。', options:['さんじごふんです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'がっこうはなんじにはじまりますか。', question:'なんとこたえますか。', options:['はちじにはじまります。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ひるごはんはなんじですか。', question:'なんとこたえますか。', options:['じゅうにじです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうはなんようびですか。', question:'なんとこたえますか。', options:['げつようびです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いつにほんにきましたか。', question:'なんとこたえますか。', options:['きょねんきました。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'テストはいつですか。', question:'なんとこたえますか。', options:['らいしゅうのきんようびです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えいがはなんじかんですか。', question:'なんとこたえますか。', options:['にじかんです。','きのうです。','もくようびです。','はちがつです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 9: うごき (Actions/Verbs) - 20 unique items
+  9: [
+    {type:'conversation', audio:'どこにいきますか。', question:'なんとこたえますか。', options:['がっこうにいきます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'だれときますか。', question:'なんとこたえますか。', options:['がっこうにいきます。','かぞくときます。','べんきょうです。','あしたです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'なにをしますか。', question:'なんとこたえますか。', options:['がっこうにいきます。','ともだちとです。','さんぽをします。','あしたです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いつきますか。', question:'なんとこたえますか。', options:['がっこうにいきます。','ともだちとです。','べんきょうです。','らいしゅうきます。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'なにをたべますか。', question:'なんとこたえますか。', options:['すしをたべます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをのみますか。', question:'なんとこたえますか。', options:['みずをのみます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでかいましたか。', question:'なんとこたえますか。', options:['スーパーでかいました。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをよみますか。', question:'なんとこたえますか。', options:['まんがをよみます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どうやっていきますか。', question:'なんとこたえますか。', options:['でんしゃでいきます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをかきますか。', question:'なんとこたえますか。', options:['てがみをかきます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでたべますか。', question:'なんとこたえますか。', options:['レストランでたべます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをみますか。', question:'なんとこたえますか。', options:['えいがをみます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'だれにかしますか。', question:'なんとこたえますか。', options:['ともだちにかします。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにおきますか。', question:'なんとこたえますか。', options:['つくえのうえにおきます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをかいますか。', question:'なんとこたえますか。', options:['パンをかいます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どのくらいかかりますか。', question:'なんとこたえますか。', options:['じゅっぷんかかります。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをならいますか。', question:'なんとこたえますか。', options:['にほんごをならいます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにすんでいますか。', question:'なんとこたえますか。', options:['とうきょうにすんでいます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんでいきますか。', question:'なんとこたえますか。', options:['バスでいきます。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにをしますか。', question:'なんとこたえますか。', options:['うんどうをします。','ともだちとです。','べんきょうです。','あしたです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 10: すき/きらい (Likes and Dislikes) - 20 unique items
+  10: [
+    {type:'conversation', audio:'にほんりょうりはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','はい、ほしいです。','はい、おいしいです。','はい、たのしいです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このほんはほしいですか。', question:'なんとこたえますか。', options:['はい、すきです。','はい、ほしいです。','はい、おいしいです。','はい、たのしいです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'このケーキはおいしいですか。', question:'なんとこたえますか。', options:['はい、すきです。','はい、ほしいです。','はい、おいしいです。','はい、たのしいです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'このゲームはたのしいですか。', question:'なんとこたえますか。', options:['はい、すきです。','はい、ほしいです。','はい、おいしいです。','はい、たのしいです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'やさいはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'スポーツはすきですか。', question:'なんとこたえますか。', options:['はい、だいすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えいがはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おんがくはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなたべものがすきですか。', question:'なんとこたえますか。', options:['すしがすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなスポーツがすきですか。', question:'なんとこたえますか。', options:['サッカーがすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにがいちばんすきですか。', question:'なんとこたえますか。', options:['ねこがいちばんすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このいろはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このもんだいはむずかしいですか。', question:'なんとこたえますか。', options:['はい、すこしむずかしいです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このくつはほしいですか。', question:'なんとこたえますか。', options:['はい、ほしいです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このえいがはおもしろいですか。', question:'なんとこたえますか。', options:['はい、おもしろいです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かんじはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'りょこうはすきですか。', question:'なんとこたえますか。', options:['はい、だいすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなおんがくがすきですか。', question:'なんとこたえますか。', options:['ポップスがすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このかばんはほしいですか。', question:'なんとこたえますか。', options:['はい、ほしいです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いぬとねこどちらがすきですか。', question:'なんとこたえますか。', options:['ねこのほうがすきです。','いいえ、きらいです。','はい、おいしいです。','いいえ、ほしくないです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 11: どこ/だれ/なに (WH Questions) - 20 unique items
+  11: [
+    {type:'conversation', audio:'えきはどこですか。', question:'なんとこたえますか。', options:['まっすぐです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あのひとはだれですか。', question:'なんとこたえますか。', options:['ここです。','たなかさんです。','ほんです。','みっつです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'つくえのうえになにがありますか。', question:'なんとこたえますか。', options:['ここです。','わたしです。','ペンがあります。','みっつです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'りんごはいくつありますか。', question:'なんとこたえますか。', options:['ここです。','わたしです。','ほんです。','みっつあります。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'がっこうはどこにありますか。', question:'なんとこたえますか。', options:['えきのちかくです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうしつにはだれがいますか。', question:'なんとこたえますか。', options:['せんせいがいます。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かばんのなかになにがありますか。', question:'なんとこたえますか。', options:['ほんとペンがあります。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このへやはだれのですか。', question:'なんとこたえますか。', options:['せんせいのです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いすはどこにありますか。', question:'なんとこたえますか。', options:['つくえのよこにあります。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'でんわはどこですか。', question:'なんとこたえますか。', options:['テーブルのうえです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ぎんこうはどのビルですか。', question:'なんとこたえますか。', options:['あのたかいビルです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'むすめはどこにいますか。', question:'なんとこたえますか。', options:['こうえんにいます。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'としょかんはなんかいですか。', question:'なんとこたえますか。', options:['にかいです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このへやにはなんにんいますか。', question:'なんとこたえますか。', options:['さんにんいます。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きのうはだれときましたか。', question:'なんとこたえますか。', options:['ともだちときました。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あなたのせんせいはだれですか。', question:'なんとこたえますか。', options:['やまださんです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なにがいちばんむずかしいですか。', question:'なんとこたえますか。', options:['かんじがいちばんむずかしいです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いまどこにいますか。', question:'なんとこたえますか。', options:['がっこうにいます。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにいきたいですか。', question:'なんとこたえますか。', options:['にほんにいきたいです。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんにんかぞくがいますか。', question:'なんとこたえますか。', options:['よにんいます。','わたしです。','ほんです。','みっつです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 12: どうでした (How Questions) - 20 unique items
+  12: [
+    {type:'conversation', audio:'りょこうはどうでしたか。', question:'なんとこたえますか。', options:['たのしかったです。','いきます。','いいです。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'てんきはどうですか。', question:'なんとこたえますか。', options:['はれています。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しけんはどうでしたか。', question:'なんとこたえますか。', options:['むずかしかったです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうのじゅぎょうはどうでしたか。', question:'なんとこたえますか。', options:['おもしろかったです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんごはどうですか。', question:'なんとこたえますか。', options:['むずかしいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このえいがはどうですか。', question:'なんとこたえますか。', options:['おもしろいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きのうのパーティーはどうでしたか。', question:'なんとこたえますか。', options:['たのしかったです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このりょうりはどうですか。', question:'なんとこたえますか。', options:['おいしいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'うんどうはどうですか。', question:'なんとこたえますか。', options:['たのしいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あたらしいしごとはどうですか。', question:'なんとこたえますか。', options:['たいへんです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このくつはどうですか。', question:'なんとこたえますか。', options:['ちょっとおおきいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かいしゃのひとたちはどうですか。', question:'なんとこたえますか。', options:['しんせつです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうのゆうしょくはどうでしたか。', question:'なんとこたえますか。', options:['おいしかったです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんのてんきはどうですか。', question:'なんとこたえますか。', options:['あついです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このほんはどうですか。', question:'なんとこたえますか。', options:['おもしろいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうのぐあいはどうですか。', question:'なんとこたえますか。', options:['すこしわるいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かれのえいごはどうですか。', question:'なんとこたえますか。', options:['じょうずです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんのたべものはどうですか。', question:'なんとこたえますか。', options:['おいしいです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'バスはどうでしたか。', question:'なんとこたえますか。', options:['こんでいました。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうのしごとはどうでしたか。', question:'なんとこたえますか。', options:['いそがしかったです。','よかったです。','いきます。','わすれました。'], correct:0, voice:'female'}
+  ],
+
+  // Part 13: かずとりょう (Numbers and Quantities) - 20 unique items
+  13: [
+    {type:'conversation', audio:'このみかんはいくらですか。', question:'なんとこたえますか。', options:['ひゃくえんです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'がっこうまでどのくらいかかりますか。', question:'なんとこたえますか。', options:['ひゃくえんです。','じゅっぷんかかります。','ふたつです。','ふたりです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'りんごをいくつかいますか。', question:'なんとこたえますか。', options:['ひゃくえんです。','さんじかんです。','みっつかいます。','ふたりです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'このクラスにはなんにんいますか。', question:'なんとこたえますか。', options:['ひゃくえんです。','さんじかんです。','ふたつです。','にじゅうにんいます。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'このほんはなんページですか。', question:'なんとこたえますか。', options:['さんびゃくページです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えきまでなんキロありますか。', question:'なんとこたえますか。', options:['にキロあります。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このかばんはなんキロですか。', question:'なんとこたえますか。', options:['いっキロです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'パンをいくついりますか。', question:'なんとこたえますか。', options:['よっついります。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えいがはなんじかんですか。', question:'なんとこたえますか。', options:['にじかんです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このコップにみずはどのくらいいりますか。', question:'なんとこたえますか。', options:['にひゃくミリぐらいです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このかいだんはなんだんですか。', question:'なんとこたえますか。', options:['じゅうだんです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このたてものはなんかいですか。', question:'なんとこたえますか。', options:['じゅっかいです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いちにちにみずをなんばいのみますか。', question:'なんとこたえますか。', options:['はっぱいのみます。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えんぴつをなんぼんもっていますか。', question:'なんとこたえますか。', options:['さんぼんもっています。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このテーブルはなんにんようですか。', question:'なんとこたえますか。', options:['よにんようです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このクラスはなんにんですか。', question:'なんとこたえますか。', options:['さんじゅうにんです。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんごのじゅぎょうはいっしゅうかんになんかいありますか。', question:'なんとこたえますか。', options:['さんかいあります。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ともだちはなんにんいますか。', question:'なんとこたえますか。', options:['たくさんいます。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このでんしゃはなんぷんおくれていますか。', question:'なんとこたえますか。', options:['じゅっぷんおくれています。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ねこはなんびきいますか。', question:'なんとこたえますか。', options:['さんびきいます。','さんじかんです。','ふたつです。','ふたりです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 14: できる/わかる (Ability Questions) - 20 unique items
+  14: [
+    {type:'conversation', audio:'にほんごができますか。', question:'なんとこたえますか。', options:['はい、すこしできます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このことばのいみがわかりますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'あのえいがをしっていますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'じかんがありますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'りょうりができますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このかんじがよめますか。', question:'なんとこたえますか。', options:['はい、よめます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ピアノがひけますか。', question:'なんとこたえますか。', options:['はい、すこしひけます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'およげますか。', question:'なんとこたえますか。', options:['はい、およげます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えいごがわかりますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、すこしわかります。','はい、しっています。','はい、あります。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'このもんだいのこたえをしっていますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'くるまがうんてんできますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'じてんしゃにのれますか。', question:'なんとこたえますか。', options:['はい、のれます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このことばがわかりますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'にほんのうたをしっていますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'ひらがながかけますか。', question:'なんとこたえますか。', options:['はい、かけます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かたかながよめますか。', question:'なんとこたえますか。', options:['はい、よめます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このしごとができますか。', question:'なんとこたえますか。', options:['はい、できます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'たいいくがとくいですか。', question:'なんとこたえますか。', options:['はい、とくいです。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えがかけますか。', question:'なんとこたえますか。', options:['はい、すこしかけます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんりょうりがつくれますか。', question:'なんとこたえますか。', options:['はい、つくれます。','はい、わかります。','はい、しっています。','はい、あります。'], correct:0, voice:'female'}
+  ],
+
+  // Part 15: どこから/どこへ (Movement Questions) - 20 unique items
+  15: [
+    {type:'conversation', audio:'どこからきましたか。', question:'なんとこたえますか。', options:['フィリピンからきました。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこへいきますか。', question:'なんとこたえますか。', options:['フィリピンからきました。','がっこうへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'どこでかいましたか。', question:'なんとこたえますか。', options:['フィリピンからきました。','えきへいきます。','コンビニでかいました。','とうきょうにすみます。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'どこにすんでいますか。', question:'なんとこたえますか。', options:['フィリピンからきました。','えきへいきます。','スーパーでかいました。','おおさかにすんでいます。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'どこであいますか。', question:'なんとこたえますか。', options:['えきのまえであいます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでべんきょうしますか。', question:'なんとこたえますか。', options:['としょかんでべんきょうします。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでたべますか。', question:'なんとこたえますか。', options:['レストランでたべます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにいきたいですか。', question:'なんとこたえますか。', options:['にほんにいきたいです。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでうまれましたか。', question:'なんとこたえますか。', options:['おおさかでうまれました。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでしごとをしていますか。', question:'なんとこたえますか。', options:['びょういんではたらいています。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでにほんごをならいますか。', question:'なんとこたえますか。', options:['がっこうでならいます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんでえきへいきますか。', question:'なんとこたえますか。', options:['バスでいきます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでくつをかいましたか。', question:'なんとこたえますか。', options:['デパートでかいました。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにいますか。', question:'なんとこたえますか。', options:['えきのまえにいます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでまちますか。', question:'なんとこたえますか。', options:['えきでまちます。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこからでんしゃにのりますか。', question:'なんとこたえますか。', options:['しんじゅくからのります。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでおりますか。', question:'なんとこたえますか。', options:['しぶやでおります。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこへりょこうしたいですか。', question:'なんとこたえますか。', options:['ヨーロッパへいきたいです。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこでしゃしんをとりますか。', question:'なんとこたえますか。', options:['こうえんでとります。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにほんをかえしますか。', question:'なんとこたえますか。', options:['としょかんにかえします。','えきへいきます。','スーパーでかいました。','とうきょうにすみます。'], correct:0, voice:'female'}
+  ],
+
+  // Part 16: ていねい (Requests and Invitations) - 20 unique items
+  16: [
+    {type:'conversation', audio:'いっしょにいきませんか。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'てつだってください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'ちょっとまってください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'もういちどおねがいします。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'いっしょにたべませんか。', question:'なんとこたえますか。', options:['はい、たべましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このかばんをもってください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、もちます。','はい、わかりました。','はい、どうぞ。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'まどをあけてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、あけます。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'しずかにしてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いっしょにさんぽしませんか。', question:'なんとこたえますか。', options:['はい、さんぽしましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このもんだいをといてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、といてみます。','はい、わかりました。','はい、どうぞ。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'もっとゆっくりはなしてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'ここにすわってください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、すわります。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いっしょにべんきょうしませんか。', question:'なんとこたえますか。', options:['はい、べんきょうしましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'でんわをかけてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、かけます。','はい、わかりました。','はい、どうぞ。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'ここにかいてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、かきます。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いっしょにえいがをみませんか。', question:'なんとこたえますか。', options:['はい、みましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'はやくきてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、わかりました。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'これをよんでください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、よみます。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いっしょにきてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、いきます。','はい、どうぞ。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'ちょっとみてください。', question:'なんとこたえますか。', options:['はい、いきましょう。','はい、いいですよ。','はい、みます。','はい、どうぞ。'], correct:2, voice:'female'}
+  ],
+
+  // Part 17: じこしょうかい (Self Introduction) - 20 unique items
+  17: [
+    {type:'conversation', audio:'おなまえはなんですか。', question:'なんとこたえますか。', options:['たなかです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'おいくつですか。', question:'なんとこたえますか。', options:['たなかです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'おしごとはなんですか。', question:'なんとこたえますか。', options:['たなかです。','にじゅっさいです。','かいしゃいんです。','はい、げんきです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'おげんきですか。', question:'なんとこたえますか。', options:['たなかです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'しゅっしんはどこですか。', question:'なんとこたえますか。', options:['おおさかです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かぞくはなんにんですか。', question:'なんとこたえますか。', options:['よにんかぞくです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ごしゅみはなんですか。', question:'なんとこたえますか。', options:['どくしょです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どこにすんでいますか。', question:'なんとこたえますか。', options:['とうきょうにすんでいます。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんにきてどのくらいですか。', question:'なんとこたえますか。', options:['いちねんです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんかいにすんでいますか。', question:'なんとこたえますか。', options:['さんかいにすんでいます。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'けっこんしていますか。', question:'なんとこたえますか。', options:['はい、けっこんしています。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どのくにからきましたか。', question:'なんとこたえますか。', options:['フィリピンからきました。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんごをどのくらいべんきょうしましたか。', question:'なんとこたえますか。', options:['ろっかげつべんきょうしました。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんのしごとをしていますか。', question:'なんとこたえますか。', options:['エンジニアをしています。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんかいせいですか。', question:'なんとこたえますか。', options:['にねんせいです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんのなにがすきですか。', question:'なんとこたえますか。', options:['アニメがすきです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'まいにちなにをしますか。', question:'なんとこたえますか。', options:['しごとをします。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ごきょうだいはいますか。', question:'なんとこたえますか。', options:['はい、あにがいます。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんごをはなしますか。', question:'なんとこたえますか。', options:['えいごとにほんごをはなします。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんにりゆうはなんですか。', question:'なんとこたえますか。', options:['べんきょうするためです。','にじゅっさいです。','がくせいです。','はい、げんきです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 18: てんき (Weather Questions) - 20 unique items
+  18: [
+    {type:'conversation', audio:'きょうのてんきはどうですか。', question:'なんとこたえますか。', options:['はれています。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'そとはあついですか。', question:'なんとこたえますか。', options:['はれています。','はい、とてもあついです。','はい、さむいです。','はい、あめです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'ふゆはさむいですか。', question:'なんとこたえますか。', options:['はれています。','はい、あついです。','はい、とてもさむいです。','はい、あめです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'きょうはあめですか。', question:'なんとこたえますか。', options:['はれています。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'あしたのてんきはどうですか。', question:'なんとこたえますか。', options:['くもりです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ゆきがふっていますか。', question:'なんとこたえますか。', options:['はい、ゆきがふっています。','はい、あついです。','はい、さむいです。','いいえ、ふっていません。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かぜがつよいですか。', question:'なんとこたえますか。', options:['はい、かぜがつよいです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうははれていますか。', question:'なんとこたえますか。', options:['はい、はれています。','はい、あついです。','はい、さむいです。','いいえ、くもっています。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あめはまだふっていますか。', question:'なんとこたえますか。', options:['いいえ、やみました。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なつはあついですか。', question:'なんとこたえますか。', options:['はい、とてもあついです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'はるのてんきはどうですか。', question:'なんとこたえますか。', options:['あたたかいです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あきはすずしいですか。', question:'なんとこたえますか。', options:['はい、すずしいです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かみなりがなっていますか。', question:'なんとこたえますか。', options:['はい、なっています。','はい、あついです。','はい、さむいです。','いいえ、なっていません。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'こんしゅうはてんきがいいですか。', question:'なんとこたえますか。', options:['はい、いいてんきです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きりがでていますか。', question:'なんとこたえますか。', options:['はい、きりがでています。','はい、あついです。','はい、さむいです。','いいえ、でていません。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'きょうはさむいですね。', question:'なんとこたえますか。', options:['そうですね、さむいです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'てんきよほうはどうですか。', question:'なんとこたえますか。', options:['あしたははれるそうです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'かさはいりますか。', question:'なんとこたえますか。', options:['はい、あめがふるそうです。','はい、あついです。','はい、さむいです。','いいえ。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'たいふうがきますか。', question:'なんとこたえますか。', options:['はい、きているそうです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'このきせつはなにがいいですか。', question:'なんとこたえますか。', options:['はなみがいいです。','はい、あついです。','はい、さむいです。','はい、あめです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 19: きせつとしゅみ (Seasons and Hobbies) - 20 unique items
+  19: [
+    {type:'conversation', audio:'なにがすきですか。', question:'なんとこたえますか。', options:['くだものがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'だれがすきですか。', question:'なんとこたえますか。', options:['くだものがすきです。','かぞくがすきです。','こうえんがすきです。','なつがすきです。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'どこがすきですか。', question:'なんとこたえますか。', options:['くだものがすきです。','ははがすきです。','うみがすきです。','なつがすきです。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'いつがすきですか。', question:'なんとこたえますか。', options:['くだものがすきです。','ははがすきです。','こうえんがすきです。','はるがすきです。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'しゅみはなんですか。', question:'なんとこたえますか。', options:['どくしょです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'やすみのひにはなにをしますか。', question:'なんとこたえますか。', options:['えいがをみます。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなスポーツがすきですか。', question:'なんとこたえますか。', options:['およぐのがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'いちばんすきなきせつはいつですか。', question:'なんとこたえますか。', options:['はるがいちばんすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんのはるはどうですか。', question:'なんとこたえますか。', options:['さくらがきれいです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なつやすみになにをしますか。', question:'なんとこたえますか。', options:['うみにいきます。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ふゆはなにがたのしいですか。', question:'なんとこたえますか。', options:['スキーがたのしいです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなおんがくがすきですか。', question:'なんとこたえますか。', options:['ポップスがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなたべものがすきですか。', question:'なんとこたえますか。', options:['すしがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'あきにはなにをしますか。', question:'なんとこたえますか。', options:['こうようをみにいきます。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなどくしょがすきですか。', question:'なんとこたえますか。', options:['ミステリーがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'りょこうはすきですか。', question:'なんとこたえますか。', options:['はい、だいすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'えをかくのはすきですか。', question:'なんとこたえますか。', options:['はい、すきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'ゲームはしますか。', question:'なんとこたえますか。', options:['はい、よくします。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなえいががすきですか。', question:'なんとこたえますか。', options:['アクションがすきです。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'りょうりはしますか。', question:'なんとこたえますか。', options:['はい、まいにちします。','ははがすきです。','こうえんがすきです。','なつがすきです。'], correct:0, voice:'female'}
+  ],
+
+  // Part 20: しごととがくせい (Work and Study) - 20 unique items
+  20: [
+    {type:'conversation', audio:'しゅみはなんですか。', question:'なんとこたえますか。', options:['どくしょです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'スポーツはなにをしますか。', question:'なんとこたえますか。', options:['どくしょです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:1, voice:'female'},
+    {type:'conversation', audio:'りょうりはできますか。', question:'なんとこたえますか。', options:['どくしょです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:2, voice:'female'},
+    {type:'conversation', audio:'がっきはひけますか。', question:'なんとこたえますか。', options:['どくしょです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:3, voice:'female'},
+    {type:'conversation', audio:'なんねんせいですか。', question:'なんとこたえますか。', options:['さんねんせいです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんのがっかをせんこうしていますか。', question:'なんとこたえますか。', options:['けいざいをせんこうしています。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'まいにちなんじかんべんきょうしますか。', question:'なんとこたえますか。', options:['にじかんべんきょうします。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しごとはなんですか。', question:'なんとこたえますか。', options:['エンジニアです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんごのじゅぎょうはたのしいですか。', question:'なんとこたえますか。', options:['はい、たのしいです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'しゅくだいはむずかしいですか。', question:'なんとこたえますか。', options:['はい、すこしむずかしいです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どのかもくがすきですか。', question:'なんとこたえますか。', options:['すうがくがすきです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'がっこうはなんじにはじまりますか。', question:'なんとこたえますか。', options:['はちじにはじまります。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'にほんごをどのくらいべんきょうしましたか。', question:'なんとこたえますか。', options:['ろっかげつべんきょうしました。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'どんなしごとをしたいですか。', question:'なんとこたえますか。', options:['つうやくをしたいです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'がっこうまでどのくらいかかりますか。', question:'なんとこたえますか。', options:['じゅっぷんかかります。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'なんにんのグループでべんきょうしますか。', question:'なんとこたえますか。', options:['よにんでべんきょうします。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'アルバイトをしていますか。', question:'なんとこたえますか。', options:['はい、しています。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'じゅぎょうのあとなにをしますか。', question:'なんとこたえますか。', options:['ともだちとあいます。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'せんせいはきびしいですか。', question:'なんとこたえますか。', options:['いいえ、しんせつです。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'},
+    {type:'conversation', audio:'らいねんなにをしますか。', question:'なんとこたえますか。', options:['にほんにいきます。','サッカーをします。','はい、できます。','はい、ひけます。'], correct:0, voice:'female'}
+  ]
+
+};
+
+
+// ============================================================================
+// APP STATE & LOGIC
+// ============================================================================
+
+let currentMode = null;
+let currentPart = null;
+let currentQuestions = [];
+let currentQuestionIndex = 0;
+let score = 0;
+let userAnswers = [];
+
+const synth = window.speechSynthesis;
+let femaleVoice = null;
+let maleVoice = null;
+
+// Initialize Japanese voices
+function initVoices() {
+  const voices = synth.getVoices();
+  
+  // Try to find Japanese female voice
+  femaleVoice = voices.find(v => v.lang === 'ja-JP' && v.name.includes('Female')) ||
+                voices.find(v => v.lang === 'ja-JP' && v.name.includes('female')) ||
+                voices.find(v => v.lang === 'ja-JP') ||
+                voices.find(v => v.lang.startsWith('ja'));
+  
+  // Try to find Japanese male voice (keeping for compatibility but won't use)
+  maleVoice = voices.find(v => v.lang === 'ja-JP' && v.name.includes('Male')) ||
+              voices.find(v => v.lang === 'ja-JP' && v.name.includes('male')) ||
+              voices.find(v => v.lang === 'ja-JP') ||
+              voices.find(v => v.lang.startsWith('ja'));
+  
+  console.log('Female voice:', femaleVoice?.name);
+  console.log('Male voice:', maleVoice?.name);
+}
+
+if (synth.onvoiceschanged !== undefined) {
+  synth.onvoiceschanged = initVoices;
+}
+initVoices();
+
+function playAudio(text, voiceType = 'female') {
+  synth.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ja-JP';
+  utterance.rate = 0.75;
+  utterance.pitch = 1.3; // Higher pitch for woman/girl voice
+  
+  // ALWAYS use female voice
+  if (femaleVoice) {
+    utterance.voice = femaleVoice;
+  }
+  
+  synth.speak(utterance);
+}
+
+function selectMode(mode) {
+  currentMode = mode;
+  hide('mainMenu');
+  hide('modeSelection');
+  show('partSelection');
+  renderPartSelection();
+}
+
+function renderPartSelection() {
+  const partGrid = document.getElementById('partGrid');
+  partGrid.innerHTML = '';
+  
+  const partNames = [
+    'まる/ばつ (True or False)',
+    'みちをきく (Directions)',
+    'ばしょ (Location Map)',
+    'ねだん (Price Input)',
+    'あいさつ (Greetings)',
+    'へんじ (Responses)',
+    'これ/それ/あれ (Demonstratives)',
+    'じかん (Time Questions)',
+    'うごき (Action Verbs)',
+    'すき/きらい (Likes & Dislikes)',
+    'どこ/だれ/なに (WH Questions)',
+    'どうでした (How Questions)',
+    'かずとりょう (Numbers)',
+    'できる/わかる (Ability)',
+    'どこから/どこへ (Movement)',
+    'ていねい (Requests)',
+    'じこしょうかい (Self Intro)',
+    'てんき (Weather)',
+    'きせつとしゅみ (Seasons/Hobbies)',
+    'しごととがくせい (Work & Study)'
+  ];
+  
+  for (let i = 1; i <= 20; i++) {
+    const btn = document.createElement('button');
+    btn.className = 'part-btn';
+    btn.innerHTML = `<div style="margin-bottom:4px;color:var(--listening);">${japaneseNumbers[i-1]}</div><div>${partNames[i - 1]}</div>`;
+    btn.onclick = () => startExam(i);
+    partGrid.appendChild(btn);
+  }
+}
+
+function startExam(part) {
+  currentPart = part;
+  // Take only first 20 items from each part
+  currentQuestions = [...listeningData[part]].slice(0, 20);
+  currentQuestionIndex = 0;
+  score = 0;
+  userAnswers = [];
+  
+  hide('partSelection');
+  show('examScreen');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = currentQuestions[currentQuestionIndex];
+  const card = document.getElementById('questionCard');
+  
+  updateProgress();
+  
+  let contentHTML = '';
+  
+  // Audio player
+  const voiceType = q.voice || 'female';
+  contentHTML += `
+    <div class="exam-counter">もんだい ${currentQuestionIndex + 1} / ${currentQuestions.length}</div>
+    
+    <div class="audio-player">
+      <button class="play-btn" onclick="playAudio('${q.audio.replace(/'/g, "\\'")}', '${voiceType}')">▶</button>
+      <div class="audio-info">
+        <div class="audio-label">おんせいをきいてください</div>
+        <div class="audio-text">くりっくしてさいせい</div>
+      </div>
+    </div>
+    
+    ${q.image ? `<div class="question-image"><img src="${q.image}" alt="Question visual"></div>` : ''}
+    
+    <div class="question-text">${q.question}</div>
+  `;
+  
+  // Question-specific content
+  if (q.type === 'conversation' || q.type === 'direction') {
+    contentHTML += '<div class="options">';
+    q.options.forEach((opt, i) => {
+      const letter = String.fromCharCode(65 + i);
+      contentHTML += `
+        <div class="option" data-index="${i}">
+          <div class="option-letter">${letter}</div>
+          <span>${opt}</span>
+        </div>
+      `;
+    });
+    contentHTML += '</div>';
+    
+  } else if (q.type === 'picture') {
+    contentHTML += '<div class="picture-options">';
+    q.pictures.forEach((pic, i) => {
+      contentHTML += `
+        <div class="picture-option" data-index="${i}">
+          <div class="picture-emoji">${pic}</div>
+          <div class="picture-label">${q.labels[i]}</div>
+        </div>
+      `;
+    });
+    contentHTML += '</div>';
+    
+  } else if (q.type === 'marubatsu') {
+    contentHTML += `
+      <div class="options">
+        <div class="option" data-value="true">
+          <div class="option-letter">○</div>
+          <span>ただしい (True)</span>
+        </div>
+        <div class="option" data-value="false">
+          <div class="option-letter">✕</div>
+          <span>まちがい (False)</span>
+        </div>
+      </div>
+    `;
+    
+  } else if (q.type === 'location') {
+    contentHTML += `
+      <div class="map-container">
+        <div class="map-grid">
+    `;
+    q.mapLayout.forEach((icon, i) => {
+      const isSelectable = i !== q.mapLayout.indexOf(q.referenceIcon);
+      contentHTML += `
+        <div class="map-cell ${isSelectable ? 'selectable' : ''}" data-index="${i}">
+          <div class="map-icon">${icon}</div>
+        </div>
+      `;
+    });
+    contentHTML += `
+        </div>
+      </div>
+    `;
+    
+  } else if (q.type === 'price') {
+    contentHTML += `
+      <div class="input-group">
+        <label class="input-label">こたえをにゅうりょくしてください：</label>
+        <input type="number" class="text-input" id="priceInput" placeholder="すうじをいれてください" />
+      </div>
+    `;
+  }
+  
+  contentHTML += `
+    <div class="btn-row">
+      <button class="btn btn-primary" id="submitBtn" ${q.type === 'price' ? '' : 'disabled'}>こたえる</button>
+    </div>
+    
+    <div id="feedback"></div>
+  `;
+  
+  card.innerHTML = contentHTML;
+  
+  // Add event listeners
+  if (q.type === 'conversation' || q.type === 'direction') {
+    const options = card.querySelectorAll('.option');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        document.getElementById('submitBtn').disabled = false;
+      });
+    });
+  } else if (q.type === 'picture') {
+    const options = card.querySelectorAll('.picture-option');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        document.getElementById('submitBtn').disabled = false;
+      });
+    });
+  } else if (q.type === 'marubatsu') {
+    const options = card.querySelectorAll('.option');
+    options.forEach(opt => {
+      opt.addEventListener('click', () => {
+        options.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        document.getElementById('submitBtn').disabled = false;
+      });
+    });
+  } else if (q.type === 'location') {
+    const cells = card.querySelectorAll('.map-cell.selectable');
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        cells.forEach(c => c.classList.remove('selected'));
+        cell.classList.add('selected');
+        document.getElementById('submitBtn').disabled = false;
+      });
+    });
+  } else if (q.type === 'price') {
+    const input = document.getElementById('priceInput');
+    input.addEventListener('input', () => {
+      document.getElementById('submitBtn').disabled = input.value.trim() === '';
+    });
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && input.value.trim() !== '') {
+        checkAnswer();
+      }
+    });
+    setTimeout(() => input.focus(), 100);
+  }
+  
+  document.getElementById('submitBtn').addEventListener('click', checkAnswer);
+  
+  // Auto-play audio
+  setTimeout(() => playAudio(q.audio, voiceType), 300);
+}
+
+function checkAnswer() {
+  const q = currentQuestions[currentQuestionIndex];
+  let isCorrect = false;
+  let userAnswer = null;
+  
+  if (q.type === 'marubatsu') {
+    const selected = document.querySelector('.option.selected');
+    if (!selected) return;
+    userAnswer = selected.dataset.value === 'true';
+    isCorrect = userAnswer === q.correct;
+    
+    if (isCorrect) {
+      selected.classList.add('correct');
+    } else {
+      selected.classList.add('wrong');
+      document.querySelector(`.option[data-value="${q.correct}"]`).classList.add('correct');
+    }
+    
+  } else if (q.type === 'conversation' || q.type === 'direction' || q.type === 'picture') {
+    const selected = document.querySelector('.option.selected, .picture-option.selected');
+    if (!selected) return;
+    userAnswer = parseInt(selected.dataset.index);
+    isCorrect = userAnswer === q.correct;
+    
+    if (isCorrect) {
+      selected.classList.add('correct');
+    } else {
+      selected.classList.add('wrong');
+      const correctElement = q.type === 'picture' ? 
+        document.querySelectorAll('.picture-option')[q.correct] :
+        document.querySelectorAll('.option')[q.correct];
+      correctElement.classList.add('correct');
+    }
+    
+  } else if (q.type === 'location') {
+    const selected = document.querySelector('.map-cell.selected');
+    if (!selected) return;
+    userAnswer = parseInt(selected.dataset.index);
+    isCorrect = userAnswer === q.correctPosition;
+    
+    if (isCorrect) {
+      selected.classList.add('correct');
+    } else {
+      selected.classList.add('wrong');
+      document.querySelectorAll('.map-cell')[q.correctPosition].classList.add('correct');
+    }
+    
+  } else if (q.type === 'price') {
+    const input = document.getElementById('priceInput');
+    userAnswer = input.value.trim();
+    isCorrect = userAnswer === q.correctAnswer;
+    
+    if (isCorrect) {
+      input.classList.add('correct');
+    } else {
+      input.classList.add('wrong');
+    }
+  }
+  
+  userAnswers.push({
+    question: currentQuestionIndex,
+    userAnswer: userAnswer,
+    correct: isCorrect
+  });
+  
+  if (isCorrect) {
+    score++;
+  }
+  
+  // Show feedback
+  const feedback = document.getElementById('feedback');
+  feedback.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  
+  if (isCorrect) {
+    feedback.innerHTML = '✓ せいかいです！';
+  } else {
+    let correctAnswerText = '';
+    if (q.type === 'marubatsu') {
+      correctAnswerText = q.correct ? '○ ただしい' : '✕ まちがい';
+    } else if (q.type === 'conversation' || q.type === 'direction') {
+      correctAnswerText = q.options[q.correct];
+    } else if (q.type === 'picture') {
+      correctAnswerText = q.labels[q.correct];
+    } else if (q.type === 'price') {
+      correctAnswerText = q.correctAnswer + q.unit;
+    } else if (q.type === 'location') {
+      correctAnswerText = 'ただしいばしょをみてください';
+    }
+    feedback.innerHTML = `✗ ざんねん。せいかいは: ${correctAnswerText}`;
+  }
+  
+  document.getElementById('submitBtn').textContent = currentQuestionIndex < currentQuestions.length - 1 ? 'つぎへ' : 'けっかをみる';
+  document.getElementById('submitBtn').onclick = nextQuestion;
+  document.getElementById('submitBtn').disabled = false;
+}
+
+function nextQuestion() {
+  currentQuestionIndex++;
+  
+  if (currentQuestionIndex < currentQuestions.length) {
+    renderQuestion();
+  } else {
+    showResults();
+  }
+}
+
+function updateProgress() {
+  const progress = (currentQuestionIndex / currentQuestions.length) * 100;
+  document.getElementById('progressBar').style.width = progress + '%';
+  document.getElementById('progressBar').textContent = `${currentQuestionIndex} / ${currentQuestions.length}`;
+}
+
+function showResults() {
+  const percentage = Math.round((score / currentQuestions.length) * 100);
+  
+  hide('examScreen');
+  show('resultsScreen');
+  
+  let message = 'けっか';
+  if (percentage >= 90) message = 'かんぺきです！';
+  else if (percentage >= 70) message = 'すばらしい！';
+  else if (percentage >= 50) message = 'よくできました！';
+  else message = 'もうすこしがんばりましょう！';
+  
+  document.getElementById('finalScore').textContent = percentage + '%';
+  document.getElementById('scoreMessage').textContent = message;
+  document.getElementById('correctCount').textContent = score;
+  document.getElementById('wrongCount').textContent = currentQuestions.length - score;
+  document.getElementById('totalCount').textContent = currentQuestions.length;
+}
+
+function backToMenu() {
+  synth.cancel();
+  hide('partSelection');
+  hide('examScreen');
+  hide('resultsScreen');
+  show('mainMenu');
+  show('modeSelection');
+  currentMode = null;
+  currentPart = null;
+}
+
+function hide(id) {
+  document.getElementById(id).classList.add('hidden');
+}
+
+function show(id) {
+  document.getElementById(id).classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
